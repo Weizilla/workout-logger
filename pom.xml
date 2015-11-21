@@ -24,7 +24,8 @@
     </dependencyManagement>
 
     <modules>
-        <module>workout-logger-web</module>
+        <module>workout-logger-lib</module>
+        <module>workout-logger-web-app</module>
     </modules>
 
 </project>
