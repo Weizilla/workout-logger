@@ -31,6 +31,6 @@ public class WorkoutLoggerController
     @RequestMapping(path = "/workouts", method = RequestMethod.POST)
     public void addWorkout(@RequestBody Workout workout)
     {
-
+        workoutLogger.store(workout);
     }
 }
