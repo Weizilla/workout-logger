@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.json.ObjectMappers;
+import com.weizilla.workout.logger.sample.RandomDataLoader;
 import com.weizilla.workout.logger.web.WebTestUtils;
 import com.weizilla.workout.logger.web.converter.WorkoutJsonConverter;
 import org.junit.Before;
@@ -37,6 +38,8 @@ public class WorkoutLoggerControllerTest
 {
     @Mock
     private WorkoutLogger workoutLogger;
+    @Mock
+    private RandomDataLoader randomDataLoader;
     private MockMvc mockMvc;
     private Workout workout;
     private String type;
@@ -47,7 +50,7 @@ public class WorkoutLoggerControllerTest
     @Before
     public void setUp() throws Exception
     {
-        WorkoutLoggerController controller = new WorkoutLoggerController(workoutLogger);
+        WorkoutLoggerController controller = new WorkoutLoggerController(workoutLogger, randomDataLoader);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
             .setMessageConverters(new WorkoutJsonConverter())
             .build();

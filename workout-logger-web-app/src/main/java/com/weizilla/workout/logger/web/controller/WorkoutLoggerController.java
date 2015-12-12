@@ -2,6 +2,7 @@ package com.weizilla.workout.logger.web.controller;
 
 import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.sample.RandomDataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +16,13 @@ import java.util.List;
 public class WorkoutLoggerController
 {
     private final WorkoutLogger workoutLogger;
+    private final RandomDataLoader randomDataLoader;
 
     @Autowired
-    public WorkoutLoggerController(WorkoutLogger workoutLogger)
+    public WorkoutLoggerController(WorkoutLogger workoutLogger, RandomDataLoader randomDataLoader)
     {
         this.workoutLogger = workoutLogger;
+        this.randomDataLoader = randomDataLoader;
     }
 
     @RequestMapping("/workouts")
@@ -32,5 +35,11 @@ public class WorkoutLoggerController
     public void addWorkout(@RequestBody Workout workout)
     {
         workoutLogger.store(workout);
+    }
+
+    @RequestMapping(path = "/workouts/random", method = RequestMethod.POST)
+    public void addRandomWorkout()
+    {
+        randomDataLoader.addWorkout();
     }
 }
