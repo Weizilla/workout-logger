@@ -65,7 +65,7 @@ public class WorkoutLoggerControllerTest
     @Test
     public void getsAllWorkout() throws Exception
     {
-        when(workoutLogger.getWorkouts()).thenReturn(Lists.newArrayList(workout));
+        when(workoutLogger.getAll()).thenReturn(Lists.newArrayList(workout));
 
         mockMvc.perform(get("/api/workouts"))
             .andExpect(status().isOk())
@@ -89,7 +89,7 @@ public class WorkoutLoggerControllerTest
             .andExpect(status().isOk());
 
         ArgumentCaptor<Workout> captor = ArgumentCaptor.forClass(Workout.class);
-        verify(workoutLogger).store(captor.capture());
+        verify(workoutLogger).put(captor.capture());
 
         Workout actual = captor.getValue();
         assertThat(actual.getType(), is(type));

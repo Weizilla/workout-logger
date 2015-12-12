@@ -28,13 +28,13 @@ public class WorkoutLoggerController
     @RequestMapping("/workouts")
     public List<Workout> getWorkouts()
     {
-        return workoutLogger.getWorkouts();
+        return workoutLogger.getAll();
     }
 
     @RequestMapping(path = "/workouts", method = RequestMethod.POST)
     public void addWorkout(@RequestBody Workout workout)
     {
-        workoutLogger.store(workout);
+        workoutLogger.put(workout);
     }
 
     @RequestMapping(path = "/workouts/random", method = RequestMethod.POST)
