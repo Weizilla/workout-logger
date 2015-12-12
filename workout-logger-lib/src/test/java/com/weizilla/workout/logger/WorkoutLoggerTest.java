@@ -38,13 +38,13 @@ public class WorkoutLoggerTest
     public void storesInWorkoutStore() throws Exception
     {
         workoutLogger.store(workout);
-        verify(workoutStore).store(workout);
+        verify(workoutStore).put(workout);
     }
 
     @Test
     public void getsAllWorkouts() throws Exception
     {
-        when(workoutStore.getWorkouts()).thenReturn(Lists.newArrayList(workout));
+        when(workoutStore.getAll()).thenReturn(Lists.newArrayList(workout));
 
         List<Workout> workouts = workoutLogger.getWorkouts();
         assertThat(workouts.size(), equalTo(1));

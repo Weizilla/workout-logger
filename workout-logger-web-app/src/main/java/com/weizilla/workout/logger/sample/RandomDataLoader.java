@@ -35,6 +35,6 @@ public class RandomDataLoader
         Duration duration = Duration.ofMinutes(random.nextInt(120));
         LocalDate date = LocalDate.now().minusDays(random.nextInt(100));
         Workout workout = new Workout(type, duration, date);
-        workoutStore.store(workout);
+        workoutStore.put(workout);
     }
 }

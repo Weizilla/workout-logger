@@ -20,11 +20,11 @@ public class WorkoutLogger
 
     public void store(Workout workout)
     {
-        workoutStore.store(workout);
+        workoutStore.put(workout);
     }
 
     public List<Workout> getWorkouts()
     {
-        return workoutStore.getWorkouts();
+        return workoutStore.getAll();
     }
 }
