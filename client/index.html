@@ -12,9 +12,9 @@
 <body ng-app="workoutLoggerApp">
 
     <div ng-controller="WorkoutsCtrl as ctrl">
+        <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
         <ul ng-repeat="workout in ctrl.workouts">
             <li>{{ workout.uuid }}</li>
         </ul>
     </div>
-
 </body>
