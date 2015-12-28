@@ -1,1 +1,1 @@
-mvn clean install && mvn -pl workout-logger-web-app docker:build && docker push weizilla/workout-logger
+mvn clean install && mvn -pl server-app docker:build && docker push weizilla/workout-logger

@@ -46,8 +46,8 @@
     </dependencyManagement>
 
     <modules>
-        <module>workout-logger-lib</module>
-        <module>workout-logger-web-app</module>
+        <module>server-lib</module>
+        <module>server-app</module>
     </modules>
 
     <build>

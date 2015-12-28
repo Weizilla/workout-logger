@@ -1,1 +1,1 @@
-mvn clean install && mvn -pl workout-logger-web-app docker:build
+mvn clean install && mvn -pl server-app docker:build
