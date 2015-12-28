@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workout Logger</title>
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script>
+        System.import("./app/app")
+    </script>
+</head>
+<body ng-app="workoutLoggerApp">
+
+    <div ng-controller="WorkoutsCtrl as ctrl">
+        <ul ng-repeat="workout in ctrl.workouts">
+            <li>{{ workout.uuid }}</li>
+        </ul>
+    </div>
+
+</body>
