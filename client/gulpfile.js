@@ -32,15 +32,15 @@ gulp.task("connect", function() {
 });
 
 // build for production
-gulp.task("dist", function() {
+gulp.task("package", function() {
 	var js = gulp.src("app/app.js")
 		.pipe(jspm({selfExecutingBundle: true}))
 		.pipe(uglify())
-		.pipe(gulp.dest("dist/"));
+		.pipe(gulp.dest("target/"));
 	
 	gulp.src("./index.html")
 		.pipe(replace({"js": "app.bundle.js"}))
-		.pipe(gulp.dest("dist/"));
+		.pipe(gulp.dest("target/"));
 });
 
 // start the tasks
