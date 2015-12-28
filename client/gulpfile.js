@@ -1,4 +1,7 @@
 var gulp = require("gulp"),
+	jspm = require("gulp-jspm"),
+	uglify = require("gulp-uglify"),
+	replace = require("gulp-html-replace"),
     connect = require("gulp-connect");
 
 // html task
@@ -19,12 +22,25 @@ gulp.task("watch", function() {
     gulp.watch(["./app/**/*.js"], ["js"]);
 });
 
+// refresh
 gulp.task("connect", function() {
     connect.server( {
         port: 9000,
         root: ".",
         livereload: true
     });
+});
+
+// build for production
+gulp.task("dist", function() {
+	var js = gulp.src("app/app.js")
+		.pipe(jspm({selfExecutingBundle: true}))
+		.pipe(uglify())
+		.pipe(gulp.dest("dist/"));
+	
+	gulp.src("./index.html")
+		.pipe(replace({"js": "app.bundle.js"}))
+		.pipe(gulp.dest("dist/"));
 });
 
 // start the tasks

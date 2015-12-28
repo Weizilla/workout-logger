@@ -91,3 +91,6 @@ node_modules
 
 ### jspm ###
 jspm_packages
+
+### web ###
+dist
