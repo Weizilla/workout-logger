@@ -1,4 +1,4 @@
-# workout-logger
+# Workout Logger
 Logs workouts
 
 [![Build Status](https://travis-ci.org/Weizilla/workout-logger.svg?branch=master)](https://travis-ci.org/Weizilla/workout-logger)
