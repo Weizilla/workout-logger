@@ -1,7 +1,7 @@
 var gulp = require("gulp"),
-	jspm = require("gulp-jspm"),
-	uglify = require("gulp-uglify"),
-	replace = require("gulp-html-replace"),
+    jspm = require("gulp-jspm"),
+    uglify = require("gulp-uglify"),
+    replace = require("gulp-html-replace"),
     connect = require("gulp-connect");
 
 // html task
@@ -33,14 +33,14 @@ gulp.task("connect", function() {
 
 // build for production
 gulp.task("package", function() {
-	var js = gulp.src("app/app.js")
-		.pipe(jspm({selfExecutingBundle: true}))
-		.pipe(uglify())
-		.pipe(gulp.dest("target/"));
-	
-	gulp.src("./index.html")
-		.pipe(replace({"js": "app.bundle.js"}))
-		.pipe(gulp.dest("target/"));
+    var js = gulp.src("app/app.js")
+        .pipe(jspm({selfExecutingBundle: true}))
+        .pipe(uglify())
+        .pipe(gulp.dest("target/classes/static/"));
+
+    gulp.src("./index.html")
+        .pipe(replace({"js": "app.bundle.js"}))
+        .pipe(gulp.dest("target/classes/static"));
 });
 
 // start the tasks

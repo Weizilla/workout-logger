@@ -23,6 +23,11 @@
         <dependencies>
             <dependency>
                 <groupId>com.weizilla.workout.logger</groupId>
+                <artifactId>workout-logger-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weizilla.workout.logger</groupId>
                 <artifactId>workout-logger-lib</artifactId>
                 <version>${project.version}</version>
             </dependency>
