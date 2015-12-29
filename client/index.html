@@ -14,6 +14,19 @@
 <body ng-app="workoutLoggerApp">
 
     <div ng-controller="WorkoutsCtrl as ctrl">
+        <form class="form">
+            <label for="newWorkoutType">Type</label>
+            <input id="newWorkoutType" type="text" ng-model="ctrl.newWorkoutType">
+
+            <label for="newWorkoutDuration">Duration (mins)</label>
+            <input id="newWorkoutDuration" type="number" ng-model="ctrl.newWorkoutDuration">
+
+            <label for="newWorkoutDate">Date</label>
+            <input id="newWorkoutDate" type="date" ng-model="ctrl.newWorkoutDate">
+
+            <input class="btn btn-primary" type="submit" value="Add" ng-click="ctrl.add()">
+        </form>
+
         <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
         <ul ng-repeat="workout in ctrl.workouts">
             <li>{{ workout.uuid }}</li>
