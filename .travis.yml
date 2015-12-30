@@ -4,5 +4,6 @@ sudo: false
 before_install:
   - npm install jspm
   - jspm config registries.github.auth "$JSPM_GITHUB_AUTH_TOKEN"
+  - jspm registry export github
 after_success:
   - mvn clean test jacoco:report coveralls:report
