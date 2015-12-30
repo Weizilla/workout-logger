@@ -3,6 +3,6 @@ jdk: oraclejdk8
 sudo: false
 before_install:
   - npm install jspm
-  - jspm config registries.github.auth "$jspmGithubToken"
+  - jspm config registries.github.auth "$JSPM_GITHUB_AUTH_TOKEN"
 after_success:
   - mvn clean test jacoco:report coveralls:report
