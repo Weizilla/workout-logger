@@ -51,15 +51,15 @@
     </dependencyManagement>
 
     <modules>
-		<module>client</module>
+        <module>client</module>
         <module>server-lib</module>
         <module>server-app</module>
     </modules>
 
     <build>
         <plugins>
-			<plugin>
-				<groupId>org.eluder.coveralls</groupId>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.1.0</version>
             </plugin>
