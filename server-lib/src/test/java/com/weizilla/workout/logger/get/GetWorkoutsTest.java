@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -44,4 +45,14 @@ public class GetWorkoutsTest
         assertThat(Iterables.getOnlyElement(actual), is(sameInstance(workout)));
     }
 
+    @Test
+    public void returnsAllDates() throws Exception
+    {
+        LocalDate date = LocalDate.now();
+        Set<LocalDate> dates = Collections.singleton(date);
+        when(workoutStore.getAllDates()).thenReturn(dates);
+
+        Set<LocalDate> actual = getWorkouts.getAllDates();
+        assertThat(actual, is(sameInstance(dates)));
+    }
 }

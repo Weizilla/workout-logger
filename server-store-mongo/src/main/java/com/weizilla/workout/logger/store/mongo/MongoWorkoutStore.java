@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Profile("mongo")
@@ -37,5 +39,11 @@ public class MongoWorkoutStore implements WorkoutStore
     public List<Workout> getAll()
     {
         return repo.findAll();
+    }
+
+    @Override
+    public Set<LocalDate> getAllDates()
+    {
+        return null;
     }
 }

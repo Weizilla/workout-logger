@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class WorkoutLogger
@@ -30,6 +31,11 @@ public class WorkoutLogger
     public List<Workout> getAll()
     {
         return getWorkouts.getAll();
+    }
+
+    public Set<LocalDate> getAllDates()
+    {
+        return getWorkouts.getAllDates();
     }
 
     public List<Workout> getForDate(LocalDate date)
