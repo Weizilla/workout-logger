@@ -20,13 +20,13 @@ public class MemoryStore implements WorkoutStore
     @Override
     public void put(Workout workout)
     {
-        workouts.put(workout.getUuid(), workout);
+        workouts.put(workout.getId(), workout);
     }
 
     @Override
-    public void delete(UUID uuid)
+    public void delete(UUID id)
     {
-        workouts.remove(uuid);
+        workouts.remove(id);
     }
 
     @Override

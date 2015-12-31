@@ -2,6 +2,8 @@ package com.weizilla.workout.logger.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -10,7 +12,8 @@ import java.util.UUID;
 
 public class Workout
 {
-    private final UUID uuid;
+    @Id
+    private final UUID id;
     private final String type;
     private final Duration duration;
     private final LocalDate date;
@@ -25,23 +28,24 @@ public class Workout
         this(UUID.randomUUID(), type, duration, date, Instant.now());
     }
 
+    @PersistenceConstructor
     public Workout(
-        UUID uuid,
+        UUID id,
         String type,
         Duration duration,
         LocalDate date,
         Instant entryTime)
     {
-        this.uuid = uuid;
+        this.id = id;
         this.type = type;
         this.duration = duration;
         this.date = date;
         this.entryTime = entryTime;
     }
 
-    public UUID getUuid()
+    public UUID getId()
     {
-        return uuid;
+        return id;
     }
 
     public String getType()
@@ -62,5 +66,17 @@ public class Workout
     public Instant getEntryTime()
     {
         return entryTime;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Workout{" +
+            "id=" + id +
+            ", type='" + type + '\'' +
+            ", duration=" + duration +
+            ", date=" + date +
+            ", entryTime=" + entryTime +
+            '}';
     }
 }

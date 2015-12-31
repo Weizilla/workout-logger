@@ -45,7 +45,7 @@ public class ObjectMappersTest
     {
         String input = TestUtils.readFile("workout-deserialize-test.json");
         Workout actual = ObjectMappers.OBJECT_MAPPER.readValue(input, Workout.class);
-        assertThat(actual.getUuid(), is(notNullValue()));
+        assertThat(actual.getId(), is(notNullValue()));
         assertThat(actual.getType(), is(type));
         assertThat(actual.getDuration(), is(duration));
         assertThat(actual.getDate(), is(date));

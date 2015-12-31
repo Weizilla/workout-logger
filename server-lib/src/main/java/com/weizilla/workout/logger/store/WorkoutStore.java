@@ -8,6 +8,6 @@ import java.util.UUID;
 public interface WorkoutStore
 {
     void put(Workout workout);
-    void delete(UUID uuid);
+    void delete(UUID id);
     List<Workout> getAll();
 }
