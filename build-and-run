@@ -1,1 +1,1 @@
-sudo echo && mvn clean install && sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n -jar server-app/target/workout-logger-web-app.jar --server.port=80
+sudo echo && mvn clean install && sudo java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n -jar server-app/target/workout-logger-web-app.jar --server.port=80 "$@"
