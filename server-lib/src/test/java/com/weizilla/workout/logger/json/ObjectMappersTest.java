@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.UUID;
 
+import static com.weizilla.workout.logger.test.TestUtils.assertPrivateConstructor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -28,6 +29,12 @@ public class ObjectMappersTest
         date = LocalDate.of(2015, Month.NOVEMBER, 21);
         duration = Duration.ofHours(1);
         type = "TYPE";
+    }
+
+    @Test
+    public void privateConstructor() throws Exception
+    {
+        assertPrivateConstructor(ObjectMappers.class);
     }
 
     @Test
