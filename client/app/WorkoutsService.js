@@ -13,6 +13,10 @@ class WorkoutsService {
         return this.$http.post("api/workouts", workout).then(r => r.data);
     }
 
+    getWorkoutDates() {
+        return this.$http.get("api/workouts/dates").then(r => r.data);
+    }
+
     static factory($http) {
         return new WorkoutsService($http);
     }

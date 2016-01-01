@@ -11,6 +11,9 @@ class WorkoutsCtrl {
         this.workoutsService.getWorkouts().then(workouts => {
             this.workouts = workouts;
         });
+        this.workoutsService.getWorkoutDates().then(dates => {
+            this.workoutDates = dates;
+        });
     }
 
     add() {

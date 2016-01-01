@@ -27,9 +27,21 @@
             <input class="btn btn-primary" type="submit" value="Add" ng-click="ctrl.add()">
         </form>
 
-        <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
-        <ul ng-repeat="workout in ctrl.workouts">
-            <li>{{ workout.id }}</li>
-        </ul>
+        <div>
+            Workouts
+            <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
+            <ul ng-repeat="workout in ctrl.workouts">
+                <li>{{ workout.id }}</li>
+            </ul>
+        </div>
+
+        <div>
+            Dates
+            <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
+            <ul ng-repeat="workoutDate in ctrl.workoutDates">
+                <li>{{ workoutDate | date:"yyyy-MM-dd" }}</li>
+            </ul>
+        </div>
+
     </div>
 </body>

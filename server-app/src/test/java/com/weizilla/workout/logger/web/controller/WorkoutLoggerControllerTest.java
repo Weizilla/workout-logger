@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger.web.controller;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.json.ObjectMappers;
@@ -21,8 +22,10 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.verify;
@@ -96,5 +99,22 @@ public class WorkoutLoggerControllerTest
         assertThat(actual.getDuration(), is(duration));
         assertThat(actual.getEntryTime(), is(entryTime));
         assertThat(actual.getDate(), is(date));
+    }
+
+    @Test
+    public void getsAllWorkoutDates() throws Exception
+    {
+        Set<LocalDate> dates = Sets.newHashSet(
+            LocalDate.of(2016, 1, 1),
+            LocalDate.of(2016, 1, 2),
+            LocalDate.of(2016, 1, 3));
+
+        when(workoutLogger.getAllDates()).thenReturn(dates);
+
+        mockMvc.perform(get("/api/workouts/dates"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$", hasSize(3)))
+            .andExpect(jsonPath("$", containsInAnyOrder("2016-01-01", "2016-01-02", "2016-01-03")));
     }
 }

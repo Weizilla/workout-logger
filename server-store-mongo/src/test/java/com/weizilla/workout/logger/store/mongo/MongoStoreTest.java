@@ -11,13 +11,16 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.hamcrest.core.Is.is;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MongoStoreTest
@@ -59,5 +62,21 @@ public class MongoStoreTest
 
         List<Workout> actual = store.getAll();
         assertThat(actual, is(sameInstance(workouts)));
+    }
+
+    @Test
+    public void getsAllWorkoutDates() throws Exception
+    {
+        LocalDate today = LocalDate.now();
+        Set<LocalDate> dates = LongStream.range(0, 10)
+            .mapToObj(today::plusDays)
+            .collect(Collectors.toSet());
+        List<Workout> workouts = dates.stream()
+            .map(d -> new Workout("TYPE", Duration.ofMinutes(45), d))
+            .collect(Collectors.toList());
+        when(repo.findAll()).thenReturn(workouts);
+
+        Set<LocalDate> actual = store.getAllDates();
+        assertThat(actual, is(dates));
     }
 }

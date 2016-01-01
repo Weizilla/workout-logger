@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -41,5 +43,11 @@ public class WorkoutLoggerController
     public void addRandomWorkout()
     {
         randomDataLoader.addWorkout();
+    }
+
+    @RequestMapping(path = "/workouts/dates")
+    public Set<LocalDate> getWorkoutDates()
+    {
+        return workoutLogger.getAllDates();
     }
 }
