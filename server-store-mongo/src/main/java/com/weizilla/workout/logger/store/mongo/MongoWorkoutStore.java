@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 @Component
 public class MongoWorkoutStore implements WorkoutStore
 {
-    private final WorkoutMongoRepo repo;
+    private final MongoWorkoutRepository repo;
 
     @Autowired
-    public MongoWorkoutStore(WorkoutMongoRepo repo)
+    public MongoWorkoutStore(MongoWorkoutRepository repo)
     {
         this.repo = repo;
     }

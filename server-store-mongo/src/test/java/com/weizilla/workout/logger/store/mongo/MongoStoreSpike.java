@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class MongoStoreSpike implements CommandLineRunner
 {
     @Autowired
-    private WorkoutMongoRepo mongoRepo;
+    private MongoWorkoutRepository mongoRepo;
 
     public static void main(String[] args)
     {

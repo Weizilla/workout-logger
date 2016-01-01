@@ -23,10 +23,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MongoStoreTest
+public class MongoWorkoutStoreTest
 {
     @Mock
-    private WorkoutMongoRepo repo;
+    private MongoWorkoutRepository repo;
     private MongoWorkoutStore store;
     private Workout workout;
     private UUID id;

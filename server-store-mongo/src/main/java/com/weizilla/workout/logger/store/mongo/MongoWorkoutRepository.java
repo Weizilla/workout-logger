@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.UUID;
 
 @Profile("mongo")
-public interface WorkoutMongoRepo extends MongoRepository<Workout, UUID>
+public interface MongoWorkoutRepository extends MongoRepository<Workout, UUID>
 {
 }
