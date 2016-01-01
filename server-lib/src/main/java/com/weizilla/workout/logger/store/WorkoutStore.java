@@ -13,4 +13,5 @@ public interface WorkoutStore
     void delete(UUID id);
     List<Workout> getAll();
     Set<LocalDate> getAllDates();
+    List<Workout> getForDate(LocalDate localDate);
 }

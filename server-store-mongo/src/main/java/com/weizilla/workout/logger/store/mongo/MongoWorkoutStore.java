@@ -50,4 +50,11 @@ public class MongoWorkoutStore implements WorkoutStore
             .map(Workout::getDate)
             .collect(Collectors.toSet());
     }
+
+    @Override
+    public List<Workout> getForDate(LocalDate localDate)
+    {
+        //TODO
+        return null;
+    }
 }

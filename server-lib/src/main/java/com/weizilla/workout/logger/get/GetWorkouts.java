@@ -32,8 +32,6 @@ public class GetWorkouts
 
     public List<Workout> getForDate(LocalDate date)
     {
-        //TODO
-        return null;
+        return workoutStore.getForDate(date);
     }
-
 }

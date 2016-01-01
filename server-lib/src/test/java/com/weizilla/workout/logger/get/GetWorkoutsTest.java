@@ -55,4 +55,15 @@ public class GetWorkoutsTest
         Set<LocalDate> actual = getWorkouts.getAllDates();
         assertThat(actual, is(sameInstance(dates)));
     }
+
+    @Test
+    public void returnsAllWorkoutsForDate() throws Exception
+    {
+        LocalDate date = LocalDate.now();
+        List<Workout> workouts = Collections.singletonList(workout);
+        when(workoutStore.getForDate(date)).thenReturn(workouts);
+
+        List<Workout> actual = getWorkouts.getForDate(date);
+        assertThat(actual, is(sameInstance(workouts)));
+    }
 }
