@@ -20,21 +20,25 @@
             <span>{{ ctrl.hello }}</span>
             <i class="fa fa-angle-right" ng-click="ctrl.next()"></i>
         </div>
-        <div class="week names">
-            <span class="day">Sun</span>
-            <span class="day">Mon</span>
-            <span class="day">Tue</span>
-            <span class="day">Wed</span>
-            <span class="day">Thu</span>
-            <span class="day">Fri</span>
-            <span class="day">Sat</span>
-        </div>
         <table>
-           <tr ng-repeat="week in ctrl.weeks">
-        <!--<div class="week" ng-repeat="week in ctrl.weeks">-->
-            <td class="day" ng-click="ctrl.select(day)" ng-repeat="day in week">{{ day }}</td>
-        <!--</div>-->
+            <thead>
+            <tr>
+                <th class="day">Sun</th>
+                <th class="day">Mon</th>
+                <th class="day">Tue</th>
+                <th class="day">Wed</th>
+                <th class="day">Thu</th>
+                <th class="day">Fri</th>
+                <th class="day">Sat</th>
             </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="week in ctrl.weeks">
+                <td class="day" ng-class="day.clazz"
+                        ng-click="ctrl.select(day)"
+                        ng-repeat="day in week">{{ day.date }}</td>
+            </tr>
+            </tbody>
         </table>
     </div>
 

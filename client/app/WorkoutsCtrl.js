@@ -25,7 +25,7 @@ class WorkoutsCtrl {
             date: workoutDate
         };
         this.workoutsService.addWorkout(newWorkout).then(w => {
-            this.init()
+            this.init();
         });
     }
 }

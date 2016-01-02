@@ -1,3 +1,8 @@
 .day {
     border: solid 1px black;
 }
+
+.workout {
+    background-color: black;
+    color: white;
+}

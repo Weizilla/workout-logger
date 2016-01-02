@@ -1,9 +1,12 @@
 "use strict";
 
+import moment from "moment";
+
 class WorkoutsService {
     constructor($http) {
         this.$http = $http;
         this.host = "http://localhost:80";
+        this.updateListeners = [];
     }
 
     getWorkouts() {
@@ -11,11 +14,24 @@ class WorkoutsService {
     }
 
     addWorkout(workout) {
-        return this.$http.post(this.host + "/api/workouts", workout).then(r => r.data);
+        return this.$http.post(this.host + "/api/workouts", workout)
+            .then(r => {
+                this.refreshUpdateListeners();
+                return r.data
+            });
     }
 
     getWorkoutDates() {
-        return this.$http.get(this.host + "/api/workouts/dates").then(r => r.data);
+        return this.$http.get(this.host + "/api/workouts/dates")
+            .then(r => r.data.map(d => moment(d)));
+    }
+
+    addUpdateListener(listener) {
+        this.updateListeners.push(listener);
+    }
+
+    refreshUpdateListeners() {
+        this.updateListeners.forEach(l => l());
     }
 
     static factory($http) {
