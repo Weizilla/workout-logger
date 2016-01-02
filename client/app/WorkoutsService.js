@@ -15,9 +15,9 @@ class WorkoutsService {
 
     addWorkout(workout) {
         return this.$http.post(this.host + "/api/workouts", workout)
-            .then(r => {
+            .then(r => r.data)
+            .then(() => {
                 this.refreshUpdateListeners();
-                return r.data
             });
     }
 
@@ -31,7 +31,7 @@ class WorkoutsService {
     }
 
     refreshUpdateListeners() {
-        this.updateListeners.forEach(l => l());
+        this.updateListeners.forEach(l => l.update());
     }
 
     static factory($http) {

@@ -7,16 +7,13 @@ class CalendarCtrl {
         this.workoutsService = workoutsService;
         this.weeks = this.buildWeeks();
         this.update();
-        this.workoutsService.addUpdateListener(this.update);
+        this.workoutsService.addUpdateListener(this);
     };
 
     update() {
-        //TODO "this" isn't defined
-        if (this) {
-            this.workoutsService.getWorkoutDates().then(dates => {
-                this.weeks = this.buildWeeks(dates)
-            });
-        }
+        this.workoutsService.getWorkoutDates().then(dates => {
+            this.weeks = this.buildWeeks(dates)
+        });
     }
 
     buildWeeks(workoutDates) {
