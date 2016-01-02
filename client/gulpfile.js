@@ -4,21 +4,25 @@ var gulp = require("gulp"),
     replace = require("gulp-html-replace"),
     connect = require("gulp-connect");
 
-// html task
+// watch for changes
 gulp.task("html", function() {
     gulp.src("*.html")
         .pipe(connect.reload());
 });
 
-// js task
+gulp.task("css", function() {
+    gulp.src("*.css")
+        .pipe(connect.reload());
+});
+
 gulp.task("js", function() {
     gulp.src("./app/**/*.js")
         .pipe(connect.reload());
 });
 
-// watch for changes
 gulp.task("watch", function() {
     gulp.watch(["*.html"], ["html"]);
+    gulp.watch(["*.css"], ["css"]);
     gulp.watch(["./app/**/*.js"], ["js"]);
 });
 

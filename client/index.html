@@ -13,64 +13,68 @@
     <!-- endbuild -->
 </head>
 <body ng-app="workoutLoggerApp">
-    <div ng-controller="CalendarCtrl as ctrl">
-        <div class="header">
-            <i class="fa fa-angle-left" ng-click="ctrl.previous()"></i>
-            <!--<span> {{ ctrl.month | date:"MMMM, YYYY" }}</span>-->
-            <span>{{ ctrl.hello }}</span>
-            <i class="fa fa-angle-right" ng-click="ctrl.next()"></i>
+<div class="container">
+    <div class="row">
+        <div ng-controller="CalendarCtrl as ctrl">
+            <table class="calendar">
+                <thead>
+                <tr>
+                    <th class="day">Sun</th>
+                    <th class="day">Mon</th>
+                    <th class="day">Tue</th>
+                    <th class="day">Wed</th>
+                    <th class="day">Thu</th>
+                    <th class="day">Fri</th>
+                    <th class="day">Sat</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="week in ctrl.weeks">
+                    <td class="day" ng-class="day.clazz"
+                            ng-click="ctrl.select(day)"
+                            ng-repeat="day in week">{{ day.date }}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <table>
-            <thead>
-            <tr>
-                <th class="day">Sun</th>
-                <th class="day">Mon</th>
-                <th class="day">Tue</th>
-                <th class="day">Wed</th>
-                <th class="day">Thu</th>
-                <th class="day">Fri</th>
-                <th class="day">Sat</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="week in ctrl.weeks">
-                <td class="day" ng-class="day.clazz"
-                        ng-click="ctrl.select(day)"
-                        ng-repeat="day in week">{{ day.date }}</td>
-            </tr>
-            </tbody>
-        </table>
     </div>
+    <div class="row">
 
-    <div ng-controller="WorkoutsCtrl as ctrl">
-        <form class="form">
-            <label for="newWorkoutType">Type</label>
-            <input id="newWorkoutType" type="text" ng-model="ctrl.newWorkoutType">
+        <div ng-controller="WorkoutsCtrl as ctrl">
+            <form>
+                <div class="form-group">
+                    <label for="newWorkoutType">Type</label>
+                    <input id="newWorkoutType" class="form-control" type="text" ng-model="ctrl.newWorkoutType">
+                </div>
 
-            <label for="newWorkoutDuration">Duration (mins)</label>
-            <input id="newWorkoutDuration" type="number" ng-model="ctrl.newWorkoutDuration">
+                <div class="form-group">
+                    <label for="newWorkoutDuration">Duration (mins)</label>
+                    <input id="newWorkoutDuration" class="form-control" type="number" ng-model="ctrl.newWorkoutDuration">
+                </div>
+                <div class="form-group">
+                    <label for="newWorkoutDate">Date</label>
+                    <input id="newWorkoutDate" class="form-control" type="date" ng-model="ctrl.newWorkoutDate">
+                </div>
+                <input class="btn btn-primary" type="submit" value="Add" ng-click="ctrl.add()">
+            </form>
 
-            <label for="newWorkoutDate">Date</label>
-            <input id="newWorkoutDate" type="date" ng-model="ctrl.newWorkoutDate">
+            <div>
+                Workouts
+                <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
+                <ul ng-repeat="workout in ctrl.workouts">
+                    <li>{{ workout.id }}</li>
+                </ul>
+            </div>
 
-            <input class="btn btn-primary" type="submit" value="Add" ng-click="ctrl.add()">
-        </form>
+            <div>
+                Dates
+                <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
+                <ul ng-repeat="workoutDate in ctrl.workoutDates">
+                    <li>{{ workoutDate | date:"yyyy-MM-dd" }}</li>
+                </ul>
+            </div>
 
-        <div>
-            Workouts
-            <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
-            <ul ng-repeat="workout in ctrl.workouts">
-                <li>{{ workout.id }}</li>
-            </ul>
         </div>
-
-        <div>
-            Dates
-            <input class="btn btn-default" type="button" value="Refresh" ng-click="ctrl.init()">
-            <ul ng-repeat="workoutDate in ctrl.workoutDates">
-                <li>{{ workoutDate | date:"yyyy-MM-dd" }}</li>
-            </ul>
-        </div>
-
     </div>
+</div>
 </body>

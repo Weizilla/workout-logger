@@ -1,8 +1,17 @@
 .day {
     border: solid 1px black;
+    width: 30px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .workout {
+    border: solid 1px white;
     background-color: black;
     color: white;
+}
+
+.calendar {
+    border: solid 2px black;
 }
