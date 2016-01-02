@@ -31,7 +31,8 @@ class CalendarCtrl {
         let days = [];
         for (let i = 0; i < 7; i++) {
             let currDate = start.clone().add(i, "d");
-            let clazz = this.inWorkoutDates(currDate, workoutDates) ? "workout" : "";
+            let clazz = this.addWorkoutClass(currDate, workoutDates)
+                + " " + this.addTodayClass(currDate);
             days[i] = {
                 clazz: clazz,
                 date: currDate.date()
@@ -40,15 +41,22 @@ class CalendarCtrl {
         return days;
     }
 
-    inWorkoutDates(date, workoutDates) {
+    addWorkoutClass(date, workoutDates) {
         if (workoutDates) {
             for (let wd of workoutDates) {
                 if (date.isSame(wd)) {
-                    return true;
+                    return "workout";
                 }
             }
         }
-        return false;
+        return "";
+    }
+
+    addTodayClass(date) {
+        if (date.isSame(moment(), "day")) {
+            return "today";
+        }
+        return "";
     }
 }
 

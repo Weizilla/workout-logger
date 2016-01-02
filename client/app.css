@@ -12,6 +12,10 @@
     color: white;
 }
 
+.today {
+    border: solid 3px red;
+}
+
 .calendar {
     border: solid 2px black;
 }
