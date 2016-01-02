@@ -21,6 +21,8 @@ System.config({
     "clean-css": "npm:clean-css@3.4.8",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.20",
+    "font-awesome": "npm:font-awesome@4.5.0",
+    "moment": "npm:moment@2.10.6",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -112,6 +114,9 @@ System.config({
     "npm:core-util-is@1.0.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
+    "npm:font-awesome@4.5.0": {
+      "css": "github:systemjs/plugin-css@0.1.20"
+    },
     "npm:graceful-readlink@1.0.1": {
       "fs": "github:jspm/nodelibs-fs@0.1.2"
     },
@@ -120,6 +125,9 @@ System.config({
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:moment@2.10.6": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"

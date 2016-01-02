@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Workout Logger</title>
+    <link rel="stylesheet" type="text/css" href="app.css">
     <!-- build:js -->
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
@@ -12,6 +13,30 @@
     <!-- endbuild -->
 </head>
 <body ng-app="workoutLoggerApp">
+    <div ng-controller="CalendarCtrl as ctrl">
+        <div class="header">
+            <i class="fa fa-angle-left" ng-click="ctrl.previous()"></i>
+            <!--<span> {{ ctrl.month | date:"MMMM, YYYY" }}</span>-->
+            <span>{{ ctrl.hello }}</span>
+            <i class="fa fa-angle-right" ng-click="ctrl.next()"></i>
+        </div>
+        <div class="week names">
+            <span class="day">Sun</span>
+            <span class="day">Mon</span>
+            <span class="day">Tue</span>
+            <span class="day">Wed</span>
+            <span class="day">Thu</span>
+            <span class="day">Fri</span>
+            <span class="day">Sat</span>
+        </div>
+        <table>
+           <tr ng-repeat="week in ctrl.weeks">
+        <!--<div class="week" ng-repeat="week in ctrl.weeks">-->
+            <td class="day" ng-click="ctrl.select(day)" ng-repeat="day in week">{{ day }}</td>
+        <!--</div>-->
+            </tr>
+        </table>
+    </div>
 
     <div ng-controller="WorkoutsCtrl as ctrl">
         <form class="form">
