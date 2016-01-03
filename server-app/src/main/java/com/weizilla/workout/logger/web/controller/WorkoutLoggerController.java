@@ -3,6 +3,9 @@ package com.weizilla.workout.logger.web.controller;
 import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.Workout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,5 +43,11 @@ public class WorkoutLoggerController
     public Set<LocalDate> getWorkoutDates()
     {
         return workoutLogger.getAllDates();
+    }
+
+    @RequestMapping(path = "/workouts/dates/{date}")
+    public List<Workout> getWorkoutsByDate(@PathVariable @DateTimeFormat(iso = ISO.DATE) LocalDate date)
+    {
+        return workoutLogger.getForDate(date);
     }
 }

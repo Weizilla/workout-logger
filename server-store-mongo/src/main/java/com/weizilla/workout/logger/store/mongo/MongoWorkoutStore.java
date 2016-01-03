@@ -54,7 +54,6 @@ public class MongoWorkoutStore implements WorkoutStore
     @Override
     public List<Workout> getForDate(LocalDate localDate)
     {
-        //TODO
-        return null;
+        return repo.findByDate(localDate);
     }
 }

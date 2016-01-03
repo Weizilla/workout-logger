@@ -21,6 +21,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,6 +47,7 @@ public class WorkoutLoggerControllerTest
     private Instant entryTime;
     private Duration duration;
     private LocalDate date;
+    private String dateString;
 
     @Before
     public void setUp() throws Exception
@@ -60,6 +62,7 @@ public class WorkoutLoggerControllerTest
         date = LocalDate.now();
         workout = new Workout(type, duration);
         entryTime = workout.getEntryTime().truncatedTo(ChronoUnit.SECONDS);
+        dateString = date.toString();
     }
 
     @Test
@@ -73,7 +76,7 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("$[0].type", is(type)))
             .andExpect(jsonPath("$[0].duration", is(duration.toString())))
-            .andExpect(jsonPath("$[0].date", is(date.toString())))
+            .andExpect(jsonPath("$[0].date", is(dateString)))
             .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())));
     }
 
@@ -113,5 +116,24 @@ public class WorkoutLoggerControllerTest
             .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$", hasSize(3)))
             .andExpect(jsonPath("$", containsInAnyOrder("2016-01-01", "2016-01-02", "2016-01-03")));
+    }
+
+    @Test
+    public void getWorkoutsByDate() throws Exception
+    {
+        List<Workout> workouts = Lists.newArrayList(
+            new Workout(type, duration),
+            new Workout(type, duration),
+            new Workout(type, duration));
+
+        when(workoutLogger.getForDate(date)).thenReturn(workouts);
+
+        mockMvc.perform(get("/api/workouts/dates/" + dateString))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$", hasSize(3)))
+            .andExpect(jsonPath("$[0].id", is(workouts.get(0).getId().toString())))
+            .andExpect(jsonPath("$[1].id", is(workouts.get(1).getId().toString())))
+            .andExpect(jsonPath("$[2].id", is(workouts.get(2).getId().toString())));
     }
 }

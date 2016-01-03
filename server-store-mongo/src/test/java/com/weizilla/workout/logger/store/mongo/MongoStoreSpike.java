@@ -10,6 +10,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootApplication
 public class MongoStoreSpike implements CommandLineRunner
@@ -31,6 +34,13 @@ public class MongoStoreSpike implements CommandLineRunner
         mongoRepo.save(workout);
         System.out.println("count: " + mongoRepo.count());
         mongoRepo.findAll().forEach(System.out::println);
+
+        LocalDate date = LocalDate.of(2015, 12, 11);
+        Workout pastWorkout = new Workout(null, "ABC", Duration.ofHours(1), date, Instant.now());
+        mongoRepo.save(pastWorkout);
+
+        List<Workout> byDate = mongoRepo.findByDate(date);
+        System.out.println("found by date: " + byDate);
     }
 
     @Configuration

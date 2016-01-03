@@ -1,5 +1,6 @@
 package com.weizilla.workout.logger.store.mongo;
 
+import com.google.common.collect.Lists;
 import com.weizilla.workout.logger.entity.Workout;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,5 +80,19 @@ public class MongoWorkoutStoreTest
 
         Set<LocalDate> actual = store.getAllDates();
         assertThat(actual, is(dates));
+    }
+
+    @Test
+    public void getWorkoutsForSingleDate() throws Exception
+    {
+        LocalDate today = LocalDate.now();
+        List<Workout> workouts = Lists.newArrayList(
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()));
+        when(repo.findByDate(today)).thenReturn(workouts);
+
+        List<Workout> actual = store.getForDate(today);
+        assertThat(actual, is(workouts));
     }
 }
