@@ -37,6 +37,12 @@ gulp.task("connect", function() {
 
 // build for production
 gulp.task("package", function() {
+	gulp.src("*.css")
+		.pipe(gulp.dest("target/classes/static"));
+
+	gulp.src("*.html")
+		.pipe(gulp.dest("target/classes/static"));
+
     var js = gulp.src("app/app.js")
         .pipe(jspm({selfExecutingBundle: true}))
         .pipe(uglify())
