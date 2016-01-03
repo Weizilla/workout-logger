@@ -32,7 +32,7 @@ public class GetWorkoutsTest
     public void setUp() throws Exception
     {
         getWorkouts = new GetWorkouts(workoutStore);
-        workout = new Workout("SWIM", Duration.ofMinutes(10), LocalDate.now());
+        workout = new Workout("SWIM", Duration.ofMinutes(10));
     }
 
     @Test

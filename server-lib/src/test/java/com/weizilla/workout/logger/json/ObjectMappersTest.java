@@ -15,13 +15,14 @@ import java.util.UUID;
 import static com.weizilla.workout.logger.test.TestUtils.assertPrivateConstructor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
 
 public class ObjectMappersTest
 {
     private LocalDate date;
     private Duration duration;
     private String type;
+    private UUID id;
+    private Instant entryTime;
 
     @Before
     public void setUp() throws Exception
@@ -29,6 +30,8 @@ public class ObjectMappersTest
         date = LocalDate.of(2015, Month.NOVEMBER, 21);
         duration = Duration.ofHours(1);
         type = "TYPE";
+        id = UUID.fromString("e487cc32-c5d9-417a-b0df-9aa0eb9154c3");
+        entryTime = Instant.ofEpochSecond(1448146540);
     }
 
     @Test
@@ -40,9 +43,8 @@ public class ObjectMappersTest
     @Test
     public void serializesWorkout() throws Exception
     {
-        UUID uuid = UUID.fromString("e487cc32-c5d9-417a-b0df-9aa0eb9154c3");
-        Workout workout = new Workout(uuid, type, duration, date, Instant.ofEpochSecond(1448146540));
-        String expected = TestUtils.readFile("workout-serialize-test.json");
+        Workout workout = new Workout(id, type, duration, date, entryTime);
+        String expected = TestUtils.readFile("workout-obj-mapper-test.json");
         String actual = ObjectMappers.OBJECT_MAPPER.writeValueAsString(workout);
         JSONAssert.assertEquals(expected, actual, true);
     }
@@ -50,12 +52,12 @@ public class ObjectMappersTest
     @Test
     public void deserializeWorkout() throws Exception
     {
-        String input = TestUtils.readFile("workout-deserialize-test.json");
+        String input = TestUtils.readFile("workout-obj-mapper-test.json");
         Workout actual = ObjectMappers.OBJECT_MAPPER.readValue(input, Workout.class);
-        assertThat(actual.getId(), is(notNullValue()));
+        assertThat(actual.getId(), is(id));
         assertThat(actual.getType(), is(type));
         assertThat(actual.getDuration(), is(duration));
         assertThat(actual.getDate(), is(date));
-        assertThat(actual.getEntryTime(), is(notNullValue()));
+        assertThat(actual.getEntryTime(), is(entryTime));
     }
 }

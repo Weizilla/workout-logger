@@ -36,7 +36,7 @@ public class WorkoutLoggerTest
     public void setUp() throws Exception
     {
         workoutLogger = new WorkoutLogger(getWorkouts, putWorkouts);
-        workout = new Workout("TYPE", Duration.ofHours(1), LocalDate.now());
+        workout = new Workout("TYPE", Duration.ofHours(1));
     }
 
     @Test

@@ -58,7 +58,7 @@ public class WorkoutLoggerControllerTest
         type = "TYPE";
         duration = Duration.ofHours(10);
         date = LocalDate.now();
-        workout = new Workout(type, duration, date);
+        workout = new Workout(type, duration);
         entryTime = workout.getEntryTime().truncatedTo(ChronoUnit.SECONDS);
     }
 

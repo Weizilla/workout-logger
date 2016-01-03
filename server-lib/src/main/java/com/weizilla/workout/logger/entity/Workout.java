@@ -19,28 +19,25 @@ public class Workout
     private final LocalDate date;
     private final Instant entryTime;
 
-    @JsonCreator
-    public Workout(
-        @JsonProperty("type") String type,
-        @JsonProperty("duration") Duration duration,
-        @JsonProperty("date") LocalDate date)
+    public Workout(String type, Duration duration)
     {
-        this(UUID.randomUUID(), type, duration, date, Instant.now());
+        this(null, type, duration, null, null);
     }
 
+    @JsonCreator
     @PersistenceConstructor
     public Workout(
-        UUID id,
-        String type,
-        Duration duration,
-        LocalDate date,
-        Instant entryTime)
+        @JsonProperty(value = "id", required = false) UUID id,
+        @JsonProperty("type") String type,
+        @JsonProperty("duration") Duration duration,
+        @JsonProperty(value = "date", required = false) LocalDate date,
+        @JsonProperty(value = "entryTime", required = false) Instant entryTime)
     {
-        this.id = id;
+        this.id = id != null ? id : UUID.randomUUID();
         this.type = type;
         this.duration = duration;
-        this.date = date;
-        this.entryTime = entryTime;
+        this.date = date != null ? date : LocalDate.now();
+        this.entryTime = entryTime != null ? entryTime : Instant.now();
     }
 
     public UUID getId()

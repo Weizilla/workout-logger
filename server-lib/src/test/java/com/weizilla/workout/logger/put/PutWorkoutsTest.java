@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.Duration;
-import java.time.LocalDate;
 
 import static org.mockito.Mockito.verify;
 
@@ -25,7 +24,7 @@ public class PutWorkoutsTest
     public void setUp() throws Exception
     {
         putWorkouts = new PutWorkouts(workoutStore);
-        workout = new Workout("SWIM", Duration.ofMinutes(10), LocalDate.now());
+        workout = new Workout("SWIM", Duration.ofMinutes(10));
     }
 
     @Test

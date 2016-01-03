@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +36,7 @@ public class MongoWorkoutStoreTest
     public void setUp() throws Exception
     {
         store = new MongoWorkoutStore(repo);
-        workout = new Workout("TYPE", Duration.ofHours(1), LocalDate.now());
+        workout = new Workout("TYPE", Duration.ofHours(1));
         id = workout.getId();
     }
 
@@ -72,7 +73,7 @@ public class MongoWorkoutStoreTest
             .mapToObj(today::plusDays)
             .collect(Collectors.toSet());
         List<Workout> workouts = dates.stream()
-            .map(d -> new Workout("TYPE", Duration.ofMinutes(45), d))
+            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d, Instant.now()))
             .collect(Collectors.toList());
         when(repo.findAll()).thenReturn(workouts);
 

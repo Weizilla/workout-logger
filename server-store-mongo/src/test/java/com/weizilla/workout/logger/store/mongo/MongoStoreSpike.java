@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import java.time.Duration;
-import java.time.LocalDate;
 
 @SpringBootApplication
 public class MongoStoreSpike implements CommandLineRunner
@@ -25,7 +24,7 @@ public class MongoStoreSpike implements CommandLineRunner
     @Override
     public void run(String... strings) throws Exception
     {
-        Workout workout = new Workout("ABC", Duration.ofMinutes(45), LocalDate.now());
+        Workout workout = new Workout("ABC", Duration.ofMinutes(45));
         mongoRepo.save(workout);
         System.out.println("count: " + mongoRepo.count());
         mongoRepo.findAll().forEach(System.out::println);
