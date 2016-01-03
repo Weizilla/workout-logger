@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -48,6 +49,7 @@ public class WorkoutLoggerControllerTest
     private Duration duration;
     private LocalDate date;
     private String dateString;
+    private UUID id;
 
     @Before
     public void setUp() throws Exception
@@ -60,9 +62,10 @@ public class WorkoutLoggerControllerTest
         type = "TYPE";
         duration = Duration.ofHours(10);
         date = LocalDate.now();
-        workout = new Workout(type, duration);
-        entryTime = workout.getEntryTime().truncatedTo(ChronoUnit.SECONDS);
         dateString = date.toString();
+        workout = new Workout(type, duration);
+        id = workout.getId();
+        entryTime = workout.getEntryTime().truncatedTo(ChronoUnit.SECONDS);
     }
 
     @Test
@@ -74,6 +77,7 @@ public class WorkoutLoggerControllerTest
             .andExpect(status().isOk())
             .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$[0].id", is(id.toString())))
             .andExpect(jsonPath("$[0].type", is(type)))
             .andExpect(jsonPath("$[0].duration", is(duration.toString())))
             .andExpect(jsonPath("$[0].date", is(dateString)))
@@ -95,6 +99,7 @@ public class WorkoutLoggerControllerTest
         verify(workoutLogger).put(captor.capture());
 
         Workout actual = captor.getValue();
+        assertThat(actual.getId(), is(id));
         assertThat(actual.getType(), is(type));
         assertThat(actual.getDuration(), is(duration));
         assertThat(actual.getEntryTime(), is(entryTime));
