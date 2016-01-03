@@ -5,29 +5,29 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
+import java.time.Instant;
 
-public class DurationConverters
+public class InstantConverters
 {
     @Component
     @ReadingConverter
-    public static class DurationReadConverter implements Converter<String, Duration>
+    public static class InstantReadConverter implements Converter<Long, Instant>
     {
         @Override
-        public Duration convert(String duration)
+        public Instant convert(Long instant)
         {
-            return Duration.parse(duration);
+            return Instant.ofEpochSecond(instant);
         }
     }
 
     @Component
     @WritingConverter
-    public static class DurationWriteConverter implements Converter<Duration, String>
+    public static class InstantWriteConverter implements Converter<Instant, Long>
     {
         @Override
-        public String convert(Duration duration)
+        public Long convert(Instant instant)
         {
-            return duration.toString();
+            return instant.getEpochSecond();
         }
     }
 }

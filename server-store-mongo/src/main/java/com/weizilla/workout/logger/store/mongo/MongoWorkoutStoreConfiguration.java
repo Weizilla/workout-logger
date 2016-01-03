@@ -5,9 +5,13 @@ import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Profile("mongo")
 @Configuration
@@ -19,10 +23,13 @@ public class MongoWorkoutStoreConfiguration extends AbstractMongoConfiguration
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private List<Converter<?, ?>> converters = new ArrayList<>();
+
     @Override
     public CustomConversions customConversions()
     {
-        return new DurationConverters();
+        return new CustomConversions(converters);
     }
 
     @Override

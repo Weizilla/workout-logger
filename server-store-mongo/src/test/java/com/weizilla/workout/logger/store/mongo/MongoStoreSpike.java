@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
 
@@ -18,7 +19,9 @@ public class MongoStoreSpike implements CommandLineRunner
 
     public static void main(String[] args)
     {
-        SpringApplication.run(MongoStoreSpike.class, args);
+        SpringApplication app = new SpringApplication(MongoStoreSpike.class);
+        app.setAdditionalProfiles("mongo");
+        app.run(args);
     }
 
     @Override
@@ -32,6 +35,7 @@ public class MongoStoreSpike implements CommandLineRunner
 
     @Configuration
     @PropertySource("test.properties")
+    @ActiveProfiles("mongo")
     public static class MongoStoreSpikeConfig
     {
         // nothing special

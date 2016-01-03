@@ -5,29 +5,29 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
+import java.time.LocalDate;
 
-public class DurationConverters
+public class LocalDateConverters
 {
     @Component
     @ReadingConverter
-    public static class DurationReadConverter implements Converter<String, Duration>
+    public static class LocalDateReadConverter implements Converter<String, LocalDate>
     {
         @Override
-        public Duration convert(String duration)
+        public LocalDate convert(String s)
         {
-            return Duration.parse(duration);
+            return LocalDate.parse(s);
         }
     }
 
     @Component
     @WritingConverter
-    public static class DurationWriteConverter implements Converter<Duration, String>
+    public static class LocalDateWriteConverter implements Converter<LocalDate, String>
     {
         @Override
-        public String convert(Duration duration)
+        public String convert(LocalDate localDate)
         {
-            return duration.toString();
+            return localDate.toString();
         }
     }
 }
