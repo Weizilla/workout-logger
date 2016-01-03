@@ -9,6 +9,11 @@ import java.time.LocalDate;
 
 public class LocalDateConverters
 {
+    private LocalDateConverters()
+    {
+        // static util class
+    }
+
     @Component
     @ReadingConverter
     public static class LocalDateReadConverter implements Converter<String, LocalDate>

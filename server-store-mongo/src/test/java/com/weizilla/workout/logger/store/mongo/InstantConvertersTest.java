@@ -2,6 +2,7 @@ package com.weizilla.workout.logger.store.mongo;
 
 import com.weizilla.workout.logger.store.mongo.InstantConverters.InstantReadConverter;
 import com.weizilla.workout.logger.store.mongo.InstantConverters.InstantWriteConverter;
+import com.weizilla.workout.logger.test.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,5 +37,11 @@ public class InstantConvertersTest
         InstantReadConverter converter = new InstantReadConverter();
         Instant actual = converter.convert(instantlong);
         assertThat(actual, is(instant));
+    }
+
+    @Test
+    public void privateConstructor() throws Exception
+    {
+        TestUtils.assertPrivateConstructor(InstantConverters.class);
     }
 }

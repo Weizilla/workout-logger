@@ -9,6 +9,11 @@ import java.time.Duration;
 
 public class DurationConverters
 {
+    private DurationConverters()
+    {
+        // static util class
+    }
+
     @Component
     @ReadingConverter
     public static class DurationReadConverter implements Converter<String, Duration>

@@ -2,6 +2,7 @@ package com.weizilla.workout.logger.store.mongo;
 
 import com.weizilla.workout.logger.store.mongo.LocalDateConverters.LocalDateReadConverter;
 import com.weizilla.workout.logger.store.mongo.LocalDateConverters.LocalDateWriteConverter;
+import com.weizilla.workout.logger.test.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,5 +37,11 @@ public class LocalDateConvertersTest
         LocalDateReadConverter converter = new LocalDateReadConverter();
         LocalDate actual = converter.convert(dateString);
         assertThat(actual, is(date));
+    }
+
+    @Test
+    public void privateConstructor() throws Exception
+    {
+        TestUtils.assertPrivateConstructor(LocalDateConverters.class);
     }
 }

@@ -2,6 +2,7 @@ package com.weizilla.workout.logger.store.mongo;
 
 import com.weizilla.workout.logger.store.mongo.DurationConverters.DurationReadConverter;
 import com.weizilla.workout.logger.store.mongo.DurationConverters.DurationWriteConverter;
+import com.weizilla.workout.logger.test.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,5 +37,11 @@ public class DurationConvertersTest
         DurationReadConverter converter = new DurationReadConverter();
         Duration actual = converter.convert(durationString);
         assertThat(actual, is(duration));
+    }
+
+    @Test
+    public void privateConstructor() throws Exception
+    {
+        TestUtils.assertPrivateConstructor(DurationConverters.class);
     }
 }

@@ -17,6 +17,12 @@
             <artifactId>workout-logger-lib</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.weizilla.workout.logger</groupId>
+            <artifactId>workout-logger-lib</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
         </dependency>

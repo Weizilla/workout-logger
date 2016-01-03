@@ -33,6 +33,12 @@
             </dependency>
             <dependency>
                 <groupId>com.weizilla.workout.logger</groupId>
+                <artifactId>workout-logger-lib</artifactId>
+                <type>test-jar</type>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.weizilla.workout.logger</groupId>
                 <artifactId>workout-logger-store-mongo</artifactId>
                 <version>${project.version}</version>
             </dependency>

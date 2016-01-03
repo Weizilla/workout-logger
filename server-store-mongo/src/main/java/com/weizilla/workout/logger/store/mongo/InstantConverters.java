@@ -9,6 +9,11 @@ import java.time.Instant;
 
 public class InstantConverters
 {
+    private InstantConverters()
+    {
+        // static util class
+    }
+
     @Component
     @ReadingConverter
     public static class InstantReadConverter implements Converter<Long, Instant>

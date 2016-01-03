@@ -6,8 +6,8 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 public class WorkoutTest
 {
@@ -27,5 +27,12 @@ public class WorkoutTest
         assertThat(workout.getId(), is(notNullValue()));
         assertThat(workout.getDate(), is(LocalDate.now()));
         assertThat(workout.getEntryTime(), is(notNullValue()));
+    }
+
+    @Test
+    public void returnsStringWithValues() throws Exception
+    {
+        Workout workout = new Workout("TYPE", Duration.ofHours(1));
+        assertThat(workout.toString(), is(notNullValue()));
     }
 }
