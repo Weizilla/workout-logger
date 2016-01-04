@@ -1,0 +1,8 @@
+workout-logger:
+    image: weizilla/workout-logger
+    ports: 
+        - "80:80"
+    links: 
+        - mongo
+mongo:
+    image: mongo
