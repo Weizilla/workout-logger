@@ -5,16 +5,15 @@ import moment from "moment";
 class WorkoutsService {
     constructor($http) {
         this.$http = $http;
-        this.host = "http://localhost:80";
         this.updateListeners = [];
     }
 
     getWorkouts() {
-        return this.$http.get(this.host + "/api/workouts").then(r => r.data);
+        return this.$http.get("/api/workouts").then(r => r.data);
     }
 
     addWorkout(workout) {
-        return this.$http.post(this.host + "/api/workouts", workout)
+        return this.$http.post("/api/workouts", workout)
             .then(r => r.data)
             .then(() => {
                 this.refreshUpdateListeners();
@@ -22,7 +21,7 @@ class WorkoutsService {
     }
 
     getWorkoutDates() {
-        return this.$http.get(this.host + "/api/workouts/dates")
+        return this.$http.get("/api/workouts/dates")
             .then(r => r.data.map(d => moment(d)));
     }
 
