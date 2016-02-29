@@ -27,9 +27,8 @@ public class WebApplicationTest
         CorsRegistration registration = mock(CorsRegistration.class);
         when(registry.addMapping(anyString())).thenReturn(registration);
 
-        webApplication.addCorsMappings(registry);
+        webApplication.corsConfigurer().addCorsMappings(registry);
 
-        verify(registry).addMapping("/**");
-        verify(registration).allowedOrigins("http://localhost:9000");
+        verify(registry).addMapping("/api/**");
     }
 }

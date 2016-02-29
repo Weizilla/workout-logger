@@ -1,8 +1,10 @@
 import angular from "angular";
 import * as CalendarModule from "./calendar/calendar";
 import * as WorkoutsModule from "./workouts";
-import "bootstrap/css/bootstrap.min.css!";
-import "font-awesome/css/font-awesome.min.css!";
+import "purecss";
+import "../app.css";
+import "font-awesome-webpack";
+import "../index.html";
 
 angular.module("workoutLoggerApp", [])
     .factory("WorkoutsService", WorkoutsModule.service)

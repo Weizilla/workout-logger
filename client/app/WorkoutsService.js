@@ -1,6 +1,7 @@
 "use strict";
 
 import moment from "moment";
+import getHost from "./host.js";
 
 class WorkoutsService {
     constructor($http) {
@@ -9,11 +10,11 @@ class WorkoutsService {
     }
 
     getWorkouts() {
-        return this.$http.get("/api/workouts").then(r => r.data);
+        return this.$http.get(getHost() + "/api/workouts").then(r => r.data);
     }
 
     addWorkout(workout) {
-        return this.$http.post("/api/workouts", workout)
+        return this.$http.post(getHost() + "/api/workouts", workout)
             .then(r => r.data)
             .then(() => {
                 this.refreshUpdateListeners();
@@ -21,7 +22,7 @@ class WorkoutsService {
     }
 
     getWorkoutDates() {
-        return this.$http.get("/api/workouts/dates")
+        return this.$http.get(getHost() + "/api/workouts/dates")
             .then(r => r.data.map(d => moment(d)));
     }
 

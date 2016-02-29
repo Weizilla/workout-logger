@@ -30,18 +30,12 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>jspm install</id>
+                        <id>webpack build</id>
                         <goals>
-                            <goal>jspm</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>gulp build</id>
-                        <goals>
-                            <goal>gulp</goal>
+                            <goal>webpack</goal>
                         </goals>
                         <configuration>
-                            <arguments>package</arguments>
+                            <arguments>-p</arguments>
                         </configuration>
                     </execution>
                 </executions>
