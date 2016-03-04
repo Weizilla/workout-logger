@@ -58,6 +58,12 @@ class CalendarCtrl {
         }
         return "";
     }
+
+    select(date) {
+        this.workoutsService.getWorkoutsByDate(date).then(dates => {
+            console.log(dates)
+        })
+    }
 }
 
 CalendarCtrl.$inject = ["WorkoutsService"];

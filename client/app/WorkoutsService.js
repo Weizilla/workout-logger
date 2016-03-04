@@ -13,6 +13,11 @@ class WorkoutsService {
         return this.$http.get(getHost() + "/api/workouts").then(r => r.data);
     }
 
+    getWorkoutsByDate(date) {
+        var d = moment(date).format("YYYY-MM-DD");
+        return this.$http.get(getHost() + "/api/workouts/dates/" + d).then(r => r.data);
+    }
+
     addWorkout(workout) {
         return this.$http.post(getHost() + "/api/workouts", workout)
             .then(r => r.data)
