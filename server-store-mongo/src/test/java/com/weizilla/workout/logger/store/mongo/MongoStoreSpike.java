@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
@@ -44,7 +43,6 @@ public class MongoStoreSpike implements CommandLineRunner
     }
 
     @Configuration
-    @PropertySource("test.properties")
     @ActiveProfiles("mongo")
     public static class MongoStoreSpikeConfig
     {

@@ -1,0 +1,4 @@
+store:
+  mongo:
+    dbname: workouts
+    host: localhost
