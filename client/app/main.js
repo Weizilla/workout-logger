@@ -9,6 +9,7 @@ import "../index.html";
 angular.module("workoutLoggerApp", [])
     .factory("WorkoutsService", WorkoutsModule.service)
     .controller("CalendarCtrl", CalendarModule.ctrl)
+    .directive("calendar", () => new CalendarModule.directive())
     .controller("WorkoutsCtrl", WorkoutsModule.ctrl);
 
 

@@ -7,28 +7,8 @@
 <body ng-app="workoutLoggerApp">
 <div class="container">
     <div class="row">
-        <div ng-controller="CalendarCtrl as ctrl">
-            <table class="calendar">
-                <thead>
-                <tr>
-                    <th class="day">Sun</th>
-                    <th class="day">Mon</th>
-                    <th class="day">Tue</th>
-                    <th class="day">Wed</th>
-                    <th class="day">Thu</th>
-                    <th class="day">Fri</th>
-                    <th class="day">Sat</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="week in ctrl.weeks">
-                    <td class="day" ng-class="day.clazz"
-                            ng-click="ctrl.select(day)"
-                            ng-repeat="day in week">{{ day.date }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <calendar></calendar>
+
     </div>
     <div class="row">
 
