@@ -50,6 +50,7 @@ public class WorkoutLoggerControllerTest
     private LocalDate date;
     private String dateString;
     private UUID id;
+    private String comment;
 
     @Before
     public void setUp() throws Exception
@@ -63,9 +64,10 @@ public class WorkoutLoggerControllerTest
         duration = Duration.ofHours(10);
         date = LocalDate.now();
         dateString = date.toString();
-        workout = new Workout(type, duration);
-        id = workout.getId();
-        entryTime = workout.getEntryTime().truncatedTo(ChronoUnit.SECONDS);
+        id = UUID.randomUUID();
+        entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        comment = "COMMENT";
+        workout = new Workout(id, type, duration, date, entryTime, comment);
     }
 
     @Test
@@ -81,7 +83,8 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$[0].type", is(type)))
             .andExpect(jsonPath("$[0].duration", is(duration.toString())))
             .andExpect(jsonPath("$[0].date", is(dateString)))
-            .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())));
+            .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())))
+            .andExpect(jsonPath("$[0].comment", is(comment)));
     }
 
     @Test
@@ -102,8 +105,9 @@ public class WorkoutLoggerControllerTest
         assertThat(actual.getId(), is(id));
         assertThat(actual.getType(), is(type));
         assertThat(actual.getDuration(), is(duration));
-        assertThat(actual.getEntryTime(), is(entryTime));
+        assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS), is(entryTime));
         assertThat(actual.getDate(), is(date));
+        assertThat(actual.getComment(), is(comment));
     }
 
     @Test

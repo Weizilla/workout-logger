@@ -18,26 +18,29 @@ public class Workout
     private final Duration duration;
     private final LocalDate date;
     private final Instant entryTime;
+    private final String comment;
 
     public Workout(String type, Duration duration)
     {
-        this(null, type, duration, null, null);
+        this(null, type, duration, null, null, null);
     }
 
     @JsonCreator
     @PersistenceConstructor
     public Workout(
-        @JsonProperty(value = "id", required = false) UUID id,
-        @JsonProperty("type") String type,
-        @JsonProperty("duration") Duration duration,
-        @JsonProperty(value = "date", required = false) LocalDate date,
-        @JsonProperty(value = "entryTime", required = false) Instant entryTime)
+        @JsonProperty("id") UUID id,
+        @JsonProperty(value = "type", required = true) String type,
+        @JsonProperty(value = "duration", required = true) Duration duration,
+        @JsonProperty("date") LocalDate date,
+        @JsonProperty("entryTime") Instant entryTime,
+        @JsonProperty("comment") String comment)
     {
         this.id = id != null ? id : UUID.randomUUID();
         this.type = type;
         this.duration = duration;
         this.date = date != null ? date : LocalDate.now();
         this.entryTime = entryTime != null ? entryTime : Instant.now();
+        this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
     }
 
     public UUID getId()
@@ -65,6 +68,11 @@ public class Workout
         return entryTime;
     }
 
+    public String getComment()
+    {
+        return comment;
+    }
+
     @Override
     public String toString()
     {
@@ -74,6 +82,7 @@ public class Workout
             ", duration=" + duration +
             ", date=" + date +
             ", entryTime=" + entryTime +
+            ", comment=" + comment +
             '}';
     }
 }

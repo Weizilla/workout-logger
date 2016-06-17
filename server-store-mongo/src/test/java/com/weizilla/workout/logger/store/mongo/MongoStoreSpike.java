@@ -35,7 +35,7 @@ public class MongoStoreSpike implements CommandLineRunner
         mongoRepo.findAll().forEach(System.out::println);
 
         LocalDate date = LocalDate.of(2015, 12, 11);
-        Workout pastWorkout = new Workout(null, "ABC", Duration.ofHours(1), date, Instant.now());
+        Workout pastWorkout = new Workout(null, "ABC", Duration.ofHours(1), date, Instant.now(), "COMMENT");
         mongoRepo.save(pastWorkout);
 
         List<Workout> byDate = mongoRepo.findByDate(date);

@@ -35,7 +35,7 @@
                 <input class="btn btn-secondary" type="button" value="Refresh" ng-click="ctrl.init()">
                 <ul>
                     <li ng-repeat="workout in ctrl.workouts">
-                        {{ workout.id }} - {{ workout.type }} - {{ workout.duration }} - {{ workout.date }} - {{ workout.entryTime }}
+                        {{ workout.id }} - {{ workout.type }} - {{ workout.duration }} - {{ workout.date }} - {{ workout.entryTime }} - {{  workout.comment }}
                     </li>
                 </ul>
             </div>

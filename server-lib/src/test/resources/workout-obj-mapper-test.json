@@ -3,5 +3,6 @@
   "type": "TYPE",
   "duration": "PT1H",
   "date": "2015-11-21",
-  "entryTime": 1448146540
+  "entryTime": 1448146540,
+  "comment": "COMMENT"
 }

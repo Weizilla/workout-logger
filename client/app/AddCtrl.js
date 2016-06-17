@@ -8,7 +8,7 @@ class AddCtrl {
         this.types = [];
         this.newWorkoutDate = new Date();
         
-        workoutsService.getAllTypes().then(data => this.types = data);
+        workoutsService.getAllTypes().then(data => this.types = data.sort());
     }
 
     add() {
@@ -17,10 +17,10 @@ class AddCtrl {
         let newWorkout = {
             type: this.newWorkoutType,
             duration: "PT" + this.newWorkoutDuration + "M",
-            date: workoutDate
+            date: workoutDate,
+            comment: this.newWorkoutComment
         };
         this.workoutsService.addWorkout(newWorkout).then(w => {
-            console.log("Added workout", newWorkout);
             this.$window.location.href = "/";
         });
     }

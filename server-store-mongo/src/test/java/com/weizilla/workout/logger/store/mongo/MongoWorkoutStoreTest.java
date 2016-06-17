@@ -66,9 +66,9 @@ public class MongoWorkoutStoreTest
     {
         LocalDate today = LocalDate.now();
         List<Workout> workouts = Lists.newArrayList(
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()));
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"));
         when(repo.findByDate(today)).thenReturn(workouts);
 
         List<Workout> actual = store.getForDate(today);

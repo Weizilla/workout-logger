@@ -16,7 +16,7 @@ public class MemoryWorkoutStoreTest
 {
     private static final UUID ID = UUID.randomUUID();
     private static final Workout WORKOUT = new Workout(ID, "TYPE", Duration.ofMinutes(45),
-        LocalDate.now(), Instant.now());
+        LocalDate.now(), Instant.now(), "COMMENT");
     private MemoryWorkoutStore store;
 
     @Before

@@ -26,11 +26,18 @@
             <input id="newWorkoutDuration" class="form-control" type="number"
                     ng-model="ctrl.newWorkoutDuration">
         </div>
+
         <div class="form-group">
             <label for="newWorkoutDate">Date</label>
             <input id="newWorkoutDate" class="form-control" type="date"
                     ng-model="ctrl.newWorkoutDate">
         </div>
+
+        <div class="form-group">
+            <label for="newWorkoutComment">Comment</label>
+            <textarea id="newWorkoutComment" class="form-control" ng-model="ctrl.newWorkoutComment"></textarea>
+        </div>
+
         <input class="btn btn-primary" type="submit" value="Add" ng-click="ctrl.add()">
     </form>
 </div>

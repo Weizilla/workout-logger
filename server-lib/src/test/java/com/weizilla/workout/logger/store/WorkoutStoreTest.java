@@ -35,7 +35,7 @@ public class WorkoutStoreTest
             .mapToObj(today::plusDays)
             .collect(Collectors.toSet());
         List<Workout> workouts = dates.stream()
-            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d, Instant.now()))
+            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d, Instant.now(), "COMMENT"))
             .collect(Collectors.toList());
         store.setWorkouts(workouts);
 
@@ -49,11 +49,11 @@ public class WorkoutStoreTest
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = today.plusDays(1);
         List<Workout> workouts = Lists.newArrayList(
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now()),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now()),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now()));
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now(), "COMMENT"),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now(), "COMMENT"),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"));
         store.setWorkouts(workouts);
 
         List<Workout> actual = store.getForDate(today);
@@ -65,11 +65,11 @@ public class WorkoutStoreTest
     {
         Set<String> types = Sets.newHashSet("a", "b", "c");
         List<Workout> workouts = Lists.newArrayList(
-            new Workout(UUID.randomUUID(), "a", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
-            new Workout(UUID.randomUUID(), "b", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
-            new Workout(UUID.randomUUID(), "c", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
-            new Workout(UUID.randomUUID(), "b", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
-            new Workout(UUID.randomUUID(), "a", Duration.ofMinutes(45), LocalDate.now(), Instant.now()));
+            new Workout("a", Duration.ofMinutes(45)),
+            new Workout("b", Duration.ofMinutes(45)),
+            new Workout("c", Duration.ofMinutes(45)),
+            new Workout("b", Duration.ofMinutes(45)),
+            new Workout("a", Duration.ofMinutes(45)));
         store.setWorkouts(workouts);
 
         Set<String> actual = store.getAllTypes();
@@ -81,11 +81,11 @@ public class WorkoutStoreTest
     {
         Set<String> types = Sets.newHashSet("a", "b", "c");
         List<Workout> workouts = Lists.newArrayList(
-            new Workout(UUID.randomUUID(), "a", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
-            new Workout(UUID.randomUUID(), "B", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
-            new Workout(UUID.randomUUID(), "c", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
-            new Workout(UUID.randomUUID(), "b", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
-            new Workout(UUID.randomUUID(), "A", Duration.ofMinutes(45), LocalDate.now(), Instant.now()));
+            new Workout("a", Duration.ofMinutes(45)),
+            new Workout("B", Duration.ofMinutes(45)),
+            new Workout("c", Duration.ofMinutes(45)),
+            new Workout("b", Duration.ofMinutes(45)),
+            new Workout("A", Duration.ofMinutes(45)));
         store.setWorkouts(workouts);
 
         Set<String> actual = store.getAllTypes();
