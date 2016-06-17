@@ -13,10 +13,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -62,22 +59,6 @@ public class MongoWorkoutStoreTest
 
         List<Workout> actual = store.getAll();
         assertThat(actual).isSameAs(workouts);
-    }
-
-    @Test
-    public void getsAllWorkoutDates() throws Exception
-    {
-        LocalDate today = LocalDate.now();
-        Set<LocalDate> dates = LongStream.range(0, 10)
-            .mapToObj(today::plusDays)
-            .collect(Collectors.toSet());
-        List<Workout> workouts = dates.stream()
-            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d, Instant.now()))
-            .collect(Collectors.toList());
-        when(repo.findAll()).thenReturn(workouts);
-
-        Set<LocalDate> actual = store.getAllDates();
-        assertThat(actual).isEqualTo(dates);
     }
 
     @Test

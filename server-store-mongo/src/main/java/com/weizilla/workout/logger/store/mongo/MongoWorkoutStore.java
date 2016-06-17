@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Profile("mongo")
 @Component
@@ -40,15 +38,6 @@ public class MongoWorkoutStore implements WorkoutStore
     public List<Workout> getAll()
     {
         return repo.findAll();
-    }
-
-    @Override
-    public Set<LocalDate> getAllDates()
-    {
-        //TODO replace this with mongo aggregation
-        return getAll().stream()
-            .map(Workout::getDate)
-            .collect(Collectors.toSet());
     }
 
     @Override
