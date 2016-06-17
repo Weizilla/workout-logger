@@ -18,9 +18,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsSame.sameInstance;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -60,10 +58,10 @@ public class MongoWorkoutStoreTest
     {
         List<Workout> workouts = Collections.singletonList(workout);
         when(repo.findAll()).thenReturn(workouts);
-        assertThat(repo.findAll().size(), is(1));
+        assertThat(repo.findAll()).hasSize(1);
 
         List<Workout> actual = store.getAll();
-        assertThat(actual, is(sameInstance(workouts)));
+        assertThat(actual).isSameAs(workouts);
     }
 
     @Test
@@ -79,7 +77,7 @@ public class MongoWorkoutStoreTest
         when(repo.findAll()).thenReturn(workouts);
 
         Set<LocalDate> actual = store.getAllDates();
-        assertThat(actual, is(dates));
+        assertThat(actual).isEqualTo(dates);
     }
 
     @Test
@@ -93,6 +91,6 @@ public class MongoWorkoutStoreTest
         when(repo.findByDate(today)).thenReturn(workouts);
 
         List<Workout> actual = store.getForDate(today);
-        assertThat(actual, is(workouts));
+        assertThat(actual).isEqualTo(workouts);
     }
 }

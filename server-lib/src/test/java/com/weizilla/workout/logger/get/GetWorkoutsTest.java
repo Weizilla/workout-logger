@@ -1,6 +1,5 @@
 package com.weizilla.workout.logger.get;
 
-import com.google.common.collect.Iterables;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.junit.Before;
@@ -15,9 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsSame.sameInstance;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,8 +38,8 @@ public class GetWorkoutsTest
         when(workoutStore.getAll()).thenReturn(Collections.singletonList(workout));
 
         List<Workout> actual = getWorkouts.getAll();
-        assertThat(actual.size(), is(1));
-        assertThat(Iterables.getOnlyElement(actual), is(sameInstance(workout)));
+        assertThat(actual).hasSize(1);
+        assertThat(actual.get(0)).isSameAs(workout);
     }
 
     @Test
@@ -53,7 +50,7 @@ public class GetWorkoutsTest
         when(workoutStore.getAllDates()).thenReturn(dates);
 
         Set<LocalDate> actual = getWorkouts.getAllDates();
-        assertThat(actual, is(sameInstance(dates)));
+        assertThat(actual).isSameAs(dates);
     }
 
     @Test
@@ -64,6 +61,6 @@ public class GetWorkoutsTest
         when(workoutStore.getForDate(date)).thenReturn(workouts);
 
         List<Workout> actual = getWorkouts.getForDate(date);
-        assertThat(actual, is(sameInstance(workouts)));
+        assertThat(actual).isSameAs(workouts);
     }
 }

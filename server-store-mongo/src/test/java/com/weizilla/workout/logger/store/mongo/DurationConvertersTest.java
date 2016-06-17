@@ -8,8 +8,7 @@ import org.junit.Test;
 
 import java.time.Duration;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DurationConvertersTest
 {
@@ -28,7 +27,7 @@ public class DurationConvertersTest
     {
         DurationWriteConverter converter = new DurationWriteConverter();
         String actual = converter.convert(duration);
-        assertThat(actual, is(durationString));
+        assertThat(actual).isEqualTo(durationString);
     }
 
     @Test
@@ -36,7 +35,7 @@ public class DurationConvertersTest
     {
         DurationReadConverter converter = new DurationReadConverter();
         Duration actual = converter.convert(durationString);
-        assertThat(actual, is(duration));
+        assertThat(actual).isEqualTo(duration);
     }
 
     @Test

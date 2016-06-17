@@ -16,9 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -52,8 +50,8 @@ public class WorkoutLoggerTest
         when(getWorkouts.getAll()).thenReturn(Lists.newArrayList(workout));
 
         List<Workout> workouts = workoutLogger.getAll();
-        assertThat(workouts.size(), is(1));
-        assertThat(workouts.get(0), is(sameInstance(workout)));
+        assertThat(workouts).hasSize(1);
+        assertThat(workouts.get(0)).isSameAs(workout);
     }
 
     @Test
@@ -63,8 +61,8 @@ public class WorkoutLoggerTest
         when(getWorkouts.getForDate(date)).thenReturn(Lists.newArrayList(workout));
 
         List<Workout> workouts = workoutLogger.getForDate(date);
-        assertThat(workouts.size(), is(1));
-        assertThat(workouts.get(0), is(sameInstance(workout)));
+        assertThat(workouts).hasSize(1);
+        assertThat(workouts.get(0)).isSameAs(workout);
     }
 
     @Test
@@ -75,6 +73,6 @@ public class WorkoutLoggerTest
         when(getWorkouts.getAllDates()).thenReturn(dates);
 
         Set<LocalDate> actual = workoutLogger.getAllDates();
-        assertThat(actual, is(sameInstance(dates)));
+        assertThat(actual).isSameAs(dates);
     }
 }

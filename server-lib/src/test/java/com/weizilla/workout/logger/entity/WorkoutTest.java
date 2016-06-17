@@ -5,9 +5,7 @@ import org.junit.Test;
 import java.time.Duration;
 import java.time.LocalDate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class WorkoutTest
 {
@@ -15,24 +13,24 @@ public class WorkoutTest
     public void populatesDefaultValues() throws Exception
     {
         Workout workout = new Workout("TYPE", Duration.ofHours(1));
-        assertThat(workout.getId(), is(notNullValue()));
-        assertThat(workout.getDate(), is(LocalDate.now()));
-        assertThat(workout.getEntryTime(), is(notNullValue()));
+        assertThat(workout.getId()).isNotNull();
+        assertThat(workout.getDate()).isEqualTo(LocalDate.now());
+        assertThat(workout.getEntryTime()).isNotNull();
     }
 
     @Test
     public void populatesDefaultValuesGivenNull() throws Exception
     {
         Workout workout = new Workout(null, "TYPE", Duration.ofHours(1), null, null);
-        assertThat(workout.getId(), is(notNullValue()));
-        assertThat(workout.getDate(), is(LocalDate.now()));
-        assertThat(workout.getEntryTime(), is(notNullValue()));
+        assertThat(workout.getId()).isNotNull();
+        assertThat(workout.getDate()).isEqualTo(LocalDate.now());
+        assertThat(workout.getEntryTime()).isNotNull();
     }
 
     @Test
     public void returnsStringWithValues() throws Exception
     {
         Workout workout = new Workout("TYPE", Duration.ofHours(1));
-        assertThat(workout.toString(), is(notNullValue()));
+        assertThat(workout.toString()).isNotNull();
     }
 }

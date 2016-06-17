@@ -8,8 +8,7 @@ import org.junit.Test;
 
 import java.time.Instant;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class InstantConvertersTest
 {
@@ -28,7 +27,7 @@ public class InstantConvertersTest
     {
         InstantWriteConverter converter = new InstantWriteConverter();
         long actual = converter.convert(instant);
-        assertThat(actual, is(instantlong));
+        assertThat(actual).isEqualTo(instantlong);
     }
 
     @Test
@@ -36,7 +35,7 @@ public class InstantConvertersTest
     {
         InstantReadConverter converter = new InstantReadConverter();
         Instant actual = converter.convert(instantlong);
-        assertThat(actual, is(instant));
+        assertThat(actual).isEqualTo(instant);
     }
 
     @Test

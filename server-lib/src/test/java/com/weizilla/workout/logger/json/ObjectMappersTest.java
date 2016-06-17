@@ -13,8 +13,7 @@ import java.time.Month;
 import java.util.UUID;
 
 import static com.weizilla.workout.logger.test.TestUtils.assertPrivateConstructor;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ObjectMappersTest
 {
@@ -54,10 +53,10 @@ public class ObjectMappersTest
     {
         String input = TestUtils.readFile("workout-obj-mapper-test.json");
         Workout actual = ObjectMappers.OBJECT_MAPPER.readValue(input, Workout.class);
-        assertThat(actual.getId(), is(id));
-        assertThat(actual.getType(), is(type));
-        assertThat(actual.getDuration(), is(duration));
-        assertThat(actual.getDate(), is(date));
-        assertThat(actual.getEntryTime(), is(entryTime));
+        assertThat(actual.getId()).isEqualTo(id);
+        assertThat(actual.getType()).isEqualTo(type);
+        assertThat(actual.getDuration()).isEqualTo(duration);
+        assertThat(actual.getDate()).isEqualTo(date);
+        assertThat(actual.getEntryTime()).isEqualTo(entryTime);
     }
 }

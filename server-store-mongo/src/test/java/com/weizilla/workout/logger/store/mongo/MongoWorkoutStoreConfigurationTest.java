@@ -6,9 +6,7 @@ import org.junit.Test;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.mock.env.MockEnvironment;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MongoWorkoutStoreConfigurationTest
 {
@@ -30,20 +28,20 @@ public class MongoWorkoutStoreConfigurationTest
     public void returnsDbName() throws Exception
     {
         String actual = configuration.getDatabaseName();
-        assertThat(actual, is(DB_NAME));
+        assertThat(actual).isEqualTo(DB_NAME);
     }
 
     @Test
     public void returnsMongoClient() throws Exception
     {
         Mongo mongo = configuration.mongo();
-        assertThat(mongo, is(notNullValue()));
+        assertThat(mongo).isNotNull();
     }
 
     @Test
     public void returnsCustomConverters() throws Exception
     {
         CustomConversions conversions = configuration.customConversions();
-        assertThat(conversions, is(notNullValue()));
+        assertThat(conversions).isNotNull();
     }
 }

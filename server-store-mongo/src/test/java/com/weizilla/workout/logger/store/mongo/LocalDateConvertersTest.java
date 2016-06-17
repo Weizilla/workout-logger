@@ -8,8 +8,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LocalDateConvertersTest
 {
@@ -28,7 +27,7 @@ public class LocalDateConvertersTest
     {
         LocalDateWriteConverter converter = new LocalDateWriteConverter();
         String actual = converter.convert(date);
-        assertThat(actual, is(dateString));
+        assertThat(actual).isEqualTo(dateString);
     }
 
     @Test
@@ -36,7 +35,7 @@ public class LocalDateConvertersTest
     {
         LocalDateReadConverter converter = new LocalDateReadConverter();
         LocalDate actual = converter.convert(dateString);
-        assertThat(actual, is(date));
+        assertThat(actual).isEqualTo(date);
     }
 
     @Test
