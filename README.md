@@ -8,12 +8,16 @@ Logs workouts
 ## Instructions
 Coming soon
 
+## Bug
+1. Adding workout shows up for the next day. Maybe due to timezone parsing because it happened at end of day?
+
 ## To Do
-1. Improve UI
+1. Improve UI 
  1. Make add workout pretty
  2. Make calendar pretty
  3. Switch to flexbox 
  4. Make a "view all" debug page
+ 5. Have separate pages for workflow
 2. Import/Export
 3. Add day ordering of workout (including reordering)
 4. Allow workouts to have comments
@@ -28,3 +32,4 @@ Coming soon
 11. Nagios?
 12. Password/security for UI
 13. Https
+14. Garmin Connect Sync
