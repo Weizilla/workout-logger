@@ -1,1 +1,8 @@
+if [[ -n $@ ]]; then
+	mvn $@
+	if [[ $? -ne 0 ]]; then
+		exit
+	fi
+fi
+
 mvn -pl server-app spring-boot:run -Drun.profiles=dev,memory
