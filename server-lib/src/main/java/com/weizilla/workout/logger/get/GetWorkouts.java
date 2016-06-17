@@ -34,4 +34,9 @@ public class GetWorkouts
     {
         return workoutStore.getForDate(date);
     }
+
+    public Set<String> getAllTypes()
+    {
+        return workoutStore.getAllTypes();
+    }
 }

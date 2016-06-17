@@ -27,4 +27,12 @@ public interface WorkoutStore
             .filter(w -> w.getDate().equals(localDate))
             .collect(Collectors.toList());
     }
+
+    default Set<String> getAllTypes()
+    {
+        return getAll().stream()
+            .map(Workout::getType)
+            .map(String::toLowerCase)
+            .collect(Collectors.toSet());
+    }
 }

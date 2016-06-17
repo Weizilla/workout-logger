@@ -50,4 +50,10 @@ public class WorkoutLoggerController
     {
         return workoutLogger.getForDate(date);
     }
+
+    @RequestMapping(path = "/workouts/types")
+    public Set<String> getAllTypes()
+    {
+        return workoutLogger.getAllTypes();
+    }
 }

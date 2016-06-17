@@ -27,8 +27,11 @@ class WorkoutsService {
     }
 
     getWorkoutDates() {
-        return this.$http.get(getHost() + "/api/workouts/dates")
-            .then(r => r.data.map(d => moment(d)));
+        return this.$http.get(getHost() + "/api/workouts/dates").then(r => r.data.map(d => moment(d)));
+    }
+    
+    getAllTypes() {
+        return this.$http.get(getHost() + "/api/workouts/types").then(r => r.data);
     }
 
     addUpdateListener(listener) {
@@ -42,7 +45,7 @@ class WorkoutsService {
     static factory($http) {
         return new WorkoutsService($http);
     }
-};
+}
 
 WorkoutsService.factory.$inject = ["$http"];
 

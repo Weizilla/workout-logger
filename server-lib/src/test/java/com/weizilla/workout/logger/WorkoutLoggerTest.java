@@ -75,4 +75,14 @@ public class WorkoutLoggerTest
         Set<LocalDate> actual = workoutLogger.getAllDates();
         assertThat(actual).isSameAs(dates);
     }
+
+    @Test
+    public void getAllTypes() throws Exception
+    {
+        Set<String> types = Sets.newHashSet("a", "b", "c");
+        when(getWorkouts.getAllTypes()).thenReturn(types);
+
+        Set<String> actual = workoutLogger.getAllTypes();
+        assertThat(actual).isSameAs(types);
+    }
 }

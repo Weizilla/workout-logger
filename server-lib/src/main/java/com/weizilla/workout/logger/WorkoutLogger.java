@@ -42,4 +42,9 @@ public class WorkoutLogger
     {
         return getWorkouts.getForDate(date);
     }
+
+    public Set<String> getAllTypes()
+    {
+        return getWorkouts.getAllTypes();
+    }
 }

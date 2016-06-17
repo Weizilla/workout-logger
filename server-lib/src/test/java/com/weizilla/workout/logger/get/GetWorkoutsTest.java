@@ -1,5 +1,6 @@
 package com.weizilla.workout.logger.get;
 
+import com.google.common.collect.Sets;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.junit.Before;
@@ -62,5 +63,15 @@ public class GetWorkoutsTest
 
         List<Workout> actual = getWorkouts.getForDate(date);
         assertThat(actual).isSameAs(workouts);
+    }
+
+    @Test
+    public void getAllTypes() throws Exception
+    {
+        Set<String> types = Sets.newHashSet("a", "b", "c");
+        when(workoutStore.getAllTypes()).thenReturn(types);
+
+        Set<String> actual = getWorkouts.getAllTypes();
+        assertThat(actual).isSameAs(types);
     }
 }

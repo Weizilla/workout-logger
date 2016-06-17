@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger.store;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.weizilla.workout.logger.entity.Workout;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,8 +35,7 @@ public class WorkoutStoreTest
             .mapToObj(today::plusDays)
             .collect(Collectors.toSet());
         List<Workout> workouts = dates.stream()
-            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d,
-                Instant.now()))
+            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d, Instant.now()))
             .collect(Collectors.toList());
         store.setWorkouts(workouts);
 
@@ -60,11 +60,43 @@ public class WorkoutStoreTest
         assertThat(actual).hasSize(3);
     }
 
+    @Test
+    public void getsAllWorkoutTypes() throws Exception
+    {
+        Set<String> types = Sets.newHashSet("a", "b", "c");
+        List<Workout> workouts = Lists.newArrayList(
+            new Workout(UUID.randomUUID(), "a", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
+            new Workout(UUID.randomUUID(), "b", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
+            new Workout(UUID.randomUUID(), "c", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
+            new Workout(UUID.randomUUID(), "b", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
+            new Workout(UUID.randomUUID(), "a", Duration.ofMinutes(45), LocalDate.now(), Instant.now()));
+        store.setWorkouts(workouts);
+
+        Set<String> actual = store.getAllTypes();
+        assertThat(actual).containsOnlyElementsOf(types);
+    }
+
+    @Test
+    public void getsAllWorkoutsCaseInsensitive() throws Exception
+    {
+        Set<String> types = Sets.newHashSet("a", "b", "c");
+        List<Workout> workouts = Lists.newArrayList(
+            new Workout(UUID.randomUUID(), "a", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
+            new Workout(UUID.randomUUID(), "B", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
+            new Workout(UUID.randomUUID(), "c", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
+            new Workout(UUID.randomUUID(), "b", Duration.ofMinutes(45), LocalDate.now(), Instant.now()),
+            new Workout(UUID.randomUUID(), "A", Duration.ofMinutes(45), LocalDate.now(), Instant.now()));
+        store.setWorkouts(workouts);
+
+        Set<String> actual = store.getAllTypes();
+        assertThat(actual).containsOnlyElementsOf(types);
+    }
+
     private static class WorkoutStoreStub implements WorkoutStore
     {
         private List<Workout> workouts;
 
-        public void setWorkouts(List<Workout> workouts)
+        private void setWorkouts(List<Workout> workouts)
         {
             this.workouts = workouts;
         }

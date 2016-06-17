@@ -141,4 +141,17 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$[1].id", is(workouts.get(1).getId().toString())))
             .andExpect(jsonPath("$[2].id", is(workouts.get(2).getId().toString())));
     }
+
+    @Test
+    public void getsAllWorkoutTypes() throws Exception
+    {
+        Set<String> types = Sets.newHashSet("a", "b", "c");
+        when(workoutLogger.getAllTypes()).thenReturn(types);
+
+        mockMvc.perform(get("/api/workouts/types"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$", hasSize(3)))
+            .andExpect(jsonPath("$", containsInAnyOrder("a", "b", "c")));
+    }
 }

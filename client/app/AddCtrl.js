@@ -5,7 +5,10 @@ class AddCtrl {
         this.workoutsService = workoutsService;
         this.$window = $window;
         this.workouts = [];
+        this.types = [];
         this.newWorkoutDate = new Date();
+        
+        workoutsService.getAllTypes().then(data => this.types = data);
     }
 
     add() {
