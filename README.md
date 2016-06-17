@@ -8,28 +8,23 @@ Logs workouts
 ## Instructions
 Coming soon
 
-## Bug
-1. Adding workout shows up for the next day. Maybe due to timezone parsing because it happened at end of day?
-
 ## To Do
 1. Improve UI 
  1. Make add workout pretty
  2. Make calendar pretty
  3. Switch to flexbox 
- 4. Make a "view all" debug page
- 5. Have separate pages for workflow
+ 4. Show workouts when clicking on a day
 2. Import/Export
 3. Add day ordering of workout (including reordering)
-4. Allow workouts to have comments
-5. Most common types
-6. Most common times (for type)
-7. Get historical workout when clicking on previous day
-8. DB backup scheme
-9. Deployment
+4. Most common times (for type)
+5. DB backup scheme
+6. Deployment
  1. AWS? with docker
  2. Ansible?
-10. Logging
-11. Nagios?
-12. Password/security for UI
-13. Https
-14. Garmin Connect Sync
+7. Logging
+8. Nagios?
+9. Password/security for UI
+10. Https
+11. Garmin Connect Sync
+12. Unit tests for UI
+13. BUG: Adding workout shows up for the next day. Maybe due to timezone parsing because it happened at end of day?
