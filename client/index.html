@@ -8,49 +8,9 @@
 <div class="container">
     <div class="row">
         <calendar></calendar>
-
     </div>
     <div class="row">
-
-        <div ng-controller="WorkoutsCtrl as ctrl">
-            <form>
-                <div class="form-group">
-                    <label for="newWorkoutType">Type</label>
-                    <input id="newWorkoutType" class="form-control" type="text" ng-model="ctrl.newWorkoutType">
-                </div>
-
-                <div class="form-group">
-                    <label for="newWorkoutDuration">Duration (mins)</label>
-                    <input id="newWorkoutDuration" class="form-control" type="number" ng-model="ctrl.newWorkoutDuration">
-                </div>
-                <div class="form-group">
-                    <label for="newWorkoutDate">Date</label>
-                    <input id="newWorkoutDate" class="form-control" type="date" ng-model="ctrl.newWorkoutDate">
-                </div>
-                <input class="btn btn-primary" type="submit" value="Add" ng-click="ctrl.add()">
-            </form>
-
-            <div>
-                Workouts
-                <input class="btn btn-secondary" type="button" value="Refresh" ng-click="ctrl.init()">
-                <ul>
-                    <li ng-repeat="workout in ctrl.workouts">
-                        {{ workout.id }} - {{ workout.type }} - {{ workout.duration }} - {{ workout.date }} - {{ workout.entryTime }}
-                    </li>
-                </ul>
-            </div>
-
-            <div>
-                Dates
-                <input class="btn btn-secondary" type="button" value="Refresh" ng-click="ctrl.init()">
-                <ul>
-                    <li ng-repeat="workoutDate in ctrl.workoutDates">
-                        {{ workoutDate | date:"yyyy-MM-dd" }}
-                    </li>
-                </ul>
-            </div>
-
-        </div>
+        <a href="add.html">Add</a>
     </div>
 </div>
 <script src="/bundle.js"></script>

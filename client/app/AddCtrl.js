@@ -1,20 +1,11 @@
 "use strict";
 
-class WorkoutsCtrl {
-    constructor(workoutsService, $location) {
+class AddCtrl {
+    constructor(workoutsService, $window) {
         this.workoutsService = workoutsService;
-        this.$location = $location;
+        this.$window = $window;
         this.workouts = [];
-        this.init();
-    }
-
-    init() {
-        this.workoutsService.getWorkouts().then(workouts => {
-            this.workouts = workouts;
-        });
-        this.workoutsService.getWorkoutDates().then(dates => {
-            this.workoutDates = dates;
-        });
+        this.newWorkoutDate = new Date();
     }
 
     add() {
@@ -26,11 +17,12 @@ class WorkoutsCtrl {
             date: workoutDate
         };
         this.workoutsService.addWorkout(newWorkout).then(w => {
-            this.init();
+            console.log("Added workout", newWorkout);
+            this.$window.location.href = "/";
         });
     }
 }
 
-WorkoutsCtrl.$inject = ["WorkoutsService", "$location"];
+AddCtrl.$inject = ["WorkoutsService", "$window"];
 
-export { WorkoutsCtrl }
+export {AddCtrl }
