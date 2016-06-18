@@ -4,26 +4,28 @@
   "description": "Workout Logger",
   "main": "app/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Wei Yang",
   "license": "MIT",
   "homepage": "https://github.com/Weizilla/workout-logger",
-  "devDependencies" : {
+  "devDependencies": {
     "angular": "^1.5.7",
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
-    "css-loader" : "^0.23.1",
-    "file-loader" : "^0.8.5",
+    "chai": "^3.5.0",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
     "font-awesome": "^4.6.3",
-    "font-awesome-webpack" : "0.0.4",
+    "font-awesome-webpack": "0.0.4",
     "less": "^2.7.1",
+    "mocha": "^2.5.3",
     "moment": "^2.13.0",
-    "purecss" : "^0.6.0",
+    "purecss": "^0.6.0",
     "style-loader": "^0.13.1",
-    "url-loader" : "^0.5.7",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
-    "webpack-dev-server" : "^1.14.1"
+    "webpack-dev-server": "^1.14.1"
   }
 }

@@ -15,13 +15,23 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>0.0.26</version>
+                <version>1.0</version>
                 <executions>
                     <execution>
                         <id>install node and npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>javascript tests</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>test</arguments>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>npm install</id>
@@ -34,6 +44,7 @@
                         <goals>
                             <goal>webpack</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <arguments>-p</arguments>
                         </configuration>
@@ -42,6 +53,7 @@
                 <configuration>
                     <nodeVersion>v6.2.2</nodeVersion>
                     <npmVersion>3.9.6</npmVersion>
+                    <installDirectory>target</installDirectory>
                 </configuration>
             </plugin>
         </plugins>
