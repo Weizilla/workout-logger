@@ -28,3 +28,4 @@ Coming soon
 11. Garmin Connect Sync
 12. Unit tests for UI
 13. BUG: Adding workout shows up for the next day. Maybe due to timezone parsing because it happened at end of day?
+14. Combine JS and Java code coverage in Coveralls.io
