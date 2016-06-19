@@ -28,4 +28,4 @@ class AddCtrl {
 
 AddCtrl.$inject = ["WorkoutsService", "$window"];
 
-export {AddCtrl }
+export {AddCtrl}
