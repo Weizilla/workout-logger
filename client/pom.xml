@@ -44,7 +44,7 @@
                         <goals>
                             <goal>webpack</goal>
                         </goals>
-                        <phase>package</phase>
+                        <phase>prepare-package</phase>
                         <configuration>
                             <arguments>-p</arguments>
                         </configuration>
