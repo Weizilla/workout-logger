@@ -1,4 +1,6 @@
 workout-logger:
+    environment:
+        SPRING_PROFILES_ACTIVE: mongo
     image: weizilla/workout-logger
     ports: 
         - "80:80"
