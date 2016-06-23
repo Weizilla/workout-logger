@@ -1,10 +1,11 @@
 workout-logger:
     environment:
         SPRING_PROFILES_ACTIVE: mongo
+        STORE_MONGO_HOST: MONGO
     image: weizilla/workout-logger
-    ports: 
+    ports:
         - "80:80"
-    links: 
+    links:
         - mongo
 mongo:
     image: mongo
