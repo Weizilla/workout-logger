@@ -1,35 +1,30 @@
-<div ng-controller="AddCtrl as ctrl">
+<div class="container" ng-controller="AddCtrl as ctrl">
     <form>
         <div>
             <label for="newWorkoutType">Type</label>
             <div id="newWorkoutType">
-                <div ng-repeat="type in ctrl.types">
-                    <label>
-                        <input type="radio" ng-model="ctrl.newWorkoutType" ng-value="type">
-                        {{ type }}
-                    </label>
-                </div>
+                <p ng-repeat="type in ctrl.types">
+                    <input id="{{ type }}" type="radio" name="types" ng-model="ctrl.newWorkoutType" ng-value="type">
+                    <label for="{{ type }}">{{ type }}</label>
+                </p>
                 <div>
                     <input class="form-control" type="text" ng-model="ctrl.newWorkoutType">
                 </div>
             </div>
         </div>
-
-        <div>
+        <div class="input-field">
             <label for="newWorkoutDuration">Duration (mins)</label>
             <input id="newWorkoutDuration" class="form-control" type="number"
                     ng-model="ctrl.newWorkoutDuration">
         </div>
-
-        <div>
+        <div class="input-field">
             <label for="newWorkoutDate">Date</label>
             <input id="newWorkoutDate" class="form-control" type="date"
                     ng-model="ctrl.newWorkoutDate">
         </div>
-
-        <div>
+        <div class="input-field">
             <label for="newWorkoutComment">Comment</label>
-            <textarea id="newWorkoutComment" class="form-control" ng-model="ctrl.newWorkoutComment"></textarea>
+            <textarea id="newWorkoutComment" class="materialize-textarea" ng-model="ctrl.newWorkoutComment"></textarea>
         </div>
 
         <input type="submit" value="Add" ng-click="ctrl.add()">
