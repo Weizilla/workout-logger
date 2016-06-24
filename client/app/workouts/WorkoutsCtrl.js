@@ -1,7 +1,5 @@
 "use strict";
 
-import moment from "moment";
-
 class WorkoutsCtrl {
     constructor(workoutsService) {
         this.workoutsService = workoutsService;

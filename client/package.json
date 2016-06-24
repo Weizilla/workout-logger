@@ -4,7 +4,7 @@
   "description": "Workout Logger",
   "main": "app/main.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --compilers js:babel-core/register"
   },
   "author": "Wei Yang",
   "license": "MIT",

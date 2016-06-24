@@ -1,5 +1,7 @@
 "use strict";
 
+import moment from "moment";
+
 class AddCtrl {
     constructor(workoutsService, $window) {
         this.workoutsService = workoutsService;
@@ -7,17 +9,15 @@ class AddCtrl {
         this.workouts = [];
         this.types = [];
         this.newWorkoutDate = new Date();
-        
+
         workoutsService.getAllTypes().then(data => this.types = data.sort());
     }
 
     add() {
-        let date = this.newWorkoutDate.toISOString();
-        let workoutDate = date.substr(0, date.indexOf("T"));
         let newWorkout = {
             type: this.newWorkoutType,
             duration: "PT" + this.newWorkoutDuration + "M",
-            date: workoutDate,
+            date: moment(this.newWorkoutDate).format("YYYY-MM-DD"),
             comment: this.newWorkoutComment
         };
         this.workoutsService.addWorkout(newWorkout).then(w => {
