@@ -1,3 +1,9 @@
 <div ng-controller="WorkoutsCtrl as ctrl">
-    WORKOUTS HERE
+    {{ ctrl.displayWorkouts.date }} - {{ ctrl.displayWorkouts.workouts.length }}
+    <div ng-repeat="workout in ctrl.displayWorkouts.workouts">
+        <div>{{ workout.id }}</div>
+        <div>{{ workout.type }}</div>
+        <div>{{ workout.duration }}</div>
+        <div>{{ workout.comment }}</div>
+    </div>
 </div>

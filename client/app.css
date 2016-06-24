@@ -19,3 +19,7 @@
 .calendar {
     border: solid 2px black;
 }
+
+.selected {
+    background-color: lightblue;
+}

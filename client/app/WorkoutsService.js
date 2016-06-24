@@ -7,6 +7,7 @@ class WorkoutsService {
     constructor($http) {
         this.$http = $http;
         this.updateListeners = [];
+        this.displayWorkouts = {workouts: []};
     }
 
     getWorkouts() {
@@ -15,7 +16,11 @@ class WorkoutsService {
 
     getWorkoutsByDate(date) {
         var d = moment(date).format("YYYY-MM-DD");
-        return this.$http.get(getHost() + "/api/workouts/dates/" + d).then(r => r.data);
+        return this.$http.get(getHost() + "/api/workouts/dates/" + d)
+            .then(r => {
+                this.displayWorkouts.date = d;
+                this.displayWorkouts.workouts = r.data;
+            });
     }
 
     addWorkout(workout) {
@@ -29,7 +34,7 @@ class WorkoutsService {
     getWorkoutDates() {
         return this.$http.get(getHost() + "/api/workouts/dates").then(r => r.data.map(d => moment(d)));
     }
-    
+
     getAllTypes() {
         return this.$http.get(getHost() + "/api/workouts/types").then(r => r.data);
     }

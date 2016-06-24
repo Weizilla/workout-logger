@@ -5,7 +5,7 @@ import moment from "moment";
 class WorkoutsCtrl {
     constructor(workoutsService) {
         this.workoutsService = workoutsService;
-        this.workouts = [];
+        this.displayWorkouts = workoutsService.displayWorkouts;
     }
 }
 
