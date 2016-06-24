@@ -3,7 +3,6 @@ import * as CalendarModule from "./calendar/calendar";
 import * as WorkoutsModule from "./workouts/workouts";
 import * as AddModule from "./add/add";
 import { WorkoutsService } from "./WorkoutsService";
-import "purecss";
 import "../app.css";
 import "font-awesome-webpack";
 import "../index.html";
