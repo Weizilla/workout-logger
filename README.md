@@ -15,17 +15,14 @@ Coming soon
 4. Deployed to AWS using ECS 
 
 ## To Do
-1. Improve UI 
- 1. Make add workout pretty
- 2. Make calendar pretty
- 3. Switch to flexbox 
+1. Improve UI?
 2. Import/Export
 3. Add day ordering of workout (including reordering)
 4. Most common times (for type)
 5. DB backup scheme
 6. Deployment
  1. Document
- 2. BUG: Killing/Starting new task will redeploy but loses DB data. Check to make sure actually using Mongo and Docker volumes.
+ 2. Store AWS config in Git
 7. Logging
 8. Nagios?
 9. Password/security for UI - Maybe use Google Sign In?
