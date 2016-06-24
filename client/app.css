@@ -1,7 +1,4 @@
 .day {
-    border: solid 1px black;
-    width: 30px;
-    padding: 10px;
     text-align: center;
     vertical-align: middle;
 }
@@ -13,7 +10,7 @@
 }
 
 .today {
-    border: solid 3px red;
+    border: solid 2px red !important;
 }
 
 .calendar {

@@ -3,10 +3,11 @@ import * as CalendarModule from "./calendar/calendar";
 import * as WorkoutsModule from "./workouts/workouts";
 import * as AddModule from "./add/add";
 import { WorkoutsService } from "./WorkoutsService";
-import "../app.css";
+import "bootswatch/cosmo/bootstrap.min.css";
 import "font-awesome-webpack";
 import "../index.html";
 import "../addWorkout.html";
+import "../app.css";
 
 angular.module("workoutLoggerApp", [])
     .factory("WorkoutsService", WorkoutsService.factory)
