@@ -8,24 +8,31 @@ Logs workouts
 ## Instructions
 Coming soon
 
+## Completed
+1. Spring boot, Angular JS, Java 8
+2. Store workouts in Mongo db or memory depending on Spring profile
+3. Run using Docker with images stored in Docker Hub
+4. Deployed to AWS using ECS 
+
 ## To Do
 1. Improve UI 
  1. Make add workout pretty
  2. Make calendar pretty
  3. Switch to flexbox 
- 4. Show workouts when clicking on a day
 2. Import/Export
 3. Add day ordering of workout (including reordering)
 4. Most common times (for type)
 5. DB backup scheme
 6. Deployment
- 1. AWS? with docker
- 2. Ansible?
+ 1. Document
+ 2. BUG: Killing/Starting new task will redeploy but loses DB data. Check to make sure actually using Mongo and Docker volumes.
 7. Logging
 8. Nagios?
-9. Password/security for UI
+9. Password/security for UI - Maybe use Google Sign In?
 10. Https
 11. Garmin Connect Sync
 12. Unit tests for UI
+ 1. Figure out how to use ES6 with unit tests both in CLI and Intellij
+ 2. Figure out JS only test along with browser test (Karma?)
 13. BUG: Adding workout shows up for the next day. Maybe due to timezone parsing because it happened at end of day?
 14. Combine JS and Java code coverage in Coveralls.io
