@@ -37,7 +37,6 @@ Coming soon
 10. Https
 11. Garmin Connect Sync
 12. Unit tests for UI
- 1. Figure out how to use ES6 with unit tests both in CLI and Intellij
- 2. Figure out JS only test along with browser test (Karma?)
-13. BUG: Adding workout shows up for the next day. Maybe due to timezone parsing because it happened at end of day?
+ 1. add additional unit tests
+ 2. add browser based tests (Karma)
 14. Combine JS and Java code coverage in Coveralls.io
