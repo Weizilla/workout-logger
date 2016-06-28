@@ -1,8 +1,7 @@
 package com.weizilla.workout.logger;
 
 import com.weizilla.workout.logger.entity.Workout;
-import com.weizilla.workout.logger.get.GetWorkouts;
-import com.weizilla.workout.logger.put.PutWorkouts;
+import com.weizilla.workout.logger.store.WorkoutStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,38 +12,36 @@ import java.util.Set;
 @Component
 public class WorkoutLogger
 {
-    private final GetWorkouts getWorkouts;
-    private final PutWorkouts putWorkouts;
+    private final WorkoutStore workoutStore;
 
     @Autowired
-    public WorkoutLogger(GetWorkouts getWorkouts, PutWorkouts putWorkouts)
+    public WorkoutLogger(WorkoutStore workoutStore)
     {
-        this.getWorkouts = getWorkouts;
-        this.putWorkouts = putWorkouts;
+        this.workoutStore = workoutStore;
     }
 
     public void put(Workout workout)
     {
-        putWorkouts.put(workout);
+        workoutStore.put(workout);
     }
 
     public List<Workout> getAll()
     {
-        return getWorkouts.getAll();
+        return workoutStore.getAll();
     }
 
     public Set<LocalDate> getAllDates()
     {
-        return getWorkouts.getAllDates();
+        return workoutStore.getAllDates();
     }
 
     public List<Workout> getForDate(LocalDate date)
     {
-        return getWorkouts.getForDate(date);
+        return workoutStore.getForDate(date);
     }
 
     public Set<String> getAllTypes()
     {
-        return getWorkouts.getAllTypes();
+        return workoutStore.getAllTypes();
     }
 }

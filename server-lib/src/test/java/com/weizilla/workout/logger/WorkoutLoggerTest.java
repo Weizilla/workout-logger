@@ -3,8 +3,7 @@ package com.weizilla.workout.logger;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.weizilla.workout.logger.entity.Workout;
-import com.weizilla.workout.logger.get.GetWorkouts;
-import com.weizilla.workout.logger.put.PutWorkouts;
+import com.weizilla.workout.logger.store.WorkoutStore;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,16 +23,14 @@ import static org.mockito.Mockito.when;
 public class WorkoutLoggerTest
 {
     @Mock
-    private GetWorkouts getWorkouts;
-    @Mock
-    private PutWorkouts putWorkouts;
+    private WorkoutStore workoutStore;
     private WorkoutLogger workoutLogger;
     private Workout workout;
 
     @Before
     public void setUp() throws Exception
     {
-        workoutLogger = new WorkoutLogger(getWorkouts, putWorkouts);
+        workoutLogger = new WorkoutLogger(workoutStore);
         workout = new Workout("TYPE", Duration.ofHours(1));
     }
 
@@ -41,13 +38,13 @@ public class WorkoutLoggerTest
     public void putsWorkout() throws Exception
     {
         workoutLogger.put(workout);
-        verify(putWorkouts).put(workout);
+        verify(workoutStore).put(workout);
     }
 
     @Test
     public void getsAllWorkouts() throws Exception
     {
-        when(getWorkouts.getAll()).thenReturn(Lists.newArrayList(workout));
+        when(workoutStore.getAll()).thenReturn(Lists.newArrayList(workout));
 
         List<Workout> workouts = workoutLogger.getAll();
         assertThat(workouts).hasSize(1);
@@ -58,7 +55,7 @@ public class WorkoutLoggerTest
     public void getWorkoutsForDate() throws Exception
     {
         LocalDate date = LocalDate.now();
-        when(getWorkouts.getForDate(date)).thenReturn(Lists.newArrayList(workout));
+        when(workoutStore.getForDate(date)).thenReturn(Lists.newArrayList(workout));
 
         List<Workout> workouts = workoutLogger.getForDate(date);
         assertThat(workouts).hasSize(1);
@@ -70,7 +67,7 @@ public class WorkoutLoggerTest
     {
         LocalDate date = LocalDate.now();
         Set<LocalDate> dates = Sets.newHashSet(date);
-        when(getWorkouts.getAllDates()).thenReturn(dates);
+        when(workoutStore.getAllDates()).thenReturn(dates);
 
         Set<LocalDate> actual = workoutLogger.getAllDates();
         assertThat(actual).isSameAs(dates);
@@ -80,7 +77,7 @@ public class WorkoutLoggerTest
     public void getAllTypes() throws Exception
     {
         Set<String> types = Sets.newHashSet("a", "b", "c");
-        when(getWorkouts.getAllTypes()).thenReturn(types);
+        when(workoutStore.getAllTypes()).thenReturn(types);
 
         Set<String> actual = workoutLogger.getAllTypes();
         assertThat(actual).isSameAs(types);
