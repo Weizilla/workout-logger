@@ -23,6 +23,7 @@ public class ObjectMappersTest
     private UUID id;
     private Instant entryTime;
     private String comment;
+    private long activityId;
 
     @Before
     public void setUp() throws Exception
@@ -33,6 +34,7 @@ public class ObjectMappersTest
         id = UUID.fromString("e487cc32-c5d9-417a-b0df-9aa0eb9154c3");
         entryTime = Instant.ofEpochSecond(1448146540);
         comment = "COMMENT";
+        activityId = 1234;
     }
 
     @Test
@@ -44,7 +46,7 @@ public class ObjectMappersTest
     @Test
     public void serializesWorkout() throws Exception
     {
-        Workout workout = new Workout(id, type, duration, date, entryTime, comment);
+        Workout workout = new Workout(id, type, duration, date, entryTime, comment, activityId);
         String expected = TestUtils.readFile("workout-obj-mapper-test.json");
         String actual = ObjectMappers.OBJECT_MAPPER.writeValueAsString(workout);
         JSONAssert.assertEquals(expected, actual, true);
@@ -61,5 +63,6 @@ public class ObjectMappersTest
         assertThat(actual.getDate()).isEqualTo(date);
         assertThat(actual.getEntryTime()).isEqualTo(entryTime);
         assertThat(actual.getComment()).isEqualTo(comment);
+        assertThat(actual.getActivityId()).isPresent().contains(activityId);
     }
 }

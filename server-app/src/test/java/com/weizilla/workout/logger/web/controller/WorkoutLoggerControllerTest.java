@@ -51,6 +51,7 @@ public class WorkoutLoggerControllerTest
     private String dateString;
     private UUID id;
     private String comment;
+    private long activityId;
 
     @Before
     public void setUp() throws Exception
@@ -67,13 +68,14 @@ public class WorkoutLoggerControllerTest
         id = UUID.randomUUID();
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
-        workout = new Workout(id, type, duration, date, entryTime, comment);
+        activityId = 123;
+        workout = new Workout(id, type, duration, date, entryTime, comment, activityId);
     }
 
     @Test
     public void getsAllWorkout() throws Exception
     {
-        when(workoutLogger.getAll()).thenReturn(Lists.newArrayList(workout));
+        when(workoutLogger.getAllWorkouts()).thenReturn(Lists.newArrayList(workout));
 
         mockMvc.perform(get("/api/workouts"))
             .andExpect(status().isOk())
@@ -84,7 +86,8 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$[0].duration", is(duration.toString())))
             .andExpect(jsonPath("$[0].date", is(dateString)))
             .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())))
-            .andExpect(jsonPath("$[0].comment", is(comment)));
+            .andExpect(jsonPath("$[0].comment", is(comment)))
+            .andExpect(jsonPath("$[0].activityId", is((int) activityId)));
     }
 
     @Test
@@ -108,6 +111,7 @@ public class WorkoutLoggerControllerTest
         assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS), is(entryTime));
         assertThat(actual.getDate(), is(date));
         assertThat(actual.getComment(), is(comment));
+        assertThat(actual.getActivityId().get(), is(activityId));
     }
 
     @Test

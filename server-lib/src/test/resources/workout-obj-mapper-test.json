@@ -4,5 +4,6 @@
   "duration": "PT1H",
   "date": "2015-11-21",
   "entryTime": 1448146540,
-  "comment": "COMMENT"
+  "comment": "COMMENT",
+  "activityId": 1234
 }

@@ -8,6 +8,7 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 public class Workout
@@ -19,10 +20,11 @@ public class Workout
     private final LocalDate date;
     private final Instant entryTime;
     private final String comment;
+    private Long activityId;
 
     public Workout(String type, Duration duration)
     {
-        this(null, type, duration, null, null, null);
+        this(null, type, duration, null, null, null, null);
     }
 
     @JsonCreator
@@ -33,7 +35,8 @@ public class Workout
         @JsonProperty(value = "duration", required = true) Duration duration,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
-        @JsonProperty("comment") String comment)
+        @JsonProperty("comment") String comment,
+        @JsonProperty("activityId") Long activityId)
     {
         this.id = id != null ? id : UUID.randomUUID();
         this.type = type;
@@ -41,6 +44,7 @@ public class Workout
         this.date = date != null ? date : LocalDate.now();
         this.entryTime = entryTime != null ? entryTime : Instant.now();
         this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
+        this.activityId = activityId;
     }
 
     public UUID getId()
@@ -73,6 +77,16 @@ public class Workout
         return comment;
     }
 
+    public Optional<Long> getActivityId()
+    {
+        return Optional.ofNullable(activityId);
+    }
+
+    public void setActivityId(long activityId)
+    {
+        this.activityId = activityId;
+    }
+
     @Override
     public String toString()
     {
@@ -83,6 +97,7 @@ public class Workout
             ", date=" + date +
             ", entryTime=" + entryTime +
             ", comment=" + comment +
+            ", activityId=" + activityId +
             '}';
     }
 }

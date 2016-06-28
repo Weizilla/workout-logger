@@ -2,6 +2,7 @@ package com.weizilla.workout.logger;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.weizilla.workout.logger.activity.ActivityManager;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.junit.Before;
@@ -24,13 +25,15 @@ public class WorkoutLoggerTest
 {
     @Mock
     private WorkoutStore workoutStore;
+    @Mock
+    private ActivityManager activityManager;
     private WorkoutLogger workoutLogger;
     private Workout workout;
 
     @Before
     public void setUp() throws Exception
     {
-        workoutLogger = new WorkoutLogger(workoutStore);
+        workoutLogger = new WorkoutLogger(workoutStore, activityManager);
         workout = new Workout("TYPE", Duration.ofHours(1));
     }
 
@@ -46,7 +49,7 @@ public class WorkoutLoggerTest
     {
         when(workoutStore.getAll()).thenReturn(Lists.newArrayList(workout));
 
-        List<Workout> workouts = workoutLogger.getAll();
+        List<Workout> workouts = workoutLogger.getAllWorkouts();
         assertThat(workouts).hasSize(1);
         assertThat(workouts.get(0)).isSameAs(workout);
     }

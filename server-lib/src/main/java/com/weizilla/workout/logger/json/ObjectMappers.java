@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class ObjectMappers
         module.addSerializer(Duration.class, new DurationSerializer());
         module.addSerializer(Instant.class, new InstantSerializer());
         OBJECT_MAPPER.registerModule(module);
+        OBJECT_MAPPER.registerModule(new Jdk8Module());
     }
 
     private ObjectMappers()

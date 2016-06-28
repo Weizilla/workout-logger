@@ -8,20 +8,20 @@ import org.springframework.mock.env.MockEnvironment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MongoWorkoutStoreConfigurationTest
+public class MongoStoreConfigurationTest
 {
     private static final String HOST = "HOST";
     private static final String DB_NAME = "DB NAME";
-    private MongoWorkoutStoreConfiguration configuration;
+    private MongoStoreConfiguration configuration;
 
     @Before
     public void setUp() throws Exception
     {
-        configuration = new MongoWorkoutStoreConfiguration();
+        configuration = new MongoStoreConfiguration();
         MockEnvironment environment = new MockEnvironment();
         configuration.setEnvironment(environment);
-        environment.setProperty(MongoWorkoutStoreConfiguration.DB_NAME, DB_NAME);
-        environment.setProperty(MongoWorkoutStoreConfiguration.HOST, HOST);
+        environment.setProperty(MongoStoreConfiguration.DB_NAME, DB_NAME);
+        environment.setProperty(MongoStoreConfiguration.HOST, HOST);
     }
 
     @Test

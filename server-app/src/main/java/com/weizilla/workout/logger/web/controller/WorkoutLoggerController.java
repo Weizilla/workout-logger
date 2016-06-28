@@ -30,7 +30,7 @@ public class WorkoutLoggerController
     @RequestMapping("/workouts")
     public List<Workout> getWorkouts()
     {
-        return workoutLogger.getAll();
+        return workoutLogger.getAllWorkouts();
     }
 
     @RequestMapping(path = "/workouts", method = RequestMethod.POST)

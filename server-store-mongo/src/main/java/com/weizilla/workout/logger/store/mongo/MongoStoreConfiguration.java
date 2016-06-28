@@ -17,9 +17,9 @@ import java.util.List;
 
 @Profile("mongo")
 @Configuration
-public class MongoWorkoutStoreConfiguration extends AbstractMongoConfiguration
+public class MongoStoreConfiguration extends AbstractMongoConfiguration
 {
-    private static final Logger logger = LoggerFactory.getLogger(MongoWorkoutStoreConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(MongoStoreConfiguration.class);
     protected static final String DB_NAME = "store.mongo.dbname";
     protected static final String HOST = "store.mongo.host";
     private static final String DEFAULT_HOST = "localhost";

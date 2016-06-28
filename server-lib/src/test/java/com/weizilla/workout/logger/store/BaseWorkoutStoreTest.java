@@ -51,9 +51,8 @@ public abstract class BaseWorkoutStoreTest
         assertThat(workouts).hasSize(1);
         assertThat(workouts).containsExactly(workout);
 
-        Workout newWorkout =
-            new Workout(id, "NEW TYPE", Duration.ofDays(1), LocalDate.now(), Instant
-                .now(), "COMMENT");
+        Workout newWorkout = new Workout(id, "NEW TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(),
+            "COMMENT", 1L);
         store.put(newWorkout);
 
         List<Workout> newWorkouts = store.getAll();

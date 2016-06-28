@@ -1,5 +1,6 @@
 package com.weizilla.workout.logger;
 
+import com.weizilla.workout.logger.activity.ActivityManager;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,13 @@ import java.util.Set;
 public class WorkoutLogger
 {
     private final WorkoutStore workoutStore;
+    private final ActivityManager activityManager;
 
     @Autowired
-    public WorkoutLogger(WorkoutStore workoutStore)
+    public WorkoutLogger(WorkoutStore workoutStore, ActivityManager activityManager)
     {
         this.workoutStore = workoutStore;
+        this.activityManager = activityManager;
     }
 
     public void put(Workout workout)
@@ -25,7 +28,7 @@ public class WorkoutLogger
         workoutStore.put(workout);
     }
 
-    public List<Workout> getAll()
+    public List<Workout> getAllWorkouts()
     {
         return workoutStore.getAll();
     }

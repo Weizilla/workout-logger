@@ -35,7 +35,7 @@ public class WorkoutStoreTest
             .mapToObj(today::plusDays)
             .collect(Collectors.toSet());
         List<Workout> workouts = dates.stream()
-            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d, Instant.now(), "COMMENT"))
+            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d, Instant.now(), "COMMENT", 1L))
             .collect(Collectors.toList());
         store.setWorkouts(workouts);
 
@@ -49,11 +49,11 @@ public class WorkoutStoreTest
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = today.plusDays(1);
         List<Workout> workouts = Lists.newArrayList(
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now(), "COMMENT"),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now(), "COMMENT"),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT"));
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now(), "COMMENT", 1L),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now(), "COMMENT", 1L),
+            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L));
         store.setWorkouts(workouts);
 
         List<Workout> actual = store.getForDate(today);
