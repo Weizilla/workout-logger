@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 @Profile("memory")
 @Component
-public class MemoryActivityStore implements ActivityStore
+public class MemoryGarminEntryStore implements GarminEntryStore
 {
     private final Map<Long, Activity> activities = new TreeMap<>();
 

@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger.store.mongo;
 
 import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,6 +14,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootApplication
 public class MongoStoreSpike implements CommandLineRunner
@@ -21,7 +23,10 @@ public class MongoStoreSpike implements CommandLineRunner
     private MongoWorkoutRepository workoutRepo;
 
     @Autowired
-    private MongoActivityRepository activityRepo;
+    private MongoManualEntryRepository manualEntryRepository;
+
+    @Autowired
+    private MongoGarminEntryRepository activityRepo;
 
     public static void main(String[] args)
     {
@@ -34,17 +39,16 @@ public class MongoStoreSpike implements CommandLineRunner
     @Override
     public void run(String... strings) throws Exception
     {
-        Workout workout = new Workout("ABC", Duration.ofMinutes(45));
-        workoutRepo.save(workout);
-        System.out.println("count: " + workoutRepo.count());
-        workoutRepo.findAll().forEach(System.out::println);
-
         LocalDate date = LocalDate.of(2015, 12, 11);
-        Workout pastWorkout = new Workout(null, "ABC", Duration.ofHours(1), date, Instant.now(), "COMMENT", 1L);
-        workoutRepo.save(pastWorkout);
+        Workout workout = new Workout(null, "ABC", Duration.ofHours(1), date, Instant.now(), "COMMENT", 1L,
+            UUID.randomUUID());
+        workoutRepo.save(workout);
 
         Activity activity = new Activity(1234, "RUNNING", Duration.ofDays(1), Instant.now(), 22.3);
         activityRepo.save(activity);
+
+        ManualEntry entry = new ManualEntry("DEF", Duration.ofDays(1));
+        manualEntryRepository.save(entry);
 
         List<Workout> byDate = workoutRepo.findByDate(date);
         System.out.println("found by date: " + byDate);

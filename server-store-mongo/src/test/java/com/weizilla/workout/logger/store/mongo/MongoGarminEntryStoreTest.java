@@ -17,18 +17,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MongoActivityStoreTest
+public class MongoGarminEntryStoreTest
 {
     @Mock
-    private MongoActivityRepository repo;
-    private MongoActivityStore store;
+    private MongoGarminEntryRepository repo;
+    private MongoGarminEntryStore store;
     private Activity activity;
     private long id;
 
     @Before
     public void setUp() throws Exception
     {
-        store = new MongoActivityStore(repo);
+        store = new MongoGarminEntryStore(repo);
         id = 1234;
         activity = new Activity(id, "TYPE", Duration.ofDays(1), Instant.now(), 12.3);
     }

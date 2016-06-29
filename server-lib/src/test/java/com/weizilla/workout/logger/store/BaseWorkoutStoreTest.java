@@ -21,8 +21,8 @@ public abstract class BaseWorkoutStoreTest
     @Before
     public void setUp() throws Exception
     {
-        workout = new Workout("TYPE", Duration.ofHours(1));
-        id = workout.getId();
+        id = UUID.randomUUID();
+        workout = new Workout(id, "TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT", 1L, UUID.randomUUID());
     }
 
     @Test
@@ -52,7 +52,7 @@ public abstract class BaseWorkoutStoreTest
         assertThat(workouts).containsExactly(workout);
 
         Workout newWorkout = new Workout(id, "NEW TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(),
-            "COMMENT", 1L);
+            "COMMENT", 1L, UUID.randomUUID());
         store.put(newWorkout);
 
         List<Workout> newWorkouts = store.getAll();

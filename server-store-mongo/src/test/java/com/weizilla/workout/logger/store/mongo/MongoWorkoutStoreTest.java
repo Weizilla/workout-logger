@@ -32,7 +32,8 @@ public class MongoWorkoutStoreTest
     public void setUp() throws Exception
     {
         store = new MongoWorkoutStore(repo);
-        workout = new Workout("TYPE", Duration.ofHours(1));
+        workout = new Workout(UUID.randomUUID(), "TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT",
+            1L, UUID.randomUUID());
         id = workout.getId();
     }
 
@@ -65,13 +66,16 @@ public class MongoWorkoutStoreTest
     public void getWorkoutsForSingleDate() throws Exception
     {
         LocalDate today = LocalDate.now();
-        List<Workout> workouts = Lists.newArrayList(
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L));
+        List<Workout> workouts = Lists.newArrayList(createWorkout(today), createWorkout(today), createWorkout(today));
         when(repo.findByDate(today)).thenReturn(workouts);
 
         List<Workout> actual = store.getForDate(today);
         assertThat(actual).isEqualTo(workouts);
+    }
+
+    private static Workout createWorkout(LocalDate today)
+    {
+        return new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L,
+            UUID.randomUUID());
     }
 }

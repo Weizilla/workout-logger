@@ -8,10 +8,9 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.UUID;
 
-public class Workout
+public class ManualEntry
 {
     @Id
     private final UUID id;
@@ -20,20 +19,21 @@ public class Workout
     private final LocalDate date;
     private final Instant entryTime;
     private final String comment;
-    private Long garminId;
-    private UUID manualId;
+
+    public ManualEntry(String type, Duration duration)
+    {
+        this(null, type, duration, null, null, null);
+    }
 
     @JsonCreator
     @PersistenceConstructor
-    public Workout(
+    public ManualEntry(
         @JsonProperty("id") UUID id,
         @JsonProperty(value = "type", required = true) String type,
         @JsonProperty(value = "duration", required = true) Duration duration,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
-        @JsonProperty("comment") String comment,
-        @JsonProperty("garminId") Long garminId,
-        @JsonProperty("manualId") UUID manualId)
+        @JsonProperty("comment") String comment)
     {
         this.id = id != null ? id : UUID.randomUUID();
         this.type = type;
@@ -41,8 +41,6 @@ public class Workout
         this.date = date != null ? date : LocalDate.now();
         this.entryTime = entryTime != null ? entryTime : Instant.now();
         this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
-        this.garminId = garminId;
-        this.manualId = manualId;
     }
 
     public UUID getId()
@@ -75,38 +73,16 @@ public class Workout
         return comment;
     }
 
-    public Optional<Long> getGarminId()
-    {
-        return Optional.ofNullable(garminId);
-    }
-
-    public void setGarminId(long garminId)
-    {
-        this.garminId = garminId;
-    }
-
-    public Optional<UUID> getManualId()
-    {
-        return Optional.ofNullable(manualId);
-    }
-
-    public void setManualId(UUID manualId)
-    {
-        this.manualId = manualId;
-    }
-
     @Override
     public String toString()
     {
-        return "Workout{" +
+        return "ManualEntry{" +
             "id=" + id +
             ", type='" + type + '\'' +
             ", duration=" + duration +
             ", date=" + date +
             ", entryTime=" + entryTime +
             ", comment=" + comment +
-            ", garminId=" + garminId +
-            ", manualId=" + manualId +
             '}';
     }
 }

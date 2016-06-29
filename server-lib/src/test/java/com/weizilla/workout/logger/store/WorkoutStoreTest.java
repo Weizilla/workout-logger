@@ -35,7 +35,7 @@ public class WorkoutStoreTest
             .mapToObj(today::plusDays)
             .collect(Collectors.toSet());
         List<Workout> workouts = dates.stream()
-            .map(d -> new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), d, Instant.now(), "COMMENT", 1L))
+            .map(WorkoutStoreTest::createWorkout)
             .collect(Collectors.toList());
         store.setWorkouts(workouts);
 
@@ -48,12 +48,8 @@ public class WorkoutStoreTest
     {
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = today.plusDays(1);
-        List<Workout> workouts = Lists.newArrayList(
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now(), "COMMENT", 1L),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), tomorrow, Instant.now(), "COMMENT", 1L),
-            new Workout(UUID.randomUUID(), "TYPE", Duration.ofMinutes(45), today, Instant.now(), "COMMENT", 1L));
+        List<Workout> workouts = Lists.newArrayList(createWorkout(today), createWorkout(tomorrow), createWorkout(today),
+            createWorkout(tomorrow), createWorkout(today));
         store.setWorkouts(workouts);
 
         List<Workout> actual = store.getForDate(today);
@@ -64,12 +60,8 @@ public class WorkoutStoreTest
     public void getsAllWorkoutTypes() throws Exception
     {
         Set<String> types = Sets.newHashSet("a", "b", "c");
-        List<Workout> workouts = Lists.newArrayList(
-            new Workout("a", Duration.ofMinutes(45)),
-            new Workout("b", Duration.ofMinutes(45)),
-            new Workout("c", Duration.ofMinutes(45)),
-            new Workout("b", Duration.ofMinutes(45)),
-            new Workout("a", Duration.ofMinutes(45)));
+        List<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("b"), createWorkout("c"),
+            createWorkout("b"), createWorkout("a"));
         store.setWorkouts(workouts);
 
         Set<String> actual = store.getAllTypes();
@@ -80,16 +72,24 @@ public class WorkoutStoreTest
     public void getsAllWorkoutsCaseInsensitive() throws Exception
     {
         Set<String> types = Sets.newHashSet("a", "b", "c");
-        List<Workout> workouts = Lists.newArrayList(
-            new Workout("a", Duration.ofMinutes(45)),
-            new Workout("B", Duration.ofMinutes(45)),
-            new Workout("c", Duration.ofMinutes(45)),
-            new Workout("b", Duration.ofMinutes(45)),
-            new Workout("A", Duration.ofMinutes(45)));
+        List<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("B"), createWorkout("c"),
+            createWorkout("b"), createWorkout("A"));
         store.setWorkouts(workouts);
 
         Set<String> actual = store.getAllTypes();
         assertThat(actual).containsOnlyElementsOf(types);
+    }
+
+    private static Workout createWorkout(String type)
+    {
+        return new Workout(UUID.randomUUID(), type, Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT", 1L,
+            UUID.randomUUID());
+    }
+
+    private static Workout createWorkout(LocalDate date)
+    {
+        return new Workout(UUID.randomUUID(), "TYPE", Duration.ofDays(1), date, Instant.now(), "COMMENT", 1L,
+            UUID.randomUUID());
     }
 
     private static class WorkoutStoreStub implements WorkoutStore

@@ -2,8 +2,9 @@ package com.weizilla.workout.logger;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.weizilla.workout.logger.activity.ActivityManager;
+import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.store.ManualEntryStore;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,9 +13,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -26,15 +29,18 @@ public class WorkoutLoggerTest
     @Mock
     private WorkoutStore workoutStore;
     @Mock
-    private ActivityManager activityManager;
+    private GarminManager garminManager;
+    @Mock
+    private ManualEntryStore manualEntryStore;
     private WorkoutLogger workoutLogger;
     private Workout workout;
 
     @Before
     public void setUp() throws Exception
     {
-        workoutLogger = new WorkoutLogger(workoutStore, activityManager);
-        workout = new Workout("TYPE", Duration.ofHours(1));
+        workoutLogger = new WorkoutLogger(workoutStore, manualEntryStore, garminManager);
+        workout = new Workout(UUID.randomUUID(), "TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT",
+            1L, UUID.randomUUID());
     }
 
     @Test

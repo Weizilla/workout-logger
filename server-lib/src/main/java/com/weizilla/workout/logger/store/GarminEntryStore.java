@@ -4,7 +4,7 @@ import com.weizilla.garmin.entity.Activity;
 
 import java.util.List;
 
-public interface ActivityStore
+public interface GarminEntryStore
 {
     void put(Activity activity);
     List<Activity> getAll();

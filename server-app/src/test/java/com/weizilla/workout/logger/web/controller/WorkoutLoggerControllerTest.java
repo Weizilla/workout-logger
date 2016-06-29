@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -51,7 +51,8 @@ public class WorkoutLoggerControllerTest
     private String dateString;
     private UUID id;
     private String comment;
-    private long activityId;
+    private long garminId;
+    private UUID manualId;
 
     @Before
     public void setUp() throws Exception
@@ -68,8 +69,9 @@ public class WorkoutLoggerControllerTest
         id = UUID.randomUUID();
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
-        activityId = 123;
-        workout = new Workout(id, type, duration, date, entryTime, comment, activityId);
+        garminId = 123;
+        manualId = UUID.randomUUID();
+        workout = new Workout(id, type, duration, date, entryTime, comment, garminId, manualId);
     }
 
     @Test
@@ -87,7 +89,9 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$[0].date", is(dateString)))
             .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())))
             .andExpect(jsonPath("$[0].comment", is(comment)))
-            .andExpect(jsonPath("$[0].activityId", is((int) activityId)));
+            .andExpect(jsonPath("$[0].garminId", is((int) garminId)))
+            .andExpect(jsonPath("$[0].manualId", is(manualId.toString())));
+
     }
 
     @Test
@@ -105,13 +109,14 @@ public class WorkoutLoggerControllerTest
         verify(workoutLogger).put(captor.capture());
 
         Workout actual = captor.getValue();
-        assertThat(actual.getId(), is(id));
-        assertThat(actual.getType(), is(type));
-        assertThat(actual.getDuration(), is(duration));
-        assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS), is(entryTime));
-        assertThat(actual.getDate(), is(date));
-        assertThat(actual.getComment(), is(comment));
-        assertThat(actual.getActivityId().get(), is(activityId));
+        assertThat(actual.getId()).isEqualTo(id);
+        assertThat(actual.getType()).isEqualTo(type);
+        assertThat(actual.getDuration()).isEqualTo(duration);
+        assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(entryTime);
+        assertThat(actual.getDate()).isEqualTo(date);
+        assertThat(actual.getComment()).isEqualTo(comment);
+        assertThat(actual.getGarminId()).isPresent().contains(garminId);
+        assertThat(actual.getManualId()).isPresent().contains(manualId);
     }
 
     @Test
@@ -135,9 +140,9 @@ public class WorkoutLoggerControllerTest
     public void getWorkoutsByDate() throws Exception
     {
         List<Workout> workouts = Lists.newArrayList(
-            new Workout(type, duration),
-            new Workout(type, duration),
-            new Workout(type, duration));
+            new Workout(id, type, duration, date, entryTime, comment, garminId, manualId),
+            new Workout(id, type, duration, date, entryTime, comment, garminId, manualId),
+            new Workout(id, type, duration, date, entryTime, comment, garminId, manualId));
 
         when(workoutLogger.getForDate(date)).thenReturn(workouts);
 
