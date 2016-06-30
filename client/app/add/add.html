@@ -1,35 +1,35 @@
 <div class="container" ng-controller="AddCtrl as ctrl">
     <form>
         <div class="form-group">
-            <label for="newWorkoutType">Type</label>
-            <div id="newWorkoutType">
+            <label for="newEntryType">Type</label>
+            <div id="newEntryType">
                 <div class="radio" ng-repeat="type in ctrl.types">
                     <label>
-                        <input type="radio" name="types" ng-model="ctrl.newWorkoutType" ng-value="type">
+                        <input type="radio" name="types" ng-model="ctrl.newEntryType" ng-value="type">
                         {{ type }}
                     </label>
                 </div>
                 <div>
-                    <input class="form-control" type="text" ng-model="ctrl.newWorkoutType">
+                    <input class="form-control" type="text" ng-model="ctrl.newEntryType">
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="newWorkoutDuration">Duration (mins)</label>
-            <input id="newWorkoutDuration" class="form-control" type="number"
-                    ng-model="ctrl.newWorkoutDuration">
+            <label for="newEntryDuration">Duration (mins)</label>
+            <input id="newEntryDuration" class="form-control" type="number"
+                    ng-model="ctrl.newEntryDuration">
         </div>
 
         <div class="form-group">
-            <label for="newWorkoutDate">Date</label>
-            <input id="newWorkoutDate" class="form-control" type="date"
-                    ng-model="ctrl.newWorkoutDate">
+            <label for="newEntryDate">Date</label>
+            <input id="newEntryDate" class="form-control" type="date"
+                    ng-model="ctrl.newEntryDate">
         </div>
 
         <div class="form-group">
-            <label for="newWorkoutComment">Comment</label>
-            <textarea id="newWorkoutComment" class="form-control" ng-model="ctrl.newWorkoutComment"></textarea>
+            <label for="newEntryComment">Comment</label>
+            <textarea id="newEntryComment" class="form-control" ng-model="ctrl.newEntryComment"></textarea>
         </div>
 
         <input class="btn btn-primary btn-lg btn-block" type="submit" value="Add" ng-click="ctrl.add()">

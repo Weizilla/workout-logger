@@ -13,8 +13,8 @@ describe("add controller", function() {
             getAllTypes: function() {
                 return new Promise(function(fulfill){fulfill([]);});
             },
-            addWorkout(newWorkout) {
-                this.result = newWorkout;
+            addEntry(newEntry) {
+                this.result = newEntry;
                 return new Promise(function(){});
             }
         };
@@ -26,9 +26,9 @@ describe("add controller", function() {
         expect(ctrl).to.exist;
     });
 
-    describe("when creating a new workout", function() {
+    describe("when creating a new entry", function() {
         it("should set type", function() {
-            ctrl.newWorkoutType = "TYPE";
+            ctrl.newEntryType = "TYPE";
             ctrl.add();
             let result = workoutService.result;
             expect(result).to.exist;
@@ -36,7 +36,7 @@ describe("add controller", function() {
         });
 
         it("should set duration", function() {
-            ctrl.newWorkoutDuration = 33;
+            ctrl.newEntryDuration = 33;
             ctrl.add();
             let result = workoutService.result;
             expect(result).to.exist;
@@ -44,7 +44,7 @@ describe("add controller", function() {
         });
 
         it("should set comment", function() {
-            ctrl.newWorkoutComment = "COMMENT";
+            ctrl.newEntryComment = "COMMENT";
             ctrl.add();
             let result = workoutService.result;
             expect(result).to.exist;
@@ -52,7 +52,7 @@ describe("add controller", function() {
         });
 
         it("should set workout date", function() {
-            ctrl.newWorkoutDate = new Date(2016, 5, 24, 23, 12, 13);
+            ctrl.newEntryDate = new Date(2016, 5, 24, 23, 12, 13);
             ctrl.add();
             let result = workoutService.result;
             expect(result).to.exist;

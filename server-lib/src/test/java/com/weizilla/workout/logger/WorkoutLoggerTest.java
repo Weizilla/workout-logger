@@ -2,13 +2,17 @@ package com.weizilla.workout.logger;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.weizilla.workout.logger.garmin.GarminManager;
+import com.weizilla.workout.logger.entity.ManualEntry;
+import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.store.ManualEntryStore;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -32,6 +36,8 @@ public class WorkoutLoggerTest
     private GarminManager garminManager;
     @Mock
     private ManualEntryStore manualEntryStore;
+    @Captor
+    private ArgumentCaptor<Workout> workoutCaptor;
     private WorkoutLogger workoutLogger;
     private Workout workout;
 
@@ -41,6 +47,25 @@ public class WorkoutLoggerTest
         workoutLogger = new WorkoutLogger(workoutStore, manualEntryStore, garminManager);
         workout = new Workout(UUID.randomUUID(), "TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT",
             1L, UUID.randomUUID());
+    }
+
+    @Test
+    public void addingManualEntryAddsWorkout() throws Exception
+    {
+        ManualEntry entry = ManualEntryStub.create();
+        workoutLogger.addEntry(entry);
+
+        verify(manualEntryStore).put(entry);
+        verify(workoutStore).put(workoutCaptor.capture());
+
+        Workout addedWorkout = workoutCaptor.getValue();
+        assertThat(addedWorkout.getId()).isNotNull();
+        assertThat(addedWorkout.getType()).isEqualTo(entry.getType());
+        assertThat(addedWorkout.getDuration()).isEqualTo(entry.getDuration());
+        assertThat(addedWorkout.getDate()).isEqualTo(entry.getDate());
+        assertThat(addedWorkout.getEntryTime()).isEqualTo(entry.getEntryTime());
+        assertThat(addedWorkout.getComment()).isEqualTo(entry.getComment());
+        assertThat(addedWorkout.getManualId()).isPresent().contains(entry.getId());
     }
 
     @Test

@@ -30,6 +30,14 @@ class WorkoutsService {
                 this.refreshUpdateListeners();
             });
     }
+    
+    addEntry(entry) {
+        return this.$http.post(getHost() + "/api/entry", entry)
+            .then(r => r.data)
+            .then(() => {
+                this.refreshUpdateListeners();
+            });
+    }
 
     getWorkoutDates() {
         return this.$http.get(getHost() + "/api/workouts/dates").then(r => r.data.map(d => moment(d)));

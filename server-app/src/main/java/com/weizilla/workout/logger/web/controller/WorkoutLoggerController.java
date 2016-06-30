@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger.web.controller;
 
 import com.weizilla.workout.logger.WorkoutLogger;
+import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,6 +26,12 @@ public class WorkoutLoggerController
     public WorkoutLoggerController(WorkoutLogger workoutLogger)
     {
         this.workoutLogger = workoutLogger;
+    }
+
+    @RequestMapping("/entry")
+    public void addEntry(@RequestBody ManualEntry entry)
+    {
+        workoutLogger.addEntry(entry);
     }
 
     @RequestMapping("/workouts")

@@ -8,6 +8,8 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ManualEntry
@@ -39,8 +41,14 @@ public class ManualEntry
         this.type = type;
         this.duration = duration;
         this.date = date != null ? date : LocalDate.now();
-        this.entryTime = entryTime != null ? entryTime : Instant.now();
+        this.entryTime = calcEntryTime(entryTime);
         this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
+    }
+
+    private static Instant calcEntryTime(Instant input)
+    {
+        Instant entryTime = input != null ? input : Instant.now();
+        return entryTime.truncatedTo(ChronoUnit.SECONDS);
     }
 
     public UUID getId()
@@ -84,5 +92,31 @@ public class ManualEntry
             ", entryTime=" + entryTime +
             ", comment=" + comment +
             '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        ManualEntry that = (ManualEntry) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(type, that.type) &&
+            Objects.equals(duration, that.duration) &&
+            Objects.equals(date, that.date) &&
+            Objects.equals(entryTime, that.entryTime) &&
+            Objects.equals(comment, that.comment);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id, type, duration, date, entryTime, comment);
     }
 }

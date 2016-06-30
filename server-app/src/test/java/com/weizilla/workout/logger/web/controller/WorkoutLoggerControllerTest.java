@@ -3,6 +3,8 @@ package com.weizilla.workout.logger.web.controller;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.weizilla.workout.logger.WorkoutLogger;
+import com.weizilla.workout.logger.entity.ManualEntry;
+import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.json.ObjectMappers;
 import com.weizilla.workout.logger.web.WebTestUtils;
@@ -11,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,6 +45,8 @@ public class WorkoutLoggerControllerTest
 {
     @Mock
     private WorkoutLogger workoutLogger;
+    @Captor
+    private ArgumentCaptor<ManualEntry> manualEntryCaptor;
     private MockMvc mockMvc;
     private Workout workout;
     private String type;
@@ -53,6 +58,7 @@ public class WorkoutLoggerControllerTest
     private String comment;
     private long garminId;
     private UUID manualId;
+    private ManualEntry manualEntry;
 
     @Before
     public void setUp() throws Exception
@@ -72,6 +78,24 @@ public class WorkoutLoggerControllerTest
         garminId = 123;
         manualId = UUID.randomUUID();
         workout = new Workout(id, type, duration, date, entryTime, comment, garminId, manualId);
+        manualEntry = ManualEntryStub.create();
+    }
+
+    @Test
+    public void addsManualEntry() throws Exception
+    {
+        String json = ObjectMappers.OBJECT_MAPPER.writeValueAsString(manualEntry);
+
+        MockHttpServletRequestBuilder post = post("/api/entry")
+            .contentType(WebTestUtils.APPLICATION_JSON_UTF8)
+            .content(json);
+        mockMvc.perform(post)
+            .andExpect(status().isOk());
+
+        verify(workoutLogger).addEntry(manualEntryCaptor.capture());
+
+        ManualEntry actual = manualEntryCaptor.getValue();
+        assertThat(actual).isEqualTo(manualEntry);
     }
 
     @Test

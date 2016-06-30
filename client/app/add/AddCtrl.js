@@ -8,19 +8,19 @@ class AddCtrl {
         this.$window = $window;
         this.workouts = [];
         this.types = [];
-        this.newWorkoutDate = new Date();
+        this.newEntryDate = new Date();
 
         workoutsService.getAllTypes().then(data => this.types = data.sort());
     }
 
     add() {
-        let newWorkout = {
-            type: this.newWorkoutType,
-            duration: "PT" + this.newWorkoutDuration + "M",
-            date: moment(this.newWorkoutDate).format("YYYY-MM-DD"),
-            comment: this.newWorkoutComment
+        let newEntry = {
+            type: this.newEntryType,
+            duration: "PT" + this.newEntryDuration + "M",
+            date: moment(this.newEntryDate).format("YYYY-MM-DD"),
+            comment: this.newEntryComment
         };
-        this.workoutsService.addWorkout(newWorkout).then(w => {
+        this.workoutsService.addEntry(newEntry).then(w => {
             this.$window.location.href = "/";
         });
     }

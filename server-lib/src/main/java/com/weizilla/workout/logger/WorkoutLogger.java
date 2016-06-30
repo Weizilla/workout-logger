@@ -1,7 +1,8 @@
 package com.weizilla.workout.logger;
 
-import com.weizilla.workout.logger.garmin.GarminManager;
+import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.store.ManualEntryStore;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,14 @@ public class WorkoutLogger
         this.workoutStore = workoutStore;
         this.manualEntryStore = manualEntryStore;
         this.garminManager = garminManager;
+    }
+
+    public void addEntry(ManualEntry entry)
+    {
+        manualEntryStore.put(entry);
+        Workout workout = new Workout(null, entry.getType(), entry.getDuration(), entry.getDate(), entry.getEntryTime(),
+            entry.getComment(), null, entry.getId());
+        workoutStore.put(workout);
     }
 
     public void put(Workout workout)

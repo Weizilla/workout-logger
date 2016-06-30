@@ -18,6 +18,11 @@
         </dependency>
         <dependency>
             <groupId>com.weizilla.workout.logger</groupId>
+            <artifactId>workout-logger-lib</artifactId>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.weizilla.workout.logger</groupId>
             <artifactId>workout-logger-client</artifactId>
         </dependency>
         <dependency>
