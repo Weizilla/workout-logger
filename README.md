@@ -16,15 +16,14 @@ Coming soon
 
 ## To Do
 1. Improve UI
- 1. Cancel on Add page
- 2. Improve workout day, today, selected styles 
- 3. Parse duration
- 4. Unselect selected day
- 5. Calendar, Add dialog and workouts on same page for larger screens
+ 1. Improve workout day, today, selected styles 
+ 2. Parse duration
+ 3. Unselect selected day
+ 4. Calendar, Add dialog and workouts on same page for larger screens
 2. Import/Export
 3. Workouts
  1. Add day ordering of workout (including reordering)
- 2. Delete workout
+ 2. Edit/delete workout
  3. 5 star rating
 4. Most common times for each time
 5. DB backup scheme
@@ -36,17 +35,17 @@ Coming soon
 9. Password/security for UI - Maybe use Google Sign In?
 10. Https
 11. Garmin Connect Sync
- 1. New garmin entries creates workouts
- 2. Find safe place for username/password
- 3. Get rid of package string for component scan
- 4. Use futures, async, netty?
- 5. Add status and updates to UI
- 6. Better error handling
- 7. Store imported workouts
- 8. Sync custom time range
- 9. Scheduled sync
+ 1. Find safe place for username/password
+ 2. Get rid of package string for component scan
+ 3. Use futures, async, netty?
+ 4. UI: distance
+ 5. Better error handling
+ 6. Sync custom time range
+ 7. Scheduled sync
+ 9. Match garmin types to existing types?
 12. Unit tests for UI
  1. add additional unit tests
  2. add browser based tests (Karma)
 14. Combine JS and Java code coverage in Coveralls.io
 15. Spring hot deploy
+16. Match garmin and manual workouts
