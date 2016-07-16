@@ -36,7 +36,7 @@ class CalendarCtrl {
             days[i] = {
                 hasWorkouts: this.hasWorkouts(currDate, workoutDates),
                 isToday: currDate.isSame(today, "day"),
-                date: currDate.date()
+                date: currDate
             };
         }
         return days;

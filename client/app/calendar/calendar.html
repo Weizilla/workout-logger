@@ -15,8 +15,8 @@
         <tr ng-repeat="week in ctrl.weeks">
             <td class="day"
                     ng-class="{selected: day === ctrl.selectedDate, today: day.isToday, workout: day.hasWorkouts}"
-                    ng-click="ctrl.select(day)"
-                    ng-repeat="day in week">{{ day.date }}
+                    ng-click="ctrl.select(day.date)"
+                    ng-repeat="day in week">{{ day.date.date() }}
             </td>
         </tr>
         </tbody>

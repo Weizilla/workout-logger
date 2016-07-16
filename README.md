@@ -21,7 +21,6 @@ Coming soon
  3. Parse duration
  4. Unselect selected day
  5. Calendar, Add dialog and workouts on same page for larger screens
- 6. BUG: all calendar days use same month even if day was from prev month
 2. Import/Export
 3. Workouts
  1. Add day ordering of workout (including reordering)
