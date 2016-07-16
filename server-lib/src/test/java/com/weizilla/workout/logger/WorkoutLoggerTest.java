@@ -2,9 +2,11 @@ package com.weizilla.workout.logger;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.store.ManualEntryStore;
 import com.weizilla.workout.logger.store.WorkoutStore;
@@ -19,6 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -40,6 +43,7 @@ public class WorkoutLoggerTest
     private ArgumentCaptor<Workout> workoutCaptor;
     private WorkoutLogger workoutLogger;
     private Workout workout;
+    private Activity garminEntry;
 
     @Before
     public void setUp() throws Exception
@@ -47,6 +51,7 @@ public class WorkoutLoggerTest
         workoutLogger = new WorkoutLogger(workoutStore, manualEntryStore, garminManager);
         workout = new Workout(UUID.randomUUID(), "TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT",
             1L, UUID.randomUUID());
+        garminEntry = ActivityStub.create();
     }
 
     @Test
@@ -115,5 +120,15 @@ public class WorkoutLoggerTest
 
         Set<String> actual = workoutLogger.getAllTypes();
         assertThat(actual).isSameAs(types);
+    }
+
+    @Test
+    public void getGarminEntries() throws Exception
+    {
+        List<Activity> garminEntries = Collections.singletonList(garminEntry);
+        when(garminManager.getAllEntries()).thenReturn(garminEntries);
+
+        List<Activity> actual = workoutLogger.getGarminEntries();
+        assertThat(actual).isEqualTo(garminEntries);
     }
 }

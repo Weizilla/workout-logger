@@ -1,5 +1,6 @@
 package com.weizilla.workout.logger;
 
+import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.garmin.GarminManager;
@@ -58,5 +59,10 @@ public class WorkoutLogger
     public Set<String> getAllTypes()
     {
         return workoutStore.getAllTypes();
+    }
+
+    public List<Activity> getGarminEntries()
+    {
+        return garminManager.getAllEntries();
     }
 }

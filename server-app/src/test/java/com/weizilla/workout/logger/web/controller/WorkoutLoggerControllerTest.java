@@ -2,10 +2,12 @@ package com.weizilla.workout.logger.web.controller;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.json.ObjectMappers;
 import com.weizilla.workout.logger.web.WebTestUtils;
 import com.weizilla.workout.logger.web.converter.WorkoutJsonConverter;
@@ -24,6 +26,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -59,6 +62,7 @@ public class WorkoutLoggerControllerTest
     private long garminId;
     private UUID manualId;
     private ManualEntry manualEntry;
+    private Activity garminEntry;
 
     @Before
     public void setUp() throws Exception
@@ -79,6 +83,7 @@ public class WorkoutLoggerControllerTest
         manualId = UUID.randomUUID();
         workout = new Workout(id, type, duration, date, entryTime, comment, garminId, manualId);
         manualEntry = ManualEntryStub.create();
+        garminEntry = ActivityStub.create();
     }
 
     @Test
@@ -190,5 +195,23 @@ public class WorkoutLoggerControllerTest
             .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$", hasSize(3)))
             .andExpect(jsonPath("$", containsInAnyOrder("a", "b", "c")));
+    }
+
+    @Test
+    public void getGarminEntries() throws Exception
+    {
+        List<Activity> entries = Collections.singletonList(garminEntry);
+        when(workoutLogger.getGarminEntries()).thenReturn(entries);
+
+        int start = (int) garminEntry.getStart().truncatedTo(ChronoUnit.SECONDS).getEpochSecond();
+        mockMvc.perform(get("/api/garmin/entry"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$", hasSize(1)))
+            .andExpect(jsonPath("$[0].id", is((int) garminEntry.getId())))
+            .andExpect(jsonPath("$[0].type", is(garminEntry.getType())))
+            .andExpect(jsonPath("$[0].duration", is(garminEntry.getDuration().toString())))
+            .andExpect(jsonPath("$[0].start", is(start)))
+            .andExpect(jsonPath("$[0].distance", is(garminEntry.getDistance())));
     }
 }

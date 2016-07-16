@@ -36,7 +36,17 @@ Coming soon
 9. Password/security for UI - Maybe use Google Sign In?
 10. Https
 11. Garmin Connect Sync
+ 1. New garmin entries creates workouts
+ 2. Find safe place for username/password
+ 3. Get rid of package string for component scan
+ 4. Use futures, async, netty?
+ 5. Add status and updates to UI
+ 6. Better error handling
+ 7. Store imported workouts
+ 8. Sync custom time range
+ 9. Scheduled sync
 12. Unit tests for UI
  1. add additional unit tests
  2. add browser based tests (Karma)
 14. Combine JS and Java code coverage in Coveralls.io
+15. Spring hot deploy

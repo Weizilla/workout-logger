@@ -1,5 +1,6 @@
 package com.weizilla.workout.logger.web.controller;
 
+import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
@@ -62,5 +63,11 @@ public class WorkoutLoggerController
     public Set<String> getAllTypes()
     {
         return workoutLogger.getAllTypes();
+    }
+
+    @RequestMapping(path = "/garmin/entry")
+    public List<Activity> getGarminEntries()
+    {
+        return workoutLogger.getGarminEntries();
     }
 }

@@ -4,24 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Workout Logger</title>
+    <title>Garmin Entries</title>
 </head>
 <body ng-app="workoutLoggerApp">
 <div class="container">
     <ul class="nav nav-pills nav-justified">
-        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="addWorkout.html">Add</a></li>
-        <li><a href="garminEntries.html">Garmin</a></li>
+        <li class="active"><a href="garminEntries.html">Garmin</a></li>
     </ul>
-    <div>
-        <calendar></calendar>
-    </div>
-    <div>
-        <workouts></workouts>
-    </div>
-    <div>
-        <a class="btn btn-primary btn-block" href="addWorkout.html">Add</a>
-    </div>
+    <garmin></garmin>
 </div>
 <script src="/bundle.js"></script>
 </body>
