@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class GarminManager
@@ -27,15 +29,26 @@ public class GarminManager
 
     public List<Activity> getAllEntries()
     {
-        //TODO unit test
+        return store.getAll();
+    }
+
+    public List<Activity> refreshEntries()
+    {
         try
         {
-            return activityDownloader.download();
+            List<Activity> downloaded = activityDownloader.download();
+            Set<Long> existingIds = store.getIds();
+            List<Activity> newActivities = downloaded.stream()
+                .filter(a -> ! existingIds.contains(a.getId()))
+                .collect(Collectors.toList());
+            store.putAll(newActivities);
+            logger.info("Downloaded {} activities of which {} were new", downloaded.size(), newActivities.size());
+            return newActivities;
         }
         catch (Exception e)
         {
-            logger.error("Error downloading Garmin entries: {}", e.getMessage(), e);
+            logger.error("Error downloading activities: {}", e.getMessage(), e);
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
     }
 }

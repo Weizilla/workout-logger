@@ -18,9 +18,11 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -130,5 +132,34 @@ public class WorkoutLoggerTest
 
         List<Activity> actual = workoutLogger.getGarminEntries();
         assertThat(actual).isEqualTo(garminEntries);
+    }
+
+    @Test
+    public void createWorkoutsFromNewGarminEntires() throws Exception
+    {
+        Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+        workoutLogger.setClock(clock);
+        Instant now = Instant.now(clock);
+
+        Activity activity = ActivityStub.create();
+        List<Activity> activities = Collections.singletonList(activity);
+        when(garminManager.refreshEntries()).thenReturn(activities);
+
+        int numDownloaded = workoutLogger.refreshGarminEntries();
+
+        assertThat(numDownloaded).isEqualTo(1);
+        verify(workoutStore).put(workoutCaptor.capture());
+
+        LocalDate expectedDate = activity.getStart().atZone(WorkoutLogger.DEFAULT_TZ).toLocalDate();
+
+        Workout addedWorkout = workoutCaptor.getValue();
+        assertThat(addedWorkout.getId()).isNotNull();
+        assertThat(addedWorkout.getType()).isEqualTo(activity.getType());
+        assertThat(addedWorkout.getDuration()).isEqualTo(activity.getDuration());
+        assertThat(addedWorkout.getDate()).isEqualTo(expectedDate);
+        assertThat(addedWorkout.getEntryTime()).isEqualTo(now);
+        assertThat(addedWorkout.getComment()).isNull();
+        assertThat(addedWorkout.getManualId()).isNotPresent();
+        assertThat(addedWorkout.getGarminId()).isPresent().contains(activity.getId());
     }
 }

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -69,5 +71,11 @@ public class WorkoutLoggerController
     public List<Activity> getGarminEntries()
     {
         return workoutLogger.getGarminEntries();
+    }
+
+    @RequestMapping(path = "/garmin/refresh")
+    public Map<String, Object> refreshGarminEntries()
+    {
+        return Collections.singletonMap("downloaded", workoutLogger.refreshGarminEntries());
     }
 }

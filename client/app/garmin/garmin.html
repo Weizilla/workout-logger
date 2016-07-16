@@ -1,6 +1,7 @@
 <div ng-controller="GarminCtrl as ctrl">
     # entries: {{ ctrl.entries.length }}
     <button ng-click="ctrl.refreshEntries()">Refresh</button>
+    <button ng-click="ctrl.downloadEntries()">Download</button>
 
     <table class="table table-bordered">
         <tr>

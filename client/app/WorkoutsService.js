@@ -13,11 +13,15 @@ class WorkoutsService {
     getWorkouts() {
         return this.$http.get(getHost() + "/api/workouts").then(r => r.data);
     }
-    
+
+    refreshGarminEntries() {
+        return this.$http.get(getHost() + "/api/garmin/refresh").then(r => r.data);
+    }
+
     getGarminEntries() {
         return this.$http.get(getHost() + "/api/garmin/entry").then(r => r.data);
     }
-    
+
     getWorkoutsByDate(date) {
         var d = moment(date).format("YYYY-MM-DD");
         return this.$http.get(getHost() + "/api/workouts/dates/" + d)
@@ -34,7 +38,7 @@ class WorkoutsService {
                 this.refreshUpdateListeners();
             });
     }
-    
+
     addEntry(entry) {
         return this.$http.post(getHost() + "/api/entry", entry)
             .then(r => r.data)

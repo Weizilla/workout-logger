@@ -1,11 +1,14 @@
 "use strict";
 
-import moment from "moment";
-
 class GarminCtrl {
     constructor(workoutsService) {
         this.workoutsService = workoutsService;
         this.entries = [];
+        this.refreshEntries();
+    }
+    
+    downloadEntries() {
+        this.workoutsService.refreshGarminEntries().then(d => console.log("downloaded ", d.downloaded));
     }
 
     refreshEntries() {

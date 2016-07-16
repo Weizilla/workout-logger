@@ -214,4 +214,16 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$[0].start", is(start)))
             .andExpect(jsonPath("$[0].distance", is(garminEntry.getDistance())));
     }
+
+    @Test
+    public void refreshGarminEntries() throws Exception
+    {
+        int result = 10;
+        when(workoutLogger.refreshGarminEntries()).thenReturn(result);
+
+        mockMvc.perform(get("/api/garmin/refresh"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.downloaded", is(result)));
+    }
 }
