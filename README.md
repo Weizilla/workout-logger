@@ -51,3 +51,4 @@ Coming soon
 14. Combine JS and Java code coverage in Coveralls.io
 15. Spring hot deploy
 16. Match garmin and manual workouts
+17. Add state to json and controller tests

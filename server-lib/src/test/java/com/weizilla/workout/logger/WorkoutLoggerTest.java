@@ -7,6 +7,7 @@ import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import com.weizilla.workout.logger.entity.WorkoutState;
 import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.store.ManualEntryStore;
@@ -76,6 +77,7 @@ public class WorkoutLoggerTest
         Workout addedWorkout = workoutCaptor.getValue();
         assertThat(addedWorkout.getId()).isNotNull();
         assertThat(addedWorkout.getType()).isEqualTo(entry.getType());
+        assertThat(addedWorkout.getState()).isEqualTo(WorkoutState.MANUAL);
         assertThat(addedWorkout.getDuration()).isEqualTo(entry.getDuration());
         assertThat(addedWorkout.getDate()).isEqualTo(entry.getDate());
         assertThat(addedWorkout.getEntryTime()).isEqualTo(entry.getEntryTime());
@@ -163,6 +165,7 @@ public class WorkoutLoggerTest
         Workout addedWorkout = workoutCaptor.getValue();
         assertThat(addedWorkout.getId()).isNotNull();
         assertThat(addedWorkout.getType()).isEqualTo(activity.getType());
+        assertThat(addedWorkout.getState()).isEqualTo(WorkoutState.GARMIN);
         assertThat(addedWorkout.getDuration()).isEqualTo(activity.getDuration());
         assertThat(addedWorkout.getDate()).isEqualTo(expectedDate);
         assertThat(addedWorkout.getEntryTime()).isEqualTo(now);

@@ -16,6 +16,7 @@ public class Workout
     @Id
     private final UUID id;
     private final String type;
+    private final WorkoutState state;
     private final Duration duration;
     private final LocalDate date;
     private final Instant entryTime;
@@ -28,6 +29,7 @@ public class Workout
     public Workout(
         @JsonProperty("id") UUID id,
         @JsonProperty(value = "type", required = true) String type,
+        @JsonProperty(value = "state", required = true) WorkoutState state,
         @JsonProperty(value = "duration", required = true) Duration duration,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
@@ -37,6 +39,7 @@ public class Workout
     {
         this.id = id != null ? id : UUID.randomUUID();
         this.type = type;
+        this.state = state;
         this.duration = duration;
         this.date = date != null ? date : LocalDate.now();
         this.entryTime = entryTime != null ? entryTime : Instant.now();
@@ -53,6 +56,11 @@ public class Workout
     public String getType()
     {
         return type;
+    }
+
+    public WorkoutState getState()
+    {
+        return state;
     }
 
     public Duration getDuration()
@@ -101,6 +109,7 @@ public class Workout
         return "Workout{" +
             "id=" + id +
             ", type='" + type + '\'' +
+            ", state=" + state +
             ", duration=" + duration +
             ", date=" + date +
             ", entryTime=" + entryTime +
