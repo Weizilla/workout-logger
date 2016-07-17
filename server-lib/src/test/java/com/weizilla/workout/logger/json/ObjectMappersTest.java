@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger.json;
 
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import com.weizilla.workout.logger.test.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +49,16 @@ public class ObjectMappersTest
     @Test
     public void serializesWorkout() throws Exception
     {
-        Workout workout = new Workout(id, type, duration, date, entryTime, comment, garminId, manualId);
+        Workout workout = new WorkoutBuilder()
+            .setId(id)
+            .setType(type)
+            .setDuration(duration)
+            .setDate(date)
+            .setEntryTime(entryTime)
+            .setComment(comment)
+            .setGarminId(garminId)
+            .setManualId(manualId)
+            .build();
         String expected = TestUtils.readFile("workout-obj-mapper-test.json");
         String actual = ObjectMappers.OBJECT_MAPPER.writeValueAsString(workout);
         JSONAssert.assertEquals(expected, actual, true);

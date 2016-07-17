@@ -3,6 +3,7 @@ package com.weizilla.workout.logger;
 import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.store.ManualEntryStore;
 import com.weizilla.workout.logger.store.WorkoutStore;
@@ -37,8 +38,14 @@ public class WorkoutLogger
     public void addEntry(ManualEntry entry)
     {
         manualEntryStore.put(entry);
-        Workout workout = new Workout(null, entry.getType(), entry.getDuration(), entry.getDate(), entry.getEntryTime(),
-            entry.getComment(), null, entry.getId());
+        Workout workout = new WorkoutBuilder()
+            .setType(entry.getType())
+            .setDuration(entry.getDuration())
+            .setDate(entry.getDate())
+            .setEntryTime(entry.getEntryTime())
+            .setComment(entry.getComment())
+            .setManualId(entry.getId())
+            .build();
         workoutStore.put(workout);
     }
 
@@ -85,13 +92,13 @@ public class WorkoutLogger
     private Workout createWorkout(Activity activity)
     {
         LocalDate localDate = activity.getStart().atZone(DEFAULT_TZ).toLocalDate();
-        return new Workout(null, activity.getType(),
-            activity.getDuration(),
-            localDate,
-            Instant.now(clock),
-            null,
-            activity.getId(),
-            null);
+        return new WorkoutBuilder()
+            .setType(activity.getType())
+            .setDuration(activity.getDuration())
+            .setDate(localDate)
+            .setEntryTime(Instant.now(clock))
+            .setGarminId(activity.getId())
+            .build();
     }
 
     protected void setClock(Clock clock)

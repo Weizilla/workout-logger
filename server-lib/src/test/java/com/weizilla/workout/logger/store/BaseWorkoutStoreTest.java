@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger.store;
 
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,8 +22,16 @@ public abstract class BaseWorkoutStoreTest
     @Before
     public void setUp() throws Exception
     {
-        id = UUID.randomUUID();
-        workout = new Workout(id, "TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT", 1L, UUID.randomUUID());
+        workout = new WorkoutBuilder()
+            .setType("TYPE")
+            .setDuration(Duration.ofDays(1))
+            .setDate(LocalDate.now())
+            .setEntryTime(Instant.now())
+            .setComment("COMMENT")
+            .setGarminId(1L)
+            .setManualId(UUID.randomUUID())
+            .build();
+        id = workout.getId();
     }
 
     @Test
@@ -51,8 +60,16 @@ public abstract class BaseWorkoutStoreTest
         assertThat(workouts).hasSize(1);
         assertThat(workouts).containsExactly(workout);
 
-        Workout newWorkout = new Workout(id, "NEW TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(),
-            "COMMENT", 1L, UUID.randomUUID());
+        Workout newWorkout = new WorkoutBuilder()
+            .setId(id)
+            .setType("NEW TYPE")
+            .setDuration(Duration.ofDays(1))
+            .setDate(LocalDate.now())
+            .setEntryTime(Instant.now())
+            .setComment("COMMENT")
+            .setGarminId(1L)
+            .setManualId(UUID.randomUUID())
+            .build();
         store.put(newWorkout);
 
         List<Workout> newWorkouts = store.getAll();

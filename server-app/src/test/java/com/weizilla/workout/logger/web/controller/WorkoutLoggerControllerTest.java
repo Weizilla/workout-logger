@@ -7,6 +7,7 @@ import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.json.ObjectMappers;
 import com.weizilla.workout.logger.web.WebTestUtils;
@@ -81,7 +82,16 @@ public class WorkoutLoggerControllerTest
         comment = "COMMENT";
         garminId = 123;
         manualId = UUID.randomUUID();
-        workout = new Workout(id, type, duration, date, entryTime, comment, garminId, manualId);
+        workout = new WorkoutBuilder()
+            .setId(id)
+            .setType(type)
+            .setDuration(duration)
+            .setDate(date)
+            .setEntryTime(entryTime)
+            .setComment(comment)
+            .setGarminId(garminId)
+            .setManualId(manualId)
+            .build();
         manualEntry = ManualEntryStub.create();
         garminEntry = ActivityStub.create();
     }
@@ -168,10 +178,7 @@ public class WorkoutLoggerControllerTest
     @Test
     public void getWorkoutsByDate() throws Exception
     {
-        List<Workout> workouts = Lists.newArrayList(
-            new Workout(id, type, duration, date, entryTime, comment, garminId, manualId),
-            new Workout(id, type, duration, date, entryTime, comment, garminId, manualId),
-            new Workout(id, type, duration, date, entryTime, comment, garminId, manualId));
+        List<Workout> workouts = Lists.newArrayList(workout, workout, workout);
 
         when(workoutLogger.getForDate(date)).thenReturn(workouts);
 

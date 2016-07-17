@@ -6,6 +6,7 @@ import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.store.ManualEntryStore;
@@ -51,8 +52,15 @@ public class WorkoutLoggerTest
     public void setUp() throws Exception
     {
         workoutLogger = new WorkoutLogger(workoutStore, manualEntryStore, garminManager);
-        workout = new Workout(UUID.randomUUID(), "TYPE", Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT",
-            1L, UUID.randomUUID());
+        workout = new WorkoutBuilder()
+            .setType("TYPE")
+            .setDuration(Duration.ofDays(1))
+            .setDate(LocalDate.now())
+            .setEntryTime(Instant.now())
+            .setComment("COMMENT")
+            .setGarminId(1L)
+            .setManualId(UUID.randomUUID())
+            .build();
         garminEntry = ActivityStub.create();
     }
 

@@ -3,11 +3,11 @@ package com.weizilla.workout.logger.store;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -82,14 +82,25 @@ public class WorkoutStoreTest
 
     private static Workout createWorkout(String type)
     {
-        return new Workout(UUID.randomUUID(), type, Duration.ofDays(1), LocalDate.now(), Instant.now(), "COMMENT", 1L,
-            UUID.randomUUID());
+        return new WorkoutBuilder()
+            .setType(type)
+            .setDuration(Duration.ofDays(1))
+            .setComment("COMMENT")
+            .setGarminId(1L)
+            .setManualId(UUID.randomUUID())
+            .build();
     }
 
     private static Workout createWorkout(LocalDate date)
     {
-        return new Workout(UUID.randomUUID(), "TYPE", Duration.ofDays(1), date, Instant.now(), "COMMENT", 1L,
-            UUID.randomUUID());
+        return new WorkoutBuilder()
+            .setType("TYPE")
+            .setDuration(Duration.ofDays(1))
+            .setDate(date)
+            .setComment("COMMENT")
+            .setGarminId(1L)
+            .setManualId(UUID.randomUUID())
+            .build();
     }
 
     private static class WorkoutStoreStub implements WorkoutStore

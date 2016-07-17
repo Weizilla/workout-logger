@@ -3,6 +3,7 @@ package com.weizilla.workout.logger.store.mongo;
 import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -40,8 +41,14 @@ public class MongoStoreSpike implements CommandLineRunner
     public void run(String... strings) throws Exception
     {
         LocalDate date = LocalDate.of(2015, 12, 11);
-        Workout workout = new Workout(null, "ABC", Duration.ofHours(1), date, Instant.now(), "COMMENT", 1L,
-            UUID.randomUUID());
+        Workout workout = new WorkoutBuilder()
+            .setType("ABC")
+            .setDuration(Duration.ofHours(1))
+            .setDate(date)
+            .setComment("COMMENT")
+            .setGarminId(1L)
+            .setManualId(UUID.randomUUID())
+            .build();
         workoutRepo.save(workout);
 
         Activity activity = new Activity(1234, "RUNNING", Duration.ofDays(1), Instant.now(), 22.3);
