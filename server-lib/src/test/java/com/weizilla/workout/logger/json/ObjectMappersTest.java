@@ -2,6 +2,7 @@ package com.weizilla.workout.logger.json;
 
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import com.weizilla.workout.logger.entity.WorkoutState;
 import com.weizilla.workout.logger.test.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,7 @@ public class ObjectMappersTest
 {
     private LocalDate date;
     private Duration duration;
+    private WorkoutState state;
     private String type;
     private UUID id;
     private Instant entryTime;
@@ -33,6 +35,7 @@ public class ObjectMappersTest
         date = LocalDate.of(2015, Month.NOVEMBER, 21);
         duration = Duration.ofHours(1);
         type = "TYPE";
+        state = WorkoutState.MANUAL;
         id = UUID.fromString("e487cc32-c5d9-417a-b0df-9aa0eb9154c3");
         entryTime = Instant.ofEpochSecond(1448146540);
         comment = "COMMENT";
@@ -52,6 +55,7 @@ public class ObjectMappersTest
         Workout workout = new WorkoutBuilder()
             .setId(id)
             .setType(type)
+            .setState(state)
             .setDuration(duration)
             .setDate(date)
             .setEntryTime(entryTime)
@@ -71,6 +75,7 @@ public class ObjectMappersTest
         Workout actual = ObjectMappers.OBJECT_MAPPER.readValue(input, Workout.class);
         assertThat(actual.getId()).isEqualTo(id);
         assertThat(actual.getType()).isEqualTo(type);
+        assertThat(actual.getState()).isEqualTo(state);
         assertThat(actual.getDuration()).isEqualTo(duration);
         assertThat(actual.getDate()).isEqualTo(date);
         assertThat(actual.getEntryTime()).isEqualTo(entryTime);

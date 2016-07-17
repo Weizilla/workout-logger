@@ -8,6 +8,7 @@ import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import com.weizilla.workout.logger.entity.WorkoutState;
 import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.json.ObjectMappers;
 import com.weizilla.workout.logger.web.WebTestUtils;
@@ -64,6 +65,7 @@ public class WorkoutLoggerControllerTest
     private UUID manualId;
     private ManualEntry manualEntry;
     private Activity garminEntry;
+    private WorkoutState state;
 
     @Before
     public void setUp() throws Exception
@@ -77,6 +79,7 @@ public class WorkoutLoggerControllerTest
         duration = Duration.ofHours(10);
         date = LocalDate.now();
         dateString = date.toString();
+        state = WorkoutState.MANUAL;
         id = UUID.randomUUID();
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
@@ -85,6 +88,7 @@ public class WorkoutLoggerControllerTest
         workout = new WorkoutBuilder()
             .setId(id)
             .setType(type)
+            .setState(state)
             .setDuration(duration)
             .setDate(date)
             .setEntryTime(entryTime)
@@ -124,6 +128,7 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("$[0].id", is(id.toString())))
             .andExpect(jsonPath("$[0].type", is(type)))
+            .andExpect(jsonPath("$[0].state", is(state.name())))
             .andExpect(jsonPath("$[0].duration", is(duration.toString())))
             .andExpect(jsonPath("$[0].date", is(dateString)))
             .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())))
@@ -150,6 +155,7 @@ public class WorkoutLoggerControllerTest
         Workout actual = captor.getValue();
         assertThat(actual.getId()).isEqualTo(id);
         assertThat(actual.getType()).isEqualTo(type);
+        assertThat(actual.getState()).isEqualTo(state);
         assertThat(actual.getDuration()).isEqualTo(duration);
         assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(entryTime);
         assertThat(actual.getDate()).isEqualTo(date);
