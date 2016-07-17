@@ -20,6 +20,8 @@ Coming soon
  2. Parse duration
  3. Unselect selected day
  4. Calendar, Add dialog and workouts on same page for larger screens
+ 5. Change url for selected day
+ 6. Use angular routes instead of different pages
 2. Import/Export
 3. Workouts
  1. Add day ordering of workout (including reordering)
