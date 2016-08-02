@@ -8,15 +8,30 @@ Logs workouts
 ## Instructions
 Coming soon
 
+## Workflows
+### Manual entry
+1. Add workout -> manual entry is created
+2. Run match process for new entry's date
+
+### Garmin sync entry
+1. Garmin sync downloads new workout -> garmin entry is created
+2. Run match process for each date of new garmin entry
+
+### Match process
+1. For all entries without garmin ids:
+2. Look for garmin entry of same date and type
+3. If match, create workout with two entries as linked ids, using garmin for details
+4. If not match, create workout with only manual entry as linked id
+
 ## Completed
 1. Spring boot, Angular JS, Java 8
 2. Store workouts in Mongo db or memory depending on Spring profile
 3. Run using Docker with images stored in Docker Hub
-4. Deployed to AWS using ECS 
+4. Deployed to AWS using ECS
 
 ## To Do
 1. Improve UI
- 1. Improve workout day, today, selected styles 
+ 1. Improve workout day, today, selected styles
  2. Parse duration
  3. Unselect selected day
  4. Calendar, Add dialog and workouts on same page for larger screens
