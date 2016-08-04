@@ -42,7 +42,7 @@
             <artifactId>jackson-datatype-jdk8</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.Weizilla</groupId>
+            <groupId>com.weizilla.garmin</groupId>
             <artifactId>garmin</artifactId>
         </dependency>
         <dependency>
