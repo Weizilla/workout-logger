@@ -102,38 +102,4 @@ public class WorkoutStoreTest
             .setManualId(UUID.randomUUID())
             .build();
     }
-
-    private static class WorkoutStoreStub implements WorkoutStore
-    {
-        private List<Workout> workouts;
-
-        private void setWorkouts(List<Workout> workouts)
-        {
-            this.workouts = workouts;
-        }
-
-        @Override
-        public void put(Workout workout)
-        {
-
-        }
-
-        @Override
-        public void delete(UUID id)
-        {
-
-        }
-
-        @Override
-        public List<Workout> getAll()
-        {
-            return workouts;
-        }
-
-        @Override
-        public void deleteAll()
-        {
-
-        }
-    }
 }

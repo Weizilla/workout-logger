@@ -50,31 +50,4 @@ public class GarminEntryStoreTest
         assertThat(actual).containsExactly(activities.get(0), activities.get(2));
     }
 
-    private static class GarminEntryStoreStub implements GarminEntryStore
-    {
-        private List<Activity> activities;
-
-        public void setActivities(List<Activity> activities)
-        {
-            this.activities = activities;
-        }
-
-        @Override
-        public void put(Activity activity)
-        {
-
-        }
-
-        @Override
-        public List<Activity> getAll()
-        {
-            return activities;
-        }
-
-        @Override
-        public void deleteAll()
-        {
-
-        }
-    }
 }
