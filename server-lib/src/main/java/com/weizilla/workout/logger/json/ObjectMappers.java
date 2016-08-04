@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ObjectMappers
 {
@@ -21,6 +22,7 @@ public class ObjectMappers
     {
         JavaTimeModule module = new JavaTimeModule();
         module.addSerializer(LocalDate.class, new LocalDateSerializer());
+        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         module.addSerializer(Duration.class, new DurationSerializer());
         module.addSerializer(Instant.class, new InstantSerializer());
         OBJECT_MAPPER.registerModule(module);
@@ -39,6 +41,16 @@ public class ObjectMappers
             SerializerProvider serializerProvider) throws IOException, JsonProcessingException
         {
             jsonGenerator.writeString(localDate.toString());
+        }
+    }
+
+    private static class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime>
+    {
+        @Override
+        public void serialize(LocalDateTime localDateTime, JsonGenerator jsonGenerator,
+            SerializerProvider serializerProvider) throws IOException, JsonProcessingException
+        {
+            jsonGenerator.writeString(localDateTime.toString());
         }
     }
 

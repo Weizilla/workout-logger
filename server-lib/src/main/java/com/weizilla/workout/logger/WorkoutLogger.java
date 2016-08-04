@@ -103,12 +103,11 @@ public class WorkoutLogger
 
     private Workout createWorkout(Activity activity)
     {
-        LocalDate localDate = activity.getStart().atZone(DEFAULT_TZ).toLocalDate();
         return new WorkoutBuilder()
             .setType(activity.getType())
             .setState(WorkoutState.GARMIN)
             .setDuration(activity.getDuration())
-            .setDate(localDate)
+            .setDate(activity.getStart().toLocalDate())
             .setEntryTime(Instant.now(clock))
             .setGarminId(activity.getId())
             .build();

@@ -160,14 +160,12 @@ public class WorkoutLoggerTest
         assertThat(numDownloaded).isEqualTo(1);
         verify(workoutStore).put(workoutCaptor.capture());
 
-        LocalDate expectedDate = activity.getStart().atZone(WorkoutLogger.DEFAULT_TZ).toLocalDate();
-
         Workout addedWorkout = workoutCaptor.getValue();
         assertThat(addedWorkout.getId()).isNotNull();
         assertThat(addedWorkout.getType()).isEqualTo(activity.getType());
         assertThat(addedWorkout.getState()).isEqualTo(WorkoutState.GARMIN);
         assertThat(addedWorkout.getDuration()).isEqualTo(activity.getDuration());
-        assertThat(addedWorkout.getDate()).isEqualTo(expectedDate);
+        assertThat(addedWorkout.getDate()).isEqualTo(activity.getStart().toLocalDate());
         assertThat(addedWorkout.getEntryTime()).isEqualTo(now);
         assertThat(addedWorkout.getComment()).isNull();
         assertThat(addedWorkout.getManualId()).isNotPresent();

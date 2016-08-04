@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.Duration;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class MongoGarminEntryStoreTest
     {
         store = new MongoGarminEntryStore(repo);
         id = 1234;
-        activity = new Activity(id, "TYPE", Duration.ofDays(1), Instant.now(), 12.3);
+        activity = new Activity(id, "TYPE", Duration.ofDays(1), LocalDateTime.now(), 12.3);
     }
 
     @Test

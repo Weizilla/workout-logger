@@ -216,7 +216,6 @@ public class WorkoutLoggerControllerTest
         List<Activity> entries = Collections.singletonList(garminEntry);
         when(workoutLogger.getGarminEntries()).thenReturn(entries);
 
-        int start = (int) garminEntry.getStart().truncatedTo(ChronoUnit.SECONDS).getEpochSecond();
         mockMvc.perform(get("/api/garmin/entry"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
@@ -224,7 +223,7 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$[0].id", is((int) garminEntry.getId())))
             .andExpect(jsonPath("$[0].type", is(garminEntry.getType())))
             .andExpect(jsonPath("$[0].duration", is(garminEntry.getDuration().toString())))
-            .andExpect(jsonPath("$[0].start", is(start)))
+            .andExpect(jsonPath("$[0].start", is(garminEntry.getStart().toString())))
             .andExpect(jsonPath("$[0].distance", is(garminEntry.getDistance())));
     }
 

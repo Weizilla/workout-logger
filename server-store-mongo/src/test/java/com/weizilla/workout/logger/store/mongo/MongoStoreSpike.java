@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,7 +51,7 @@ public class MongoStoreSpike implements CommandLineRunner
             .build();
         workoutRepo.save(workout);
 
-        Activity activity = new Activity(1234, "RUNNING", Duration.ofDays(1), Instant.now(), 22.3);
+        Activity activity = new Activity(1234, "RUNNING", Duration.ofDays(1), LocalDateTime.now(), 22.3);
         activityRepo.save(activity);
 
         ManualEntry entry = new ManualEntry("DEF", Duration.ofDays(1));
