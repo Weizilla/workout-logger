@@ -18,7 +18,7 @@ Coming soon
 2. Run match process for each date of new garmin entry
 
 ### Match process
-1. For all entries without garmin ids:
+1. For all manual entries without corresponding workouts:
 2. Look for garmin entry of same date and type
 3. If match, create workout with two entries as linked ids, using garmin for details
 4. If not match, create workout with only manual entry as linked id
