@@ -47,7 +47,7 @@ public class GarminEntryStoreTest
         LocalDate input = activities.get(0).getStart().toLocalDate();
         List<Activity> actual = store.getForDate(input);
         assertThat(actual).hasSize(2);
-        assertThat(actual).containsExactly(activities.get(0), activities.get(2));
+        assertThat(actual).containsExactlyInAnyOrder(activities.get(0), activities.get(2));
     }
 
 }
