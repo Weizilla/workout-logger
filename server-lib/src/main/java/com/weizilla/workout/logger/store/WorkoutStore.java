@@ -3,6 +3,7 @@ package com.weizilla.workout.logger.store;
 import com.weizilla.workout.logger.entity.Workout;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -14,6 +15,11 @@ public interface WorkoutStore
     void delete(UUID id);
     void deleteAll();
     List<Workout> getAll();
+
+    default void putAll(Collection<Workout> workouts)
+    {
+        workouts.forEach(this::put);
+    }
 
     default Set<LocalDate> getAllDates()
     {

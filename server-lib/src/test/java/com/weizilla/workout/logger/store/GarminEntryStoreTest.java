@@ -17,18 +17,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GarminEntryStoreTest
 {
     private List<Activity> activities;
-    private GarminEntryStoreStub store;
+    private GarminEntryStore store;
 
     @Before
     public void setUp() throws Exception
     {
-        store = new GarminEntryStoreStub();
+        store = new MemoryGarminEntryStore();
         activities = Lists.newArrayList(
             ActivityStub.create(LocalDateTime.now().plusDays(1)),
             ActivityStub.create(LocalDateTime.now()),
             ActivityStub.create(LocalDateTime.now().plusDays(1)),
             ActivityStub.create(LocalDateTime.now().plusMonths(1)));
-        store.setActivities(activities);
+        store.putAll(activities);
     }
 
     @Test

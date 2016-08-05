@@ -19,12 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class WorkoutStoreTest
 {
-    private WorkoutStoreStub store;
+    private WorkoutStore store;
 
     @Before
     public void setUp() throws Exception
     {
-        store = new WorkoutStoreStub();
+        store = new MemoryWorkoutStore();
     }
 
     @Test
@@ -37,7 +37,7 @@ public class WorkoutStoreTest
         List<Workout> workouts = dates.stream()
             .map(WorkoutStoreTest::createWorkout)
             .collect(Collectors.toList());
-        store.setWorkouts(workouts);
+        store.putAll(workouts);
 
         Set<LocalDate> actual = store.getAllDates();
         assertThat(actual).isEqualTo(dates);
@@ -50,7 +50,7 @@ public class WorkoutStoreTest
         LocalDate tomorrow = today.plusDays(1);
         List<Workout> workouts = Lists.newArrayList(createWorkout(today), createWorkout(tomorrow), createWorkout(today),
             createWorkout(tomorrow), createWorkout(today));
-        store.setWorkouts(workouts);
+        store.putAll(workouts);
 
         List<Workout> actual = store.getForDate(today);
         assertThat(actual).hasSize(3);
@@ -62,7 +62,7 @@ public class WorkoutStoreTest
         Set<String> types = Sets.newHashSet("a", "b", "c");
         List<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("b"), createWorkout("c"),
             createWorkout("b"), createWorkout("a"));
-        store.setWorkouts(workouts);
+        store.putAll(workouts);
 
         Set<String> actual = store.getAllTypes();
         assertThat(actual).containsOnlyElementsOf(types);
@@ -74,7 +74,7 @@ public class WorkoutStoreTest
         Set<String> types = Sets.newHashSet("a", "b", "c");
         List<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("B"), createWorkout("c"),
             createWorkout("b"), createWorkout("A"));
-        store.setWorkouts(workouts);
+        store.putAll(workouts);
 
         Set<String> actual = store.getAllTypes();
         assertThat(actual).containsOnlyElementsOf(types);
