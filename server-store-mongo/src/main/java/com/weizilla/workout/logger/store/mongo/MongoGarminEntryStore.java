@@ -1,6 +1,6 @@
 package com.weizilla.workout.logger.store.mongo;
 
-import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.store.GarminEntryStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -21,13 +21,19 @@ public class MongoGarminEntryStore implements GarminEntryStore
     }
 
     @Override
-    public void put(Activity activity)
+    public void put(GarminEntry entry)
     {
-        repo.save(activity);
+        repo.save(entry);
     }
 
     @Override
-    public List<Activity> getAll()
+    public void delete(Long id)
+    {
+        repo.delete(id);
+    }
+
+    @Override
+    public List<GarminEntry> getAll()
     {
         return repo.findAll();
     }

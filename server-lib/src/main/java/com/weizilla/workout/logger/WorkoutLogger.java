@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger;
 
 import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
@@ -15,7 +16,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 @Component
@@ -56,7 +57,7 @@ public class WorkoutLogger
         workoutStore.put(workout);
     }
 
-    public List<Workout> getAllWorkouts()
+    public Collection<Workout> getAllWorkouts()
     {
         return workoutStore.getAll();
     }
@@ -66,7 +67,7 @@ public class WorkoutLogger
         return workoutStore.getAllDates();
     }
 
-    public List<Workout> getForDate(LocalDate date)
+    public Collection<Workout> getForDate(LocalDate date)
     {
         return workoutStore.getForDate(date);
     }
@@ -77,7 +78,7 @@ public class WorkoutLogger
     }
 
     //TODO move garmin stuff into separate class?
-    public List<Activity> getGarminEntries()
+    public Collection<GarminEntry> getGarminEntries()
     {
         return garminManager.getAllEntries();
     }
@@ -94,15 +95,16 @@ public class WorkoutLogger
 
     public int refreshGarminEntries()
     {
-        List<Activity> newActivities = garminManager.refreshEntries();
+        Collection<GarminEntry> newActivities = garminManager.refreshEntries();
         newActivities.stream()
             .map(this::createWorkout)
             .forEach(workoutStore::put);
         return newActivities.size();
     }
 
-    private Workout createWorkout(Activity activity)
+    private Workout createWorkout(GarminEntry entry)
     {
+        Activity activity = entry.getActivity();
         return new WorkoutBuilder()
             .setType(activity.getType())
             .setState(WorkoutState.GARMIN)

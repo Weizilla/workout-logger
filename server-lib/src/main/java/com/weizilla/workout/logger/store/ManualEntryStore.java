@@ -2,21 +2,9 @@ package com.weizilla.workout.logger.store;
 
 import com.weizilla.workout.logger.entity.ManualEntry;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
-public interface ManualEntryStore
+public interface ManualEntryStore extends Store<ManualEntry, UUID>
 {
-    void put(ManualEntry entry);
-    List<ManualEntry> getAll();
-    void deleteAll();
-
-    //TODO combine with other entry stores
-    default List<ManualEntry> getForDate(LocalDate date)
-    {
-        return getAll().stream()
-            .filter(e -> e.getDate().isEqual(date))
-            .collect(Collectors.toList());
-    }
 }
+

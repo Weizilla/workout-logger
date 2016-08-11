@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ManualEntry
+public class ManualEntry implements Entry<UUID>
 {
     @Id
     private final UUID id;
@@ -51,6 +51,7 @@ public class ManualEntry
         return entryTime.truncatedTo(ChronoUnit.SECONDS);
     }
 
+    @Override
     public UUID getId()
     {
         return id;
@@ -66,6 +67,7 @@ public class ManualEntry
         return duration;
     }
 
+    @Override
     public LocalDate getDate()
     {
         return date;

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
-public class Workout
+public class Workout implements Entry<UUID>
 {
     @Id
     private final UUID id;
@@ -48,6 +48,7 @@ public class Workout
         this.manualId = manualId;
     }
 
+    @Override
     public UUID getId()
     {
         return id;
@@ -68,6 +69,7 @@ public class Workout
         return duration;
     }
 
+    @Override
     public LocalDate getDate()
     {
         return date;

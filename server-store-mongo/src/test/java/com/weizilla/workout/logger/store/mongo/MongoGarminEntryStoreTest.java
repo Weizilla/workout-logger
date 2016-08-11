@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger.store.mongo;
 
 import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.GarminEntry;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,7 @@ public class MongoGarminEntryStoreTest
     @Mock
     private MongoGarminEntryRepository repo;
     private MongoGarminEntryStore store;
-    private Activity activity;
+    private GarminEntry entry;
     private long id;
 
     @Before
@@ -30,24 +31,24 @@ public class MongoGarminEntryStoreTest
     {
         store = new MongoGarminEntryStore(repo);
         id = 1234;
-        activity = new Activity(id, "TYPE", Duration.ofDays(1), LocalDateTime.now(), 12.3);
+        entry = new GarminEntry(new Activity(id, "TYPE", Duration.ofDays(1), LocalDateTime.now(), 12.3));
     }
 
     @Test
-    public void putsActivityInRepo() throws Exception
+    public void putsEntryInRepo() throws Exception
     {
-        store.put(activity);
-        verify(repo).save(activity);
+        store.put(entry);
+        verify(repo).save(entry);
     }
 
     @Test
-    public void getsAllActivities() throws Exception
+    public void getsAllEntries() throws Exception
     {
-        List<Activity> activities = Collections.singletonList(activity);
+        List<GarminEntry> activities = Collections.singletonList(entry);
         when(repo.findAll()).thenReturn(activities);
         assertThat(repo.findAll()).hasSize(1);
 
-        List<Activity> actual = store.getAll();
+        List<GarminEntry> actual = store.getAll();
         assertThat(actual).isSameAs(activities);
     }
 

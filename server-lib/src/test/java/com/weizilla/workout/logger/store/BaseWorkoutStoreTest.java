@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Collection;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,7 +46,7 @@ public abstract class BaseWorkoutStoreTest
         assertThat(store.getAll()).isEmpty();
         store.put(workout);
 
-        List<Workout> workouts = store.getAll();
+        Collection<Workout> workouts = store.getAll();
         assertThat(workouts).hasSize(1);
         assertThat(workouts).containsExactly(workout);
     }
@@ -56,7 +56,7 @@ public abstract class BaseWorkoutStoreTest
     {
         store.put(workout);
 
-        List<Workout> workouts = store.getAll();
+        Collection<Workout> workouts = store.getAll();
         assertThat(workouts).hasSize(1);
         assertThat(workouts).containsExactly(workout);
 
@@ -72,7 +72,7 @@ public abstract class BaseWorkoutStoreTest
             .build();
         store.put(newWorkout);
 
-        List<Workout> newWorkouts = store.getAll();
+        Collection<Workout> newWorkouts = store.getAll();
         assertThat(newWorkouts).hasSize(1);
         assertThat(newWorkouts).containsExactly(newWorkout);
         assertThat(newWorkouts).doesNotContain(workout);

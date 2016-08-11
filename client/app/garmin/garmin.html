@@ -8,15 +8,15 @@
             <th>Id</th>
             <th>Type</th>
             <th>Duration</th>
-            <th>Start</th>
+            <th>Date</th>
             <th>Distance</th>
         </tr>
         <tr ng-repeat="entry in ctrl.entries">
-            <td>{{ entry.id }}</td>
-            <td>{{ entry.type }}</td>
-            <td>{{ entry.duration }}</td>
-            <td>{{ entry.start | date : "short"}}</td>
-            <td>{{ entry.distance }}</td>
+            <td>{{ entry.activity.id }}</td>
+            <td>{{ entry.activity.type }}</td>
+            <td>{{ entry.activity.duration }}</td>
+            <td>{{ entry.activity.start | date : "short"}}</td>
+            <td>{{ entry.activity.distance }}</td>
         </tr>
     </table>
 </div>

@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger.store.mongo;
 
 import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
@@ -51,7 +52,7 @@ public class MongoStoreSpike implements CommandLineRunner
             .build();
         workoutRepo.save(workout);
 
-        Activity activity = new Activity(1234, "RUNNING", Duration.ofDays(1), LocalDateTime.now(), 22.3);
+        GarminEntry activity = new GarminEntry(new Activity(1234, "RUNNING", Duration.ofDays(1), LocalDateTime.now(), 22.3));
         activityRepo.save(activity);
 
         ManualEntry entry = new ManualEntry("DEF", Duration.ofDays(1));

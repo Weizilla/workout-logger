@@ -1,7 +1,7 @@
 package com.weizilla.workout.logger.web.controller;
 
-import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
+import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,7 +38,7 @@ public class WorkoutLoggerController
     }
 
     @RequestMapping("/workouts")
-    public List<Workout> getWorkouts()
+    public Collection<Workout> getWorkouts()
     {
         return workoutLogger.getAllWorkouts();
     }
@@ -56,7 +56,7 @@ public class WorkoutLoggerController
     }
 
     @RequestMapping(path = "/workouts/dates/{date}")
-    public List<Workout> getWorkoutsByDate(@PathVariable @DateTimeFormat(iso = ISO.DATE) LocalDate date)
+    public Collection<Workout> getWorkoutsByDate(@PathVariable @DateTimeFormat(iso = ISO.DATE) LocalDate date)
     {
         return workoutLogger.getForDate(date);
     }
@@ -68,7 +68,7 @@ public class WorkoutLoggerController
     }
 
     @RequestMapping(path = "/garmin/entry")
-    public List<Activity> getGarminEntries()
+    public Collection<GarminEntry> getGarminEntries()
     {
         return workoutLogger.getGarminEntries();
     }

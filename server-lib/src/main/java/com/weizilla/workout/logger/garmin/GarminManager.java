@@ -2,12 +2,14 @@ package com.weizilla.workout.logger.garmin;
 
 import com.weizilla.garmin.ActivityDownloader;
 import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.store.GarminEntryStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -27,19 +29,20 @@ public class GarminManager
         this.activityDownloader = activityDownloader;
     }
 
-    public List<Activity> getAllEntries()
+    public Collection<GarminEntry> getAllEntries()
     {
         return store.getAll();
     }
 
-    public List<Activity> refreshEntries()
+    public Collection<GarminEntry> refreshEntries()
     {
         try
         {
             List<Activity> downloaded = activityDownloader.download();
             Set<Long> existingIds = store.getIds();
-            List<Activity> newActivities = downloaded.stream()
+            List<GarminEntry> newActivities = downloaded.stream()
                 .filter(a -> ! existingIds.contains(a.getId()))
+                .map(GarminEntry::new)
                 .collect(Collectors.toList());
             store.putAll(newActivities);
             logger.info("Downloaded {} activities of which {} were new", downloaded.size(), newActivities.size());

@@ -2,13 +2,13 @@ package com.weizilla.workout.logger;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import com.weizilla.workout.logger.entity.WorkoutState;
-import com.weizilla.workout.logger.garmin.ActivityStub;
+import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.store.ManualEntryStore;
 import com.weizilla.workout.logger.store.WorkoutStore;
@@ -25,8 +25,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,7 +47,7 @@ public class WorkoutLoggerTest
     private ArgumentCaptor<Workout> workoutCaptor;
     private WorkoutLogger workoutLogger;
     private Workout workout;
-    private Activity garminEntry;
+    private GarminEntry garminEntry;
 
     @Before
     public void setUp() throws Exception
@@ -62,7 +62,7 @@ public class WorkoutLoggerTest
             .setGarminId(1L)
             .setManualId(UUID.randomUUID())
             .build();
-        garminEntry = ActivityStub.create();
+        garminEntry = GarminEntryStub.create();
     }
 
     @Test
@@ -97,9 +97,9 @@ public class WorkoutLoggerTest
     {
         when(workoutStore.getAll()).thenReturn(Lists.newArrayList(workout));
 
-        List<Workout> workouts = workoutLogger.getAllWorkouts();
+        Collection<Workout> workouts = workoutLogger.getAllWorkouts();
         assertThat(workouts).hasSize(1);
-        assertThat(workouts.get(0)).isSameAs(workout);
+        assertThat(workouts).containsExactly(workout);
     }
 
     @Test
@@ -108,9 +108,9 @@ public class WorkoutLoggerTest
         LocalDate date = LocalDate.now();
         when(workoutStore.getForDate(date)).thenReturn(Lists.newArrayList(workout));
 
-        List<Workout> workouts = workoutLogger.getForDate(date);
+        Collection<Workout> workouts = workoutLogger.getForDate(date);
         assertThat(workouts).hasSize(1);
-        assertThat(workouts.get(0)).isSameAs(workout);
+        assertThat(workouts).containsExactly(workout);
     }
 
     @Test
@@ -137,23 +137,23 @@ public class WorkoutLoggerTest
     @Test
     public void getGarminEntries() throws Exception
     {
-        List<Activity> garminEntries = Collections.singletonList(garminEntry);
+        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
         when(garminManager.getAllEntries()).thenReturn(garminEntries);
 
-        List<Activity> actual = workoutLogger.getGarminEntries();
+        Collection<GarminEntry> actual = workoutLogger.getGarminEntries();
         assertThat(actual).isEqualTo(garminEntries);
     }
 
     @Test
-    public void createWorkoutsFromNewGarminEntires() throws Exception
+    public void createWorkoutsFromNewGarminEntries() throws Exception
     {
         Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
         workoutLogger.setClock(clock);
         Instant now = Instant.now(clock);
 
-        Activity activity = ActivityStub.create();
-        List<Activity> activities = Collections.singletonList(activity);
-        when(garminManager.refreshEntries()).thenReturn(activities);
+        GarminEntry entry = GarminEntryStub.create();
+        Collection<GarminEntry> entries = Collections.singletonList(entry);
+        when(garminManager.refreshEntries()).thenReturn(entries);
 
         int numDownloaded = workoutLogger.refreshGarminEntries();
 
@@ -162,13 +162,13 @@ public class WorkoutLoggerTest
 
         Workout addedWorkout = workoutCaptor.getValue();
         assertThat(addedWorkout.getId()).isNotNull();
-        assertThat(addedWorkout.getType()).isEqualTo(activity.getType());
+        assertThat(addedWorkout.getType()).isEqualTo(entry.getActivity().getType());
         assertThat(addedWorkout.getState()).isEqualTo(WorkoutState.GARMIN);
-        assertThat(addedWorkout.getDuration()).isEqualTo(activity.getDuration());
-        assertThat(addedWorkout.getDate()).isEqualTo(activity.getStart().toLocalDate());
+        assertThat(addedWorkout.getDuration()).isEqualTo(entry.getActivity().getDuration());
+        assertThat(addedWorkout.getDate()).isEqualTo(entry.getDate());
         assertThat(addedWorkout.getEntryTime()).isEqualTo(now);
         assertThat(addedWorkout.getComment()).isNull();
         assertThat(addedWorkout.getManualId()).isNotPresent();
-        assertThat(addedWorkout.getGarminId()).isPresent().contains(activity.getId());
+        assertThat(addedWorkout.getGarminId()).isPresent().contains(entry.getId());
     }
 }

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,7 +34,7 @@ public class WorkoutStoreTest
         Set<LocalDate> dates = LongStream.range(0, 10)
             .mapToObj(today::plusDays)
             .collect(Collectors.toSet());
-        List<Workout> workouts = dates.stream()
+        Collection<Workout> workouts = dates.stream()
             .map(WorkoutStoreTest::createWorkout)
             .collect(Collectors.toList());
         store.putAll(workouts);
@@ -48,11 +48,11 @@ public class WorkoutStoreTest
     {
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = today.plusDays(1);
-        List<Workout> workouts = Lists.newArrayList(createWorkout(today), createWorkout(tomorrow), createWorkout(today),
+        Collection<Workout> workouts = Lists.newArrayList(createWorkout(today), createWorkout(tomorrow), createWorkout(today),
             createWorkout(tomorrow), createWorkout(today));
         store.putAll(workouts);
 
-        List<Workout> actual = store.getForDate(today);
+        Collection<Workout> actual = store.getForDate(today);
         assertThat(actual).hasSize(3);
     }
 
@@ -60,7 +60,7 @@ public class WorkoutStoreTest
     public void getsAllWorkoutTypes() throws Exception
     {
         Set<String> types = Sets.newHashSet("a", "b", "c");
-        List<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("b"), createWorkout("c"),
+        Collection<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("b"), createWorkout("c"),
             createWorkout("b"), createWorkout("a"));
         store.putAll(workouts);
 
@@ -72,7 +72,7 @@ public class WorkoutStoreTest
     public void getsAllWorkoutsCaseInsensitive() throws Exception
     {
         Set<String> types = Sets.newHashSet("a", "b", "c");
-        List<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("B"), createWorkout("c"),
+        Collection<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("B"), createWorkout("c"),
             createWorkout("b"), createWorkout("A"));
         store.putAll(workouts);
 

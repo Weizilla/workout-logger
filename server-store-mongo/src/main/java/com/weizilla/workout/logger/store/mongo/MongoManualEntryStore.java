@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Profile("mongo")
 @Component
@@ -24,6 +25,12 @@ public class MongoManualEntryStore implements ManualEntryStore
     public void put(ManualEntry entry)
     {
         repo.insert(entry);
+    }
+
+    @Override
+    public void delete(UUID id)
+    {
+        repo.delete(id);
     }
 
     @Override

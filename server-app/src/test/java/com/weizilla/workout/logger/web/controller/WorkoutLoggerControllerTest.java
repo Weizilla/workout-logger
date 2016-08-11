@@ -2,14 +2,14 @@ package com.weizilla.workout.logger.web.controller;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
+import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import com.weizilla.workout.logger.entity.WorkoutState;
-import com.weizilla.workout.logger.garmin.ActivityStub;
+import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import com.weizilla.workout.logger.json.ObjectMappers;
 import com.weizilla.workout.logger.web.WebTestUtils;
 import com.weizilla.workout.logger.web.converter.WorkoutJsonConverter;
@@ -64,7 +64,7 @@ public class WorkoutLoggerControllerTest
     private long garminId;
     private UUID manualId;
     private ManualEntry manualEntry;
-    private Activity garminEntry;
+    private GarminEntry garminEntry;
     private WorkoutState state;
 
     @Before
@@ -97,7 +97,7 @@ public class WorkoutLoggerControllerTest
             .setManualId(manualId)
             .build();
         manualEntry = ManualEntryStub.create();
-        garminEntry = ActivityStub.create();
+        garminEntry = GarminEntryStub.create();
     }
 
     @Test
@@ -213,18 +213,20 @@ public class WorkoutLoggerControllerTest
     @Test
     public void getGarminEntries() throws Exception
     {
-        List<Activity> entries = Collections.singletonList(garminEntry);
+        List<GarminEntry> entries = Collections.singletonList(garminEntry);
         when(workoutLogger.getGarminEntries()).thenReturn(entries);
 
         mockMvc.perform(get("/api/garmin/entry"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$", hasSize(1)))
-            .andExpect(jsonPath("$[0].id", is((int) garminEntry.getId())))
-            .andExpect(jsonPath("$[0].type", is(garminEntry.getType())))
-            .andExpect(jsonPath("$[0].duration", is(garminEntry.getDuration().toString())))
-            .andExpect(jsonPath("$[0].start", is(garminEntry.getStart().toString())))
-            .andExpect(jsonPath("$[0].distance", is(garminEntry.getDistance())));
+            .andExpect(jsonPath("$[0].id", is(garminEntry.getId().intValue())))
+            .andExpect(jsonPath("$[0].date", is(garminEntry.getDate().toString())))
+            .andExpect(jsonPath("$[0].activity.id", is(garminEntry.getId().intValue())))
+            .andExpect(jsonPath("$[0].activity.type", is(garminEntry.getActivity().getType())))
+            .andExpect(jsonPath("$[0].activity.duration", is(garminEntry.getActivity().getDuration().toString())))
+            .andExpect(jsonPath("$[0].activity.start", is(garminEntry.getActivity().getStart().toString())))
+            .andExpect(jsonPath("$[0].activity.distance", is(garminEntry.getActivity().getDistance())));
     }
 
     @Test

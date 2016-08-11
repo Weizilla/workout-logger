@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -73,7 +74,7 @@ public class MongoWorkoutStoreTest
         List<Workout> workouts = Lists.newArrayList(createWorkout(today), createWorkout(today), createWorkout(today));
         when(repo.findByDate(today)).thenReturn(workouts);
 
-        List<Workout> actual = store.getForDate(today);
+        Collection<Workout> actual = store.getForDate(today);
         assertThat(actual).isEqualTo(workouts);
     }
 
