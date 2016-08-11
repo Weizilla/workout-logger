@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class ManualEntry implements Entry<UUID>
@@ -21,10 +22,11 @@ public class ManualEntry implements Entry<UUID>
     private final LocalDate date;
     private final Instant entryTime;
     private final String comment;
+    private UUID manualId;
 
     public ManualEntry(String type, Duration duration)
     {
-        this(null, type, duration, null, null, null);
+        this(null, type, duration, null, null, null, null);
     }
 
     @JsonCreator
@@ -35,7 +37,8 @@ public class ManualEntry implements Entry<UUID>
         @JsonProperty(value = "duration", required = true) Duration duration,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
-        @JsonProperty("comment") String comment)
+        @JsonProperty("comment") String comment,
+        @JsonProperty("manualId") UUID manualId)
     {
         this.id = id != null ? id : UUID.randomUUID();
         this.type = type;
@@ -43,6 +46,7 @@ public class ManualEntry implements Entry<UUID>
         this.date = date != null ? date : LocalDate.now();
         this.entryTime = calcEntryTime(entryTime);
         this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
+        this.manualId = manualId;
     }
 
     private static Instant calcEntryTime(Instant input)
@@ -83,6 +87,16 @@ public class ManualEntry implements Entry<UUID>
         return comment;
     }
 
+    public Optional<UUID> getManualId()
+    {
+        return Optional.ofNullable(manualId);
+    }
+
+    public void setManualId(UUID manualId)
+    {
+        this.manualId = manualId;
+    }
+
     @Override
     public String toString()
     {
@@ -92,7 +106,8 @@ public class ManualEntry implements Entry<UUID>
             ", duration=" + duration +
             ", date=" + date +
             ", entryTime=" + entryTime +
-            ", comment=" + comment +
+            ", comment='" + comment + '\'' +
+            ", manualId=" + manualId +
             '}';
     }
 
@@ -113,12 +128,13 @@ public class ManualEntry implements Entry<UUID>
             Objects.equals(duration, that.duration) &&
             Objects.equals(date, that.date) &&
             Objects.equals(entryTime, that.entryTime) &&
-            Objects.equals(comment, that.comment);
+            Objects.equals(comment, that.comment) &&
+            Objects.equals(manualId, that.manualId);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(id, type, duration, date, entryTime, comment);
+        return Objects.hash(id, type, duration, date, entryTime, comment, manualId);
     }
 }

@@ -1,13 +1,13 @@
 package com.weizilla.workout.logger.store.mongo;
 
 import com.weizilla.workout.logger.entity.ManualEntry;
+import com.weizilla.workout.logger.entity.ManualEntryStub;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class MongoManualEntryStoreTest
     public void setUp() throws Exception
     {
         store = new MongoManualEntryStore(repo);
-        entry = new ManualEntry("TYPE", Duration.ofHours(1));
+        entry = ManualEntryStub.create();
         id = entry.getId();
     }
 

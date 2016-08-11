@@ -1,10 +1,11 @@
 package com.weizilla.workout.logger.store.mongo;
 
-import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
+import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,10 +52,10 @@ public class MongoStoreSpike implements CommandLineRunner
             .build();
         workoutRepo.save(workout);
 
-        GarminEntry activity = new GarminEntry(new Activity(1234, "RUNNING", Duration.ofDays(1), LocalDateTime.now(), 22.3));
+        GarminEntry activity = GarminEntryStub.create();
         activityRepo.save(activity);
 
-        ManualEntry entry = new ManualEntry("DEF", Duration.ofDays(1));
+        ManualEntry entry = ManualEntryStub.create();
         manualEntryRepository.save(entry);
 
         List<Workout> byDate = workoutRepo.findByDate(date);
