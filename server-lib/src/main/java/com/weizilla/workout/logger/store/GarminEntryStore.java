@@ -10,6 +10,7 @@ public interface GarminEntryStore
 {
     void put(Activity activity);
     List<Activity> getAll();
+    void deleteAll();
 
     default Set<Long> getIds()
     {

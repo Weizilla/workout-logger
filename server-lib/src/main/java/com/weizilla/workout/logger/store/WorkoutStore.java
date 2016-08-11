@@ -12,6 +12,7 @@ public interface WorkoutStore
 {
     void put(Workout workout);
     void delete(UUID id);
+    void deleteAll();
     List<Workout> getAll();
 
     default Set<LocalDate> getAllDates()

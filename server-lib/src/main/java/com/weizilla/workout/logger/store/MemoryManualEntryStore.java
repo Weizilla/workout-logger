@@ -27,4 +27,10 @@ public class MemoryManualEntryStore implements ManualEntryStore
     {
         return new ArrayList<>(entries.values());
     }
+
+    @Override
+    public void deleteAll()
+    {
+        entries.clear();
+    }
 }

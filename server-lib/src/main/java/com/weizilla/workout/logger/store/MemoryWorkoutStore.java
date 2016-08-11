@@ -33,4 +33,10 @@ public class MemoryWorkoutStore implements WorkoutStore
     {
         return new ArrayList<>(workouts.values());
     }
+
+    @Override
+    public void deleteAll()
+    {
+        workouts.clear();
+    }
 }

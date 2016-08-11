@@ -50,4 +50,12 @@ public class MongoManualEntryStoreTest
         List<ManualEntry> actual = store.getAll();
         assertThat(actual).isSameAs(entries);
     }
+
+    @Test
+    public void deletesAllFromRepo() throws Exception
+    {
+        store.deleteAll();
+        verify(repo).deleteAll();
+
+    }
 }

@@ -31,4 +31,10 @@ public class MongoGarminEntryStore implements GarminEntryStore
     {
         return repo.findAll();
     }
+
+    @Override
+    public void deleteAll()
+    {
+        repo.deleteAll();
+    }
 }

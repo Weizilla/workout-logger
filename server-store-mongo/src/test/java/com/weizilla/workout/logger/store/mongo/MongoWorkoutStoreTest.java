@@ -77,6 +77,13 @@ public class MongoWorkoutStoreTest
         assertThat(actual).isEqualTo(workouts);
     }
 
+    @Test
+    public void deletesAllFromRepo() throws Exception
+    {
+        store.deleteAll();
+        verify(repo).deleteAll();
+    }
+
     private static Workout createWorkout(LocalDate today)
     {
         return new WorkoutBuilder()

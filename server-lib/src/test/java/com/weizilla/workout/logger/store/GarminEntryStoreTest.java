@@ -37,5 +37,11 @@ public class GarminEntryStoreTest
         {
             return ACTIVITIES;
         }
+
+        @Override
+        public void deleteAll()
+        {
+
+        }
     }
 }

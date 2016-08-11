@@ -26,4 +26,10 @@ public class MemoryGarminEntryStore implements GarminEntryStore
     {
         return new ArrayList<>(activities.values());
     }
+
+    @Override
+    public void deleteAll()
+    {
+        activities.clear();
+    }
 }

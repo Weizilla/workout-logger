@@ -129,5 +129,11 @@ public class WorkoutStoreTest
         {
             return workouts;
         }
+
+        @Override
+        public void deleteAll()
+        {
+
+        }
     }
 }

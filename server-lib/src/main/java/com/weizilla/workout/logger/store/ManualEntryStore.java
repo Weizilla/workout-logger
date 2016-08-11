@@ -8,4 +8,5 @@ public interface ManualEntryStore
 {
     void put(ManualEntry entry);
     List<ManualEntry> getAll();
+    void deleteAll();
 }

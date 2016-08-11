@@ -45,4 +45,10 @@ public class MongoWorkoutStore implements WorkoutStore
     {
         return repo.findByDate(localDate);
     }
+
+    @Override
+    public void deleteAll()
+    {
+        repo.deleteAll();
+    }
 }

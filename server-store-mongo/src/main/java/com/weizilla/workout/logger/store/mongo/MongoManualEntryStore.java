@@ -31,4 +31,10 @@ public class MongoManualEntryStore implements ManualEntryStore
     {
         return repo.findAll();
     }
+
+    @Override
+    public void deleteAll()
+    {
+        repo.deleteAll();
+    }
 }

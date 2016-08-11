@@ -50,4 +50,11 @@ public class MongoGarminEntryStoreTest
         List<Activity> actual = store.getAll();
         assertThat(actual).isSameAs(activities);
     }
+
+    @Test
+    public void deletesAllFromStore() throws Exception
+    {
+        store.deleteAll();
+        verify(repo).deleteAll();
+    }
 }

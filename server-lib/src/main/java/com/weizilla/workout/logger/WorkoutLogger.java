@@ -82,6 +82,16 @@ public class WorkoutLogger
         return garminManager.getAllEntries();
     }
 
+    public void deleteAllManualEntries()
+    {
+        manualEntryStore.deleteAll();
+    }
+
+    public void deleteAllWorkouts()
+    {
+        workoutStore.deleteAll();
+    }
+
     public int refreshGarminEntries()
     {
         List<Activity> newActivities = garminManager.refreshEntries();
