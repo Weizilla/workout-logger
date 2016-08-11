@@ -6,7 +6,7 @@ Logs workouts
 [![Coverage Status](https://coveralls.io/repos/Weizilla/workout-logger/badge.svg?branch=master&service=github)](https://coveralls.io/github/Weizilla/workout-logger?branch=master)
 
 ## Instructions
-Coming soon
+1. Copy conf/sample.yaml to conf/application.yaml and populate with the correct values
 
 ## Workflows
 ### Manual entry
@@ -52,14 +52,13 @@ Coming soon
 9. Password/security for UI - Maybe use Google Sign In?
 10. Https
 11. Garmin Connect Sync
- 1. Find safe place for username/password
- 2. Get rid of package string for component scan
- 3. Use futures, async, netty?
- 4. UI: distance
- 5. Better error handling
- 6. Sync custom time range
- 7. Scheduled sync
- 9. Match garmin types to existing types?
+ 1. Get rid of package string for component scan
+ 2. Use futures, async, netty?
+ 3. UI: distance
+ 4. Better error handling
+ 5. Sync custom time range
+ 6. Scheduled sync
+ 7. Match garmin types to existing types?
 12. Unit tests for UI
  1. add additional unit tests
  2. add browser based tests (Karma)
