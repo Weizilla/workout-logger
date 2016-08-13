@@ -18,6 +18,11 @@ public class GarminEntryStub
         return new GarminEntry(ActivityStub.create(start));
     }
 
+    public static GarminEntry create(String type)
+    {
+        return new GarminEntry(ActivityStub.create(type));
+    }
+
     public static List<GarminEntry> createList()
     {
         return Collections.singletonList(create());

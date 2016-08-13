@@ -16,7 +16,7 @@ public class Workout implements Entry<UUID>
     @Id
     private final UUID id;
     private final String type;
-    private final WorkoutState state;
+    private WorkoutState state;
     private final Duration duration;
     private final LocalDate date;
     private final Instant entryTime;
@@ -62,6 +62,11 @@ public class Workout implements Entry<UUID>
     public WorkoutState getState()
     {
         return state;
+    }
+
+    public void setState(WorkoutState state)
+    {
+        this.state = state;
     }
 
     public Duration getDuration()

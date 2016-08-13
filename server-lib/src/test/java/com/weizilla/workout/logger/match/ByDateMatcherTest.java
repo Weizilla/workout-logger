@@ -1,7 +1,7 @@
 package com.weizilla.workout.logger.match;
 
 import com.google.common.collect.Iterables;
-import com.weizilla.garmin.entity.Activity;
+import com.google.common.collect.Lists;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
@@ -13,7 +13,6 @@ import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -72,21 +71,158 @@ public class ByDateMatcherTest
         assertThat(actual).isEmpty();
     }
 
-    //
-//    @Test
-//    public void doNotCreateWorkoutIfManualEntryAlreadyMatched() throws Exception
-//    {
-//        ManualEntry entry = ManualEntryStub.create();
-//        manualStore.put(entry);
-//
-//        Workout workout = new WorkoutBuilder()
-//            .setManualId(entry.getId())
-//            .build();
-//        workoutStore.put(workout);
-//
-//        List<Workout> workouts = matcher.match(entry.getDate());
-//        assertThat(workouts).isEmpty();
-//    }
+    @Test
+    public void createNewWorkoutWithNewManualAndGarminEntries() throws Exception
+    {
+        ManualEntry manualEntry = ManualEntryStub.create();
+        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
+
+        GarminEntry garminEntry = GarminEntryStub.create();
+        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
+
+        Collection<Workout> actual = matcher.match(null, manualEntries, garminEntries);
+        assertThat(actual).hasSize(1);
+
+        Workout workout = Iterables.getOnlyElement(actual);
+        assertThat(workout.getId()).isNotNull();
+        WorkoutAssert.assertThat(workout).hasType(manualEntry.getType());
+        WorkoutAssert.assertThat(workout).hasState(WorkoutState.MATCHED);
+//        WorkoutAssert.assertThat(workout).hasDuration(garminEntry.getDuration()); //TODO add to garmin
+        WorkoutAssert.assertThat(workout).hasDate(garminEntry.getDate());
+        WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime()); // use manual entry time?
+        WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
+        assertThat(workout.getManualId()).contains(manualEntry.getId());
+        assertThat(workout.getGarminId()).contains(garminEntry.getId());
+    }
+
+    @Test
+    public void doNotMatchExistingGarminEntries() throws Exception
+    {
+        ManualEntry manualEntry = ManualEntryStub.create();
+        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
+
+        GarminEntry garminEntry = GarminEntryStub.create();
+        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
+
+        Workout workout = WorkoutStub.create();
+        Collection<Workout> workouts = Collections.singletonList(workout);
+        workout.setGarminId(garminEntry.getId());
+
+        Collection<Workout> actual = matcher.match(workouts, manualEntries, garminEntries);
+        assertThat(actual).hasSize(1);
+
+        Workout actualWorkout = Iterables.getOnlyElement(actual);
+        assertManualWorkout(manualEntry, actualWorkout);
+        assertThat(actualWorkout.getGarminId()).isEmpty();
+    }
+
+    @Test
+    public void addGarminIdAndUpdateForExistingWorkout() throws Exception
+    {
+        ManualEntry manualEntry = ManualEntryStub.create();
+        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
+
+        Collection<Workout> workouts = matcher.match(null, manualEntries, null);
+        assertThat(workouts).hasSize(1);
+
+        Workout actualWorkout = Iterables.getOnlyElement(workouts);
+        assertManualWorkout(manualEntry, actualWorkout);
+
+        GarminEntry garminEntry = GarminEntryStub.create();
+        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
+
+        Collection<Workout> actual2 = matcher.match(workouts, manualEntries, garminEntries);
+        assertThat(actual2).hasSize(1);
+
+        Workout matchedWorkout = Iterables.getOnlyElement(actual2);
+
+        assertThat(matchedWorkout.getId()).isNotNull();
+        WorkoutAssert.assertThat(matchedWorkout).hasType(manualEntry.getType());
+        WorkoutAssert.assertThat(matchedWorkout).hasState(WorkoutState.MATCHED);
+//        WorkoutAssert.assertThat(matchedWorkout).hasDuration(garminEntry.getDuration()); //TODO add to garmin
+        WorkoutAssert.assertThat(matchedWorkout).hasDate(garminEntry.getDate());
+        WorkoutAssert.assertThat(matchedWorkout).hasEntryTime(manualEntry.getEntryTime()); // use manual entry time?
+        WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
+        assertThat(matchedWorkout.getManualId()).contains(manualEntry.getId());
+        assertThat(matchedWorkout.getGarminId()).contains(garminEntry.getId());
+    }
+
+    @Test
+    public void matchNewGarminEntryByType() throws Exception
+    {
+        ManualEntry manualEntry = ManualEntryStub.create();
+        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
+
+        GarminEntry differentTypeGarmin = GarminEntryStub.create("DIFFERENT TYPE");
+        GarminEntry sameTypeGarmin = GarminEntryStub.create(manualEntry.getType());
+        Collection<GarminEntry> garminEntries = Lists.newArrayList(differentTypeGarmin, sameTypeGarmin);
+
+        Collection<Workout> actual = matcher.match(null, manualEntries, garminEntries);
+        assertThat(actual).hasSize(1);
+
+        Workout workout = Iterables.getOnlyElement(actual);
+        assertThat(workout.getId()).isNotNull();
+        WorkoutAssert.assertThat(workout).hasType(manualEntry.getType());
+        WorkoutAssert.assertThat(workout).hasState(WorkoutState.MATCHED);
+//        WorkoutAssert.assertThat(workout).hasDuration(garminEntry.getDuration()); //TODO add to garmin
+        WorkoutAssert.assertThat(workout).hasDate(sameTypeGarmin.getDate());
+        WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime()); // use manual entry time?
+        WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
+        assertThat(workout.getManualId()).contains(manualEntry.getId());
+        assertThat(workout.getGarminId()).contains(sameTypeGarmin.getId());
+    }
+
+    @Test
+    public void matchExistingWorkoutToGarminByType() throws Exception
+    {
+        ManualEntry manualEntry = ManualEntryStub.create();
+        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
+
+        Collection<Workout> workouts = matcher.match(null, manualEntries, null);
+        assertThat(workouts).hasSize(1);
+
+        Workout actualWorkout = Iterables.getOnlyElement(workouts);
+        assertManualWorkout(manualEntry, actualWorkout);
+
+        GarminEntry differentTypeGarmin = GarminEntryStub.create("DIFFERENT TYPE");
+        GarminEntry sameTypeGarmin = GarminEntryStub.create(manualEntry.getType());
+        Collection<GarminEntry> garminEntries = Lists.newArrayList(differentTypeGarmin, sameTypeGarmin);
+
+        Collection<Workout> actual2 = matcher.match(workouts, manualEntries, garminEntries);
+        assertThat(actual2).hasSize(1);
+
+        Workout matchedWorkout = Iterables.getOnlyElement(actual2);
+
+        assertThat(matchedWorkout.getId()).isNotNull();
+        WorkoutAssert.assertThat(matchedWorkout).hasType(manualEntry.getType());
+        WorkoutAssert.assertThat(matchedWorkout).hasState(WorkoutState.MATCHED);
+//        WorkoutAssert.assertThat(matchedWorkout).hasDuration(garminEntry.getDuration()); //TODO add to garmin
+        WorkoutAssert.assertThat(matchedWorkout).hasDate(sameTypeGarmin.getDate());
+        WorkoutAssert.assertThat(matchedWorkout)
+            .hasEntryTime(manualEntry.getEntryTime()); // use manual entry time?
+        WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
+        assertThat(matchedWorkout.getManualId()).contains(manualEntry.getId());
+        assertThat(matchedWorkout.getGarminId()).contains(sameTypeGarmin.getId());
+    }
+
+    @Test
+    public void sameGarminEntryIsNotMatchedMultipleTimes() throws Exception
+    {
+        ManualEntry manualEntry = ManualEntryStub.create();
+        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
+
+        Workout workout = WorkoutStub.create(manualEntry.getType());
+        Collection<Workout> workouts = Collections.singletonList(workout);
+
+        GarminEntry garminEntry = GarminEntryStub.create(manualEntry.getType());
+        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
+
+        Collection<Workout> actual = matcher.match(workouts, manualEntries, garminEntries);
+        assertThat(actual).hasSize(1);
+
+        Workout actualWorkout = Iterables.getOnlyElement(actual);
+        assertThat(actualWorkout.getGarminId()).contains(garminEntry.getId());
+    }
 
     private static void assertManualWorkout(ManualEntry entry, Workout workout)
     {
@@ -98,18 +234,5 @@ public class ByDateMatcherTest
         WorkoutAssert.assertThat(workout).hasEntryTime(entry.getEntryTime());
         WorkoutAssert.assertThat(workout).hasComment(entry.getComment());
         assertThat(workout.getManualId()).isPresent().contains(entry.getId());
-    }
-
-    private static void assertGarminWorkout(Activity activity, Workout workout)
-    {
-        assertThat(workout.getId()).isNotNull();
-        WorkoutAssert.assertThat(workout).hasType(activity.getType());
-        WorkoutAssert.assertThat(workout).hasState(WorkoutState.GARMIN);
-        WorkoutAssert.assertThat(workout).hasDuration(activity.getDuration());
-        WorkoutAssert.assertThat(workout).hasDate(activity.getStart().toLocalDate());
-        WorkoutAssert.assertThat(workout).hasEntryTime(Instant.now());
-        assertThat(workout.getComment()).isNull();
-        assertThat(workout.getManualId()).isNotPresent();
-        assertThat(workout.getGarminId()).isPresent().contains(activity.getId());
     }
 }
