@@ -87,9 +87,9 @@ public class ByDateMatcherTest
         assertThat(workout.getId()).isNotNull();
         WorkoutAssert.assertThat(workout).hasType(manualEntry.getType());
         WorkoutAssert.assertThat(workout).hasState(WorkoutState.MATCHED);
-//        WorkoutAssert.assertThat(workout).hasDuration(garminEntry.getDuration()); //TODO add to garmin
+        WorkoutAssert.assertThat(workout).hasDuration(garminEntry.getActivity().getDuration());
         WorkoutAssert.assertThat(workout).hasDate(garminEntry.getDate());
-        WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime()); // use manual entry time?
+        WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
         assertThat(workout.getManualId()).contains(manualEntry.getId());
         assertThat(workout.getGarminId()).contains(garminEntry.getId());
@@ -139,9 +139,9 @@ public class ByDateMatcherTest
         assertThat(matchedWorkout.getId()).isNotNull();
         WorkoutAssert.assertThat(matchedWorkout).hasType(manualEntry.getType());
         WorkoutAssert.assertThat(matchedWorkout).hasState(WorkoutState.MATCHED);
-//        WorkoutAssert.assertThat(matchedWorkout).hasDuration(garminEntry.getDuration()); //TODO add to garmin
+        WorkoutAssert.assertThat(matchedWorkout).hasDuration(garminEntry.getActivity().getDuration());
         WorkoutAssert.assertThat(matchedWorkout).hasDate(garminEntry.getDate());
-        WorkoutAssert.assertThat(matchedWorkout).hasEntryTime(manualEntry.getEntryTime()); // use manual entry time?
+        WorkoutAssert.assertThat(matchedWorkout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
         assertThat(matchedWorkout.getManualId()).contains(manualEntry.getId());
         assertThat(matchedWorkout.getGarminId()).contains(garminEntry.getId());
@@ -164,9 +164,9 @@ public class ByDateMatcherTest
         assertThat(workout.getId()).isNotNull();
         WorkoutAssert.assertThat(workout).hasType(manualEntry.getType());
         WorkoutAssert.assertThat(workout).hasState(WorkoutState.MATCHED);
-//        WorkoutAssert.assertThat(workout).hasDuration(garminEntry.getDuration()); //TODO add to garmin
+        WorkoutAssert.assertThat(workout).hasDuration(sameTypeGarmin.getActivity().getDuration());
         WorkoutAssert.assertThat(workout).hasDate(sameTypeGarmin.getDate());
-        WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime()); // use manual entry time?
+        WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
         assertThat(workout.getManualId()).contains(manualEntry.getId());
         assertThat(workout.getGarminId()).contains(sameTypeGarmin.getId());
@@ -196,10 +196,9 @@ public class ByDateMatcherTest
         assertThat(matchedWorkout.getId()).isNotNull();
         WorkoutAssert.assertThat(matchedWorkout).hasType(manualEntry.getType());
         WorkoutAssert.assertThat(matchedWorkout).hasState(WorkoutState.MATCHED);
-//        WorkoutAssert.assertThat(matchedWorkout).hasDuration(garminEntry.getDuration()); //TODO add to garmin
+        WorkoutAssert.assertThat(matchedWorkout).hasDuration(sameTypeGarmin.getActivity().getDuration());
         WorkoutAssert.assertThat(matchedWorkout).hasDate(sameTypeGarmin.getDate());
-        WorkoutAssert.assertThat(matchedWorkout)
-            .hasEntryTime(manualEntry.getEntryTime()); // use manual entry time?
+        WorkoutAssert.assertThat(matchedWorkout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
         assertThat(matchedWorkout.getManualId()).contains(manualEntry.getId());
         assertThat(matchedWorkout.getGarminId()).contains(sameTypeGarmin.getId());
