@@ -25,10 +25,10 @@ public class MongoStoreSpike implements CommandLineRunner
     private MongoWorkoutRepository workoutRepo;
 
     @Autowired
-    private MongoManualEntryRepository manualEntryRepository;
+    private MongoManualEntryRepository manualEntryRepo;
 
     @Autowired
-    private MongoGarminEntryRepository activityRepo;
+    private MongoGarminEntryRepository garminEntryRepo;
 
     public static void main(String[] args)
     {
@@ -52,14 +52,20 @@ public class MongoStoreSpike implements CommandLineRunner
             .build();
         workoutRepo.save(workout);
 
-        GarminEntry activity = GarminEntryStub.create();
-        activityRepo.save(activity);
+        List<Workout> byDate = workoutRepo.findByDate(date);
+        System.out.println("Found workout by date: " + byDate);
+        Workout byId = workoutRepo.findOne(workout.getId());
+        System.out.println("Found workout by id: " + byId);
+
+        GarminEntry garminEntry = GarminEntryStub.create();
+        garminEntryRepo.save(garminEntry);
+
+        System.out.println("Found garmin entry by id: " + garminEntryRepo.findOne(garminEntry.getId()));
 
         ManualEntry entry = ManualEntryStub.create();
-        manualEntryRepository.save(entry);
+        manualEntryRepo.save(entry);
 
-        List<Workout> byDate = workoutRepo.findByDate(date);
-        System.out.println("found by date: " + byDate);
+        System.out.println("Found manual entry by id: " + manualEntryRepo.findOne(entry.getId()));
     }
 
     @Configuration

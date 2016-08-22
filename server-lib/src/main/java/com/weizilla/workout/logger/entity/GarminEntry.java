@@ -1,16 +1,28 @@
 package com.weizilla.workout.logger.entity;
 
 import com.weizilla.garmin.entity.Activity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class GarminEntry implements Entry<Long>
 {
+    @Id
+    private final long id;
     private final Activity activity;
 
     public GarminEntry(Activity activity)
     {
+        id = activity.getId();
+        this.activity = activity;
+    }
+
+    @PersistenceConstructor
+    protected GarminEntry(Long id, Activity activity)
+    {
+        this.id = id;
         this.activity = activity;
     }
 
@@ -22,7 +34,7 @@ public class GarminEntry implements Entry<Long>
     @Override
     public Long getId()
     {
-        return activity.getId();
+        return id;
     }
 
     @Override
@@ -50,5 +62,13 @@ public class GarminEntry implements Entry<Long>
     public int hashCode()
     {
         return Objects.hash(activity);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "GarminEntry{" +
+            "activity=" + activity +
+            '}';
     }
 }
