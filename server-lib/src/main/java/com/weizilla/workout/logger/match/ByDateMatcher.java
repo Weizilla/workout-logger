@@ -4,7 +4,6 @@ import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
-import com.weizilla.workout.logger.entity.WorkoutState;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,8 +28,6 @@ public class ByDateMatcher
 
         Set<UUID> matchedManualId = workouts.stream()
             .map(Workout::getManualId)
-            .filter(Optional::isPresent)
-            .map(Optional::get)
             .collect(Collectors.toSet());
 
         Set<Long> matchedGarminIds = workouts.stream()
@@ -50,9 +47,8 @@ public class ByDateMatcher
         for (ManualEntry manualEntry : unmatchedManualEntries)
         {
             Optional<GarminEntry> matchedEntry = popByType(unmatchedGarminEntries, manualEntry.getType());
-            WorkoutState state = matchedEntry.isPresent() ? WorkoutState.MATCHED : WorkoutState.MANUAL;
             Long garminId = matchedEntry.isPresent() ? matchedEntry.get().getId() : null;
-            Workout workout = create(manualEntry, state, garminId);
+            Workout workout = create(manualEntry, garminId);
             results.add(workout);
         }
 
@@ -63,7 +59,6 @@ public class ByDateMatcher
                 //check for dup matches from previous
                 Optional<GarminEntry> matchedEntry = popByType(unmatchedGarminEntries, workout.getType());
                 matchedEntry.ifPresent(g -> {
-                    workout.setState(WorkoutState.MATCHED);
                     workout.setGarminId(g.getId());
                     results.add(workout);
                 });
@@ -78,11 +73,10 @@ public class ByDateMatcher
         return input != null ? input : Collections.emptyList();
     }
 
-    private static Workout create(ManualEntry entry, WorkoutState state, Long garminId)
+    private static Workout create(ManualEntry entry, Long garminId)
     {
         return new WorkoutBuilder()
             .setType(entry.getType())
-            .setState(state)
             .setDuration(entry.getDuration())
             .setDate(entry.getDate())
             .setEntryTime(entry.getEntryTime())

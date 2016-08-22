@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class WorkoutStub
 {
@@ -25,8 +26,8 @@ public class WorkoutStub
             .setDate(LocalDate.now())
             .setDuration(Duration.ofHours(1))
             .setEntryTime(Instant.now())
-            .setState(WorkoutState.MANUAL)
             .setType(type)
+            .setManualId(UUID.randomUUID())
             .build();
     }
 }

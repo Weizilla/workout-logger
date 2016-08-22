@@ -2,6 +2,7 @@ package com.weizilla.workout.logger.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -27,6 +28,7 @@ public class ObjectMappers
         module.addSerializer(Instant.class, new InstantSerializer());
         OBJECT_MAPPER.registerModule(module);
         OBJECT_MAPPER.registerModule(new Jdk8Module());
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     private ObjectMappers()

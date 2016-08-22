@@ -8,7 +8,6 @@ import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
-import com.weizilla.workout.logger.entity.WorkoutState;
 import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import com.weizilla.workout.logger.json.ObjectMappers;
 import com.weizilla.workout.logger.web.WebTestUtils;
@@ -65,7 +64,6 @@ public class WorkoutLoggerControllerTest
     private UUID manualId;
     private ManualEntry manualEntry;
     private GarminEntry garminEntry;
-    private WorkoutState state;
 
     @Before
     public void setUp() throws Exception
@@ -79,7 +77,6 @@ public class WorkoutLoggerControllerTest
         duration = Duration.ofHours(10);
         date = LocalDate.now();
         dateString = date.toString();
-        state = WorkoutState.MANUAL;
         id = UUID.randomUUID();
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
@@ -88,7 +85,6 @@ public class WorkoutLoggerControllerTest
         workout = new WorkoutBuilder()
             .setId(id)
             .setType(type)
-            .setState(state)
             .setDuration(duration)
             .setDate(date)
             .setEntryTime(entryTime)
@@ -128,7 +124,7 @@ public class WorkoutLoggerControllerTest
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("$[0].id", is(id.toString())))
             .andExpect(jsonPath("$[0].type", is(type)))
-            .andExpect(jsonPath("$[0].state", is(state.name())))
+            .andExpect(jsonPath("$[0].matched", is(true)))
             .andExpect(jsonPath("$[0].duration", is(duration.toString())))
             .andExpect(jsonPath("$[0].date", is(dateString)))
             .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())))
@@ -155,13 +151,13 @@ public class WorkoutLoggerControllerTest
         Workout actual = captor.getValue();
         assertThat(actual.getId()).isEqualTo(id);
         assertThat(actual.getType()).isEqualTo(type);
-        assertThat(actual.getState()).isEqualTo(state);
+        assertThat(actual.isMatched()).isEqualTo(true);
         assertThat(actual.getDuration()).isEqualTo(duration);
         assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(entryTime);
         assertThat(actual.getDate()).isEqualTo(date);
         assertThat(actual.getComment()).isEqualTo(comment);
         assertThat(actual.getGarminId()).isPresent().contains(garminId);
-        assertThat(actual.getManualId()).isPresent().contains(manualId);
+        assertThat(actual.getManualId()).isEqualTo(manualId);
     }
 
     @Test

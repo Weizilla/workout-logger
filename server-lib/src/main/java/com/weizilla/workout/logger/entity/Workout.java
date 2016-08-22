@@ -20,7 +20,6 @@ public class Workout implements Entry<UUID>
     private final LocalDate date;
     private final Instant entryTime;
     private final String comment;
-    private WorkoutState state;
     private Long garminId;
     private UUID manualId;
 
@@ -29,17 +28,15 @@ public class Workout implements Entry<UUID>
     public Workout(
         @JsonProperty("id") UUID id,
         @JsonProperty("type") String type,
-        @JsonProperty("state") WorkoutState state,
         @JsonProperty("duration") Duration duration,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
         @JsonProperty("comment") String comment,
-        @JsonProperty("garminId") Long garminId,
-        @JsonProperty("manualId") UUID manualId)
+        @JsonProperty("manualId") UUID manualId,
+        @JsonProperty("garminId") Long garminId)
     {
         this.id = id;
         this.type = type;
-        this.state = state;
         this.duration = duration;
         this.date = date;
         this.entryTime = entryTime;
@@ -57,16 +54,6 @@ public class Workout implements Entry<UUID>
     public String getType()
     {
         return type;
-    }
-
-    public WorkoutState getState()
-    {
-        return state;
-    }
-
-    public void setState(WorkoutState state)
-    {
-        this.state = state;
     }
 
     public Duration getDuration()
@@ -90,6 +77,11 @@ public class Workout implements Entry<UUID>
         return comment;
     }
 
+    public UUID getManualId()
+    {
+        return manualId;
+    }
+
     public Optional<Long> getGarminId()
     {
         return Optional.ofNullable(garminId);
@@ -100,14 +92,9 @@ public class Workout implements Entry<UUID>
         this.garminId = garminId;
     }
 
-    public Optional<UUID> getManualId()
+    public boolean isMatched()
     {
-        return Optional.ofNullable(manualId);
-    }
-
-    public void setManualId(UUID manualId)
-    {
-        this.manualId = manualId;
+        return garminId != null;
     }
 
     @Override
@@ -116,13 +103,12 @@ public class Workout implements Entry<UUID>
         return "Workout{" +
             "id=" + id +
             ", type='" + type + '\'' +
-            ", state=" + state +
             ", duration=" + duration +
             ", date=" + date +
             ", entryTime=" + entryTime +
             ", comment=" + comment +
-            ", garminId=" + garminId +
             ", manualId=" + manualId +
+            ", garminId=" + garminId +
             '}';
     }
 }
