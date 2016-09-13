@@ -16,7 +16,6 @@ public class Workout implements Entry<UUID>
     @Id
     private final UUID id;
     private final String type;
-    private final WorkoutState state;
     private final Duration duration;
     private final LocalDate date;
     private final Instant entryTime;
@@ -28,22 +27,20 @@ public class Workout implements Entry<UUID>
     @PersistenceConstructor
     public Workout(
         @JsonProperty("id") UUID id,
-        @JsonProperty(value = "type", required = true) String type,
-        @JsonProperty(value = "state", required = true) WorkoutState state,
-        @JsonProperty(value = "duration", required = true) Duration duration,
+        @JsonProperty("type") String type,
+        @JsonProperty("duration") Duration duration,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
         @JsonProperty("comment") String comment,
-        @JsonProperty("garminId") Long garminId,
-        @JsonProperty("manualId") UUID manualId)
+        @JsonProperty("manualId") UUID manualId,
+        @JsonProperty("garminId") Long garminId)
     {
-        this.id = id != null ? id : UUID.randomUUID();
+        this.id = id;
         this.type = type;
-        this.state = state;
         this.duration = duration;
-        this.date = date != null ? date : LocalDate.now();
-        this.entryTime = entryTime != null ? entryTime : Instant.now();
-        this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
+        this.date = date;
+        this.entryTime = entryTime;
+        this.comment = comment;
         this.garminId = garminId;
         this.manualId = manualId;
     }
@@ -57,11 +54,6 @@ public class Workout implements Entry<UUID>
     public String getType()
     {
         return type;
-    }
-
-    public WorkoutState getState()
-    {
-        return state;
     }
 
     public Duration getDuration()
@@ -85,6 +77,11 @@ public class Workout implements Entry<UUID>
         return comment;
     }
 
+    public UUID getManualId()
+    {
+        return manualId;
+    }
+
     public Optional<Long> getGarminId()
     {
         return Optional.ofNullable(garminId);
@@ -95,14 +92,9 @@ public class Workout implements Entry<UUID>
         this.garminId = garminId;
     }
 
-    public Optional<UUID> getManualId()
+    public boolean isMatched()
     {
-        return Optional.ofNullable(manualId);
-    }
-
-    public void setManualId(UUID manualId)
-    {
-        this.manualId = manualId;
+        return garminId != null;
     }
 
     @Override
@@ -111,13 +103,12 @@ public class Workout implements Entry<UUID>
         return "Workout{" +
             "id=" + id +
             ", type='" + type + '\'' +
-            ", state=" + state +
             ", duration=" + duration +
             ", date=" + date +
             ", entryTime=" + entryTime +
             ", comment=" + comment +
-            ", garminId=" + garminId +
             ", manualId=" + manualId +
+            ", garminId=" + garminId +
             '}';
     }
 }

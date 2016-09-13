@@ -8,9 +8,10 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.UUID;
+
+import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class ManualEntry implements Entry<UUID>
 {
@@ -41,14 +42,10 @@ public class ManualEntry implements Entry<UUID>
         this.type = type;
         this.duration = duration;
         this.date = date != null ? date : LocalDate.now();
-        this.entryTime = calcEntryTime(entryTime);
         this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
-    }
 
-    private static Instant calcEntryTime(Instant input)
-    {
-        Instant entryTime = input != null ? input : Instant.now();
-        return entryTime.truncatedTo(ChronoUnit.SECONDS);
+        Instant now = entryTime != null ? entryTime : Instant.now();
+        this.entryTime = now.truncatedTo(SECONDS);
     }
 
     @Override
@@ -92,7 +89,7 @@ public class ManualEntry implements Entry<UUID>
             ", duration=" + duration +
             ", date=" + date +
             ", entryTime=" + entryTime +
-            ", comment=" + comment +
+            ", comment='" + comment + '\'' +
             '}';
     }
 

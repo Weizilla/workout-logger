@@ -7,24 +7,20 @@ import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
-import com.weizilla.workout.logger.entity.WorkoutState;
 import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import com.weizilla.workout.logger.garmin.GarminManager;
+import com.weizilla.workout.logger.match.MatchRunner;
 import com.weizilla.workout.logger.store.ManualEntryStore;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -43,16 +39,15 @@ public class WorkoutLoggerTest
     private GarminManager garminManager;
     @Mock
     private ManualEntryStore manualEntryStore;
-    @Captor
-    private ArgumentCaptor<Workout> workoutCaptor;
+    @Mock
+    private MatchRunner matchRunner;
     private WorkoutLogger workoutLogger;
     private Workout workout;
-    private GarminEntry garminEntry;
 
     @Before
     public void setUp() throws Exception
     {
-        workoutLogger = new WorkoutLogger(workoutStore, manualEntryStore, garminManager);
+        workoutLogger = new WorkoutLogger(workoutStore, manualEntryStore, garminManager, matchRunner);
         workout = new WorkoutBuilder()
             .setType("TYPE")
             .setDuration(Duration.ofDays(1))
@@ -62,34 +57,35 @@ public class WorkoutLoggerTest
             .setGarminId(1L)
             .setManualId(UUID.randomUUID())
             .build();
-        garminEntry = GarminEntryStub.create();
     }
 
     @Test
-    public void addingManualEntryAddsWorkout() throws Exception
+    public void addManualEntryAndRunMatcher() throws Exception
     {
         ManualEntry entry = ManualEntryStub.create();
         workoutLogger.addEntry(entry);
-
         verify(manualEntryStore).put(entry);
-        verify(workoutStore).put(workoutCaptor.capture());
-
-        Workout addedWorkout = workoutCaptor.getValue();
-        assertThat(addedWorkout.getId()).isNotNull();
-        assertThat(addedWorkout.getType()).isEqualTo(entry.getType());
-        assertThat(addedWorkout.getState()).isEqualTo(WorkoutState.MANUAL);
-        assertThat(addedWorkout.getDuration()).isEqualTo(entry.getDuration());
-        assertThat(addedWorkout.getDate()).isEqualTo(entry.getDate());
-        assertThat(addedWorkout.getEntryTime()).isEqualTo(entry.getEntryTime());
-        assertThat(addedWorkout.getComment()).isEqualTo(entry.getComment());
-        assertThat(addedWorkout.getManualId()).isPresent().contains(entry.getId());
+        verify(matchRunner).match(entry.getDate());
     }
 
     @Test
-    public void putsWorkout() throws Exception
+    public void runsMatcherAfterNewGarminEntries() throws Exception
     {
-        workoutLogger.put(workout);
-        verify(workoutStore).put(workout);
+        GarminEntry entry = GarminEntryStub.create();
+        Collection<GarminEntry> garminEntries = Collections.singleton(entry);
+        when(garminManager.refreshEntries()).thenReturn(garminEntries);
+        workoutLogger.refreshGarminEntries();
+        verify(matchRunner).match(entry.getDate());
+    }
+
+    @Test
+    public void getGarminEntries() throws Exception
+    {
+        Collection<GarminEntry> garminEntries = GarminEntryStub.createList();
+        when(garminManager.getAllEntries()).thenReturn(garminEntries);
+
+        Collection<GarminEntry> actual = workoutLogger.getGarminEntries();
+        assertThat(actual).isEqualTo(garminEntries);
     }
 
     @Test
@@ -132,43 +128,5 @@ public class WorkoutLoggerTest
 
         Set<String> actual = workoutLogger.getAllTypes();
         assertThat(actual).isSameAs(types);
-    }
-
-    @Test
-    public void getGarminEntries() throws Exception
-    {
-        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
-        when(garminManager.getAllEntries()).thenReturn(garminEntries);
-
-        Collection<GarminEntry> actual = workoutLogger.getGarminEntries();
-        assertThat(actual).isEqualTo(garminEntries);
-    }
-
-    @Test
-    public void createWorkoutsFromNewGarminEntries() throws Exception
-    {
-        Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-        workoutLogger.setClock(clock);
-        Instant now = Instant.now(clock);
-
-        GarminEntry entry = GarminEntryStub.create();
-        Collection<GarminEntry> entries = Collections.singletonList(entry);
-        when(garminManager.refreshEntries()).thenReturn(entries);
-
-        int numDownloaded = workoutLogger.refreshGarminEntries();
-
-        assertThat(numDownloaded).isEqualTo(1);
-        verify(workoutStore).put(workoutCaptor.capture());
-
-        Workout addedWorkout = workoutCaptor.getValue();
-        assertThat(addedWorkout.getId()).isNotNull();
-        assertThat(addedWorkout.getType()).isEqualTo(entry.getActivity().getType());
-        assertThat(addedWorkout.getState()).isEqualTo(WorkoutState.GARMIN);
-        assertThat(addedWorkout.getDuration()).isEqualTo(entry.getActivity().getDuration());
-        assertThat(addedWorkout.getDate()).isEqualTo(entry.getDate());
-        assertThat(addedWorkout.getEntryTime()).isEqualTo(now);
-        assertThat(addedWorkout.getComment()).isNull();
-        assertThat(addedWorkout.getManualId()).isNotPresent();
-        assertThat(addedWorkout.getGarminId()).isPresent().contains(entry.getId());
     }
 }

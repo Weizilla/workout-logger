@@ -1,55 +1,41 @@
 package com.weizilla.workout.logger;
 
-import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
-import com.weizilla.workout.logger.entity.WorkoutBuilder;
-import com.weizilla.workout.logger.entity.WorkoutState;
 import com.weizilla.workout.logger.garmin.GarminManager;
+import com.weizilla.workout.logger.match.MatchRunner;
 import com.weizilla.workout.logger.store.ManualEntryStore;
 import com.weizilla.workout.logger.store.WorkoutStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Clock;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Set;
 
 @Component
 public class WorkoutLogger
 {
-    // TODO configure?
-    protected static final ZoneId DEFAULT_TZ = ZoneId.of("America/Chicago");
     private final WorkoutStore workoutStore;
     private final ManualEntryStore manualEntryStore;
     private final GarminManager garminManager;
-    private Clock clock = Clock.systemUTC();
+    private final MatchRunner matchRunner;
 
     @Autowired
-    public WorkoutLogger(WorkoutStore workoutStore, ManualEntryStore manualEntryStore, GarminManager garminManager)
+    public WorkoutLogger(WorkoutStore workoutStore, ManualEntryStore manualEntryStore,
+        GarminManager garminManager, MatchRunner matchRunner)
     {
         this.workoutStore = workoutStore;
         this.manualEntryStore = manualEntryStore;
         this.garminManager = garminManager;
+        this.matchRunner = matchRunner;
     }
 
     public void addEntry(ManualEntry entry)
     {
         manualEntryStore.put(entry);
-        Workout workout = new WorkoutBuilder()
-            .setType(entry.getType())
-            .setState(WorkoutState.MANUAL)
-            .setDuration(entry.getDuration())
-            .setDate(entry.getDate())
-            .setEntryTime(entry.getEntryTime())
-            .setComment(entry.getComment())
-            .setManualId(entry.getId())
-            .build();
-        workoutStore.put(workout);
+        matchRunner.match(entry.getDate());
     }
 
     public void put(Workout workout)
@@ -97,26 +83,8 @@ public class WorkoutLogger
     {
         Collection<GarminEntry> newActivities = garminManager.refreshEntries();
         newActivities.stream()
-            .map(this::createWorkout)
-            .forEach(workoutStore::put);
+            .map(GarminEntry::getDate)
+            .forEach(matchRunner::match);
         return newActivities.size();
-    }
-
-    private Workout createWorkout(GarminEntry entry)
-    {
-        Activity activity = entry.getActivity();
-        return new WorkoutBuilder()
-            .setType(activity.getType())
-            .setState(WorkoutState.GARMIN)
-            .setDuration(activity.getDuration())
-            .setDate(activity.getStart().toLocalDate())
-            .setEntryTime(Instant.now(clock))
-            .setGarminId(activity.getId())
-            .build();
-    }
-
-    protected void setClock(Clock clock)
-    {
-        this.clock = clock;
     }
 }
