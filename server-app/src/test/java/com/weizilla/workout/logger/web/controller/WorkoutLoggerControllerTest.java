@@ -2,12 +2,14 @@ package com.weizilla.workout.logger.web.controller;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import com.weizilla.workout.logger.json.ObjectMappers;
 import com.weizilla.workout.logger.web.WebTestUtils;
@@ -235,5 +237,21 @@ public class WorkoutLoggerControllerTest
             .andExpect(status().isOk())
             .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$.downloaded", is(result)));
+    }
+
+    @Test
+    public void addGarminActivity() throws Exception
+    {
+        List<Activity> activities = ActivityStub.createList();
+
+        String json = ObjectMappers.OBJECT_MAPPER.writeValueAsString(activities);
+
+        MockHttpServletRequestBuilder post = post("/api/garmin/activity")
+            .contentType(WebTestUtils.APPLICATION_JSON_UTF8)
+            .content(json);
+        mockMvc.perform(post)
+            .andExpect(status().isOk());
+
+        verify(workoutLogger).addGarminActivities(activities);
     }
 }

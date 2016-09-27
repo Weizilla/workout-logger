@@ -39,18 +39,31 @@ public class GarminManager
         try
         {
             List<Activity> downloaded = activityDownloader.download();
-            Set<Long> existingIds = store.getIds();
-            List<GarminEntry> newActivities = downloaded.stream()
-                .filter(a -> ! existingIds.contains(a.getId()))
-                .map(GarminEntry::new)
-                .collect(Collectors.toList());
-            store.putAll(newActivities);
-            logger.info("Downloaded {} activities of which {} were new", downloaded.size(), newActivities.size());
-            return newActivities;
+            return addActivities(downloaded);
         }
         catch (Exception e)
         {
             logger.error("Error downloading activities: {}", e.getMessage(), e);
+            return Collections.emptyList();
+        }
+    }
+
+    public Collection<GarminEntry> addActivities(Collection<Activity> activities)
+    {
+        try
+        {
+            Set<Long> existingIds = store.getIds();
+            List<GarminEntry> newActivities = activities.stream()
+                .filter(a -> ! existingIds.contains(a.getId()))
+                .map(GarminEntry::new)
+                .collect(Collectors.toList());
+            store.putAll(newActivities);
+            logger.info("Imported {} activities of which {} were new", activities.size(), newActivities.size());
+            return newActivities;
+        }
+        catch (Exception e)
+        {
+            logger.error("Error importing activities: {}", e.getMessage(), e);
             return Collections.emptyList();
         }
     }

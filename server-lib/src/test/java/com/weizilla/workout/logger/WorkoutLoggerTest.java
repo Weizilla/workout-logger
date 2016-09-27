@@ -2,11 +2,13 @@ package com.weizilla.workout.logger;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import com.weizilla.workout.logger.garmin.GarminManager;
 import com.weizilla.workout.logger.match.MatchRunner;
@@ -23,6 +25,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -86,6 +89,20 @@ public class WorkoutLoggerTest
 
         Collection<GarminEntry> actual = workoutLogger.getGarminEntries();
         assertThat(actual).isEqualTo(garminEntries);
+    }
+
+    @Test
+    public void addGarminActivities() throws Exception
+    {
+        List<Activity> activities = ActivityStub.createList();
+        GarminEntry entry = GarminEntryStub.create();
+        Collection<GarminEntry> garminEntries = Collections.singleton(entry);
+        when(garminManager.addActivities(activities)).thenReturn(garminEntries);
+
+        workoutLogger.addGarminActivities(activities);
+
+        verify(garminManager).addActivities(activities);
+        verify(matchRunner).match(entry.getDate());
     }
 
     @Test

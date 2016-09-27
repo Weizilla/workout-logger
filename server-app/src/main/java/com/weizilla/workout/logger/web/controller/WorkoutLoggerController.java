@@ -1,5 +1,6 @@
 package com.weizilla.workout.logger.web.controller;
 
+import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
@@ -71,6 +72,13 @@ public class WorkoutLoggerController
     public Collection<GarminEntry> getGarminEntries()
     {
         return workoutLogger.getGarminEntries();
+    }
+
+    @RequestMapping(path = "/garmin/activity", method = RequestMethod.POST)
+    public Map<String, Object> addGarminActivities(@RequestBody Collection<Activity> activities)
+    {
+        int added = workoutLogger.addGarminActivities(activities);
+        return Collections.singletonMap("added", added);
     }
 
     @RequestMapping(path = "/garmin/refresh")

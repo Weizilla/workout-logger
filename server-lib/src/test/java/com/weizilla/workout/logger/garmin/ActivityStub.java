@@ -4,6 +4,8 @@ import com.weizilla.garmin.entity.Activity;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class ActivityStub
@@ -21,5 +23,10 @@ public class ActivityStub
     public static Activity create(String type)
     {
         return new Activity(new Random().nextLong(), type, Duration.ofDays(1), LocalDateTime.now(), 12.3);
+    }
+
+    public static List<Activity> createList()
+    {
+        return Collections.singletonList(create());
     }
 }

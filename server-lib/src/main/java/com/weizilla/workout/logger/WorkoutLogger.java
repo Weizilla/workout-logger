@@ -1,5 +1,6 @@
 package com.weizilla.workout.logger;
 
+import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
@@ -82,6 +83,15 @@ public class WorkoutLogger
     public int refreshGarminEntries()
     {
         Collection<GarminEntry> newActivities = garminManager.refreshEntries();
+        newActivities.stream()
+            .map(GarminEntry::getDate)
+            .forEach(matchRunner::match);
+        return newActivities.size();
+    }
+
+    public int addGarminActivities(Collection<Activity> activities)
+    {
+        Collection<GarminEntry> newActivities = garminManager.addActivities(activities);
         newActivities.stream()
             .map(GarminEntry::getDate)
             .forEach(matchRunner::match);

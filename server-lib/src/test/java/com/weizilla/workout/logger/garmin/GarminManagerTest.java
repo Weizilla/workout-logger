@@ -68,6 +68,17 @@ public class GarminManagerTest
     }
 
     @Test
+    public void refreshEntriesWillAddDownloadedActivities() throws Exception
+    {
+        when(downloader.download()).thenReturn(activities);
+
+        manager.refreshEntries();
+
+        verify(store).putAll(entriesCaptor.capture());
+        assertThat(entriesCaptor.getValue()).extracting(GarminEntry::getActivity).containsExactly(activity);
+    }
+
+    @Test
     public void onlyStoresNewActivities() throws Exception
     {
         GarminEntry existing = GarminEntryStub.create();
@@ -77,9 +88,8 @@ public class GarminManagerTest
         List<Activity> activities = Lists.newArrayList(existing.getActivity(), newActivity);
 
         when(store.getIds()).thenReturn(existingId);
-        when(downloader.download()).thenReturn(activities);
 
-        manager.refreshEntries();
+        manager.addActivities(activities);
 
         verify(store).putAll(entriesCaptor.capture());
         assertThat(entriesCaptor.getValue()).extracting(GarminEntry::getActivity).containsExactly(newActivity);
@@ -96,9 +106,9 @@ public class GarminManagerTest
         List<Activity> activities = Lists.newArrayList(existing.getActivity(), newActivity);
 
         when(store.getIds()).thenReturn(existingId);
-        when(downloader.download()).thenReturn(activities);
 
-        Collection<GarminEntry> actual = manager.refreshEntries();
+        Collection<GarminEntry> actual = manager.addActivities(activities);
+
         assertThat(actual).hasSize(1);
         assertThat(actual).extracting(GarminEntry::getActivity).containsExactly(newActivity);
     }
