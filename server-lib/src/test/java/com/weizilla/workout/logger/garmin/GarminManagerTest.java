@@ -1,7 +1,7 @@
 package com.weizilla.workout.logger.garmin;
 
 import com.google.common.collect.Lists;
-import com.weizilla.garmin.ActivityDownloader;
+import com.weizilla.garmin.downloader.ActivityDownloader;
 import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.store.GarminEntryStore;
