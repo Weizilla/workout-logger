@@ -125,7 +125,7 @@ public class WorkoutLoggerMvcTest
             .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
             .andExpect(jsonPath("$", hasSize(1)))
             .andExpect(jsonPath("$[0].id", is(id.toString())))
-            .andExpect(jsonPath("$[0].type", is(type)))
+            .andExpect(jsonPath("$[0].type", is(type.toLowerCase())))
             .andExpect(jsonPath("$[0].matched", is(true)))
             .andExpect(jsonPath("$[0].duration", is(duration.toString())))
             .andExpect(jsonPath("$[0].date", is(dateString)))
@@ -152,7 +152,7 @@ public class WorkoutLoggerMvcTest
 
         Workout actual = captor.getValue();
         assertThat(actual.getId()).isEqualTo(id);
-        assertThat(actual.getType()).isEqualTo(type);
+        assertThat(actual.getType()).isEqualTo(type.toLowerCase());
         assertThat(actual.isMatched()).isEqualTo(true);
         assertThat(actual.getDuration()).isEqualTo(duration);
         assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(entryTime);

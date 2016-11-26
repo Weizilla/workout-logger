@@ -59,7 +59,7 @@ public class ObjectMappersTest
             .setGarminId(garminId)
             .setManualId(manualId)
             .build();
-        String expected = TestUtils.readFile("workout-obj-mapper-test.json");
+        String expected = TestUtils.readResource("workout-obj-mapper-test.json");
         String actual = ObjectMappers.OBJECT_MAPPER.writeValueAsString(workout);
         JSONAssert.assertEquals(expected, actual, true);
     }
@@ -67,10 +67,10 @@ public class ObjectMappersTest
     @Test
     public void deserializeWorkout() throws Exception
     {
-        String input = TestUtils.readFile("workout-obj-mapper-test.json");
+        String input = TestUtils.readResource("workout-obj-mapper-test.json");
         Workout actual = ObjectMappers.OBJECT_MAPPER.readValue(input, Workout.class);
         assertThat(actual.getId()).isEqualTo(id);
-        assertThat(actual.getType()).isEqualTo(type);
+        assertThat(actual.getType()).isEqualTo(type.toLowerCase());
         assertThat(actual.isMatched()).isEqualTo(true);
         assertThat(actual.getDuration()).isEqualTo(duration);
         assertThat(actual.getDate()).isEqualTo(date);

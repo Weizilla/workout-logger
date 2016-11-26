@@ -1,5 +1,7 @@
 package com.weizilla.workout.logger.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.weizilla.garmin.entity.Activity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -20,7 +22,8 @@ public class GarminEntry implements Entry<Long>
     }
 
     @PersistenceConstructor
-    protected GarminEntry(Long id, Activity activity)
+    @JsonCreator
+    protected GarminEntry(@JsonProperty("id") Long id, @JsonProperty("activity") Activity activity)
     {
         this.id = id;
         this.activity = activity;
