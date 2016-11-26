@@ -36,7 +36,7 @@ public class Workout implements Entry<UUID>
         @JsonProperty("garminId") Long garminId)
     {
         this.id = id;
-        this.type = type;
+        this.type = type.toLowerCase();
         this.duration = duration;
         this.date = date;
         this.entryTime = entryTime;

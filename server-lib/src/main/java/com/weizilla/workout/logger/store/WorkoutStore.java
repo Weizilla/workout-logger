@@ -12,7 +12,6 @@ public interface WorkoutStore extends Store<Workout, UUID>
     {
         return getAll().stream()
             .map(Workout::getType)
-            .map(String::toLowerCase)
             .collect(Collectors.toSet());
     }
 }

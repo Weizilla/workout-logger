@@ -68,18 +68,6 @@ public class WorkoutStoreTest
         assertThat(actual).containsOnlyElementsOf(types);
     }
 
-    @Test
-    public void getsAllWorkoutsCaseInsensitive() throws Exception
-    {
-        Set<String> types = Sets.newHashSet("a", "b", "c");
-        Collection<Workout> workouts = Lists.newArrayList(createWorkout("a"), createWorkout("B"), createWorkout("c"),
-            createWorkout("b"), createWorkout("A"));
-        store.putAll(workouts);
-
-        Set<String> actual = store.getAllTypes();
-        assertThat(actual).containsOnlyElementsOf(types);
-    }
-
     private static Workout createWorkout(String type)
     {
         return new WorkoutBuilder()

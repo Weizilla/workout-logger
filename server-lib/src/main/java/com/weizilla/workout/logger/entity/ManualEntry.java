@@ -39,7 +39,7 @@ public class ManualEntry implements Entry<UUID>
         @JsonProperty("comment") String comment)
     {
         this.id = id != null ? id : UUID.randomUUID();
-        this.type = type;
+        this.type = type.toLowerCase();
         this.duration = duration;
         this.date = date != null ? date : LocalDate.now();
         this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
