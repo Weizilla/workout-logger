@@ -5,18 +5,18 @@ import com.mongodb.MongoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Profile("mongo")
-@Configuration
+@EnableMongoRepositories
 public class MongoStoreConfiguration extends AbstractMongoConfiguration
 {
     private static final Logger logger = LoggerFactory.getLogger(MongoStoreConfiguration.class);

@@ -1,6 +1,5 @@
 package com.weizilla.workout.logger.store.mongo;
 
-import com.mongodb.Mongo;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.mongodb.core.convert.CustomConversions;
@@ -29,13 +28,6 @@ public class MongoStoreConfigurationTest
     {
         String actual = configuration.getDatabaseName();
         assertThat(actual).isEqualTo(DB_NAME);
-    }
-
-    @Test
-    public void returnsMongoClient() throws Exception
-    {
-        Mongo mongo = configuration.mongo();
-        assertThat(mongo).isNotNull();
     }
 
     @Test
