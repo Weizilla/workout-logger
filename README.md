@@ -29,6 +29,9 @@ Logs workouts
 3. Run using Docker with images stored in Docker Hub
 4. Deployed to AWS using ECS
 
+## Bugs
+1. Fix Docker due to garmin login changes. Add set up to readme
+
 ## To Do
 1. Improve UI
  1. Improve workout day, today, selected styles
@@ -46,9 +49,9 @@ Logs workouts
 5. DB backup scheme
 6. Deployment
  1. Document
- 2. Store AWS config in Git
+ 2. Store AWS config in Git?
 7. Logging
-8. Nagios?
+8. Nagios
 9. Password/security for UI - Maybe use Google Sign In?
 10. Https
 11. Garmin Connect Sync

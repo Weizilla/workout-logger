@@ -1,7 +1,7 @@
 workout-logger:
     environment:
         SPRING_PROFILES_ACTIVE: mongo
-        STORE_MONGO_HOST: MONGO
+        SPRING_DATA_MONGODB_URI: mongodb://MONGO/workouts
     image: weizilla/workout-logger
     ports:
         - "80:80"

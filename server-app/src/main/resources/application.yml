@@ -1,6 +1,3 @@
 spring:
   profiles: mongo
-store:
-  mongo:
-    dbname: workouts
-    host: localhost
+  data.mongodb.uri: mongodb://localhost/workouts
