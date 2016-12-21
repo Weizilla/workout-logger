@@ -30,7 +30,7 @@ Logs workouts
 4. Deployed to AWS using ECS
 
 ## Bugs
-1. Fix Docker due to garmin login changes. Add set up to readme
+1. Fix Docker due to garmin login changes. Add set up to readme. Pass in username and password from env to docker
 
 ## To Do
 1. Improve UI
@@ -69,12 +69,10 @@ Logs workouts
 15. Spring hot deploy
 16. Match garmin and manual workouts
 17. Add state to json and controller tests
-18. Add integration test 
+18. Add integration test with Docker, Robot Framework
  1. Add robot framework install and run instructions
  2. Add services up test for mongo
  3. Add tests
   1. Add workout
   2. Gets garmin workouts
   3. Matches workouts
-19. Fix docker deploy
-20. Add acceptance test with Docker, Robot Framework
