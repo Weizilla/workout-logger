@@ -68,7 +68,7 @@
             <dependency>
                 <groupId>com.github.Weizilla</groupId>
                 <artifactId>garmin</artifactId>
-                <version>3546ed58b9</version>
+                <version>ced4dfa469</version>
             </dependency>
             <!--<dependency>-->
                 <!--<groupId>com.weizilla.garmin</groupId>-->
