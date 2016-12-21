@@ -69,6 +69,12 @@ Logs workouts
 15. Spring hot deploy
 16. Match garmin and manual workouts
 17. Add state to json and controller tests
-18. Add integration test with WireMock
+18. Add integration test 
+ 1. Add robot framework install and run instructions
+ 2. Add services up test for mongo
+ 3. Add tests
+  1. Add workout
+  2. Gets garmin workouts
+  3. Matches workouts
 19. Fix docker deploy
 20. Add acceptance test with Docker, Robot Framework

@@ -102,3 +102,6 @@ node
 
 ### python ###
 venv
+
+### robot framework ###
+robot-int-test/output
