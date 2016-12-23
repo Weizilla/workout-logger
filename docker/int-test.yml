@@ -1,3 +1,6 @@
 workout-logger:
     environment:
         SPRING_DATA_MONGODB_URI: mongodb://MONGO/int-test
+mongo:
+    ports:
+        - "27017:27017"
