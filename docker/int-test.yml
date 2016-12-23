@@ -1,0 +1,3 @@
+workout-logger:
+    environment:
+        SPRING_DATA_MONGODB_URI: mongodb://MONGO/int-test
