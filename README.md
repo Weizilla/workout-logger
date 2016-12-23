@@ -32,8 +32,7 @@ Logs workouts
 ## Bugs
 1. Fix Docker due to garmin login changes. Add set up to readme. Pass in username and password from env to docker
 
-## To Do
-1. Improve UI
+## To Do 1. Improve UI
  1. Improve workout day, today, selected styles
  2. Parse duration
  3. Unselect selected day
@@ -50,6 +49,9 @@ Logs workouts
 6. Deployment
  1. Document
  2. Store AWS config in Git?
+ 3. Move to Docker Compose v2
+ 4. Set up jenkins with build
+ 5. Set up jenkins automated int test
 7. Logging
 8. Nagios
 9. Password/security for UI - Maybe use Google Sign In?
