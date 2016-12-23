@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation  Tests to see that all the services are up
+Documentation  Server and dependent services are up
 Library  RequestsLibrary
 
 *** Variables ***
@@ -18,5 +18,5 @@ Garmin Connect service is accessible
 
 Garmin SSO service is accessible
   Create Session  garmin-sso  https://sso.garmin.com  verify=True
-  ${resp}=  Get Request  garmin-sso  /sso
+  ${resp}=  Get Request  garmin-sso  /
   Should Be Equal As Strings  ${resp.status_code}  200
