@@ -7,6 +7,7 @@ Logs workouts
 
 ## Instructions
 1. Copy conf/sample.yaml to conf/application.yaml and populate with the correct values
+2. Set `GARMIN_USERNAME=[garmin username]` and `GARMIN_PASSWORD=[garmin password]`
 
 ## Workflows
 ### Manual entry
@@ -28,9 +29,6 @@ Logs workouts
 2. Store workouts in Mongo db or memory depending on Spring profile
 3. Run using Docker with images stored in Docker Hub
 4. Deployed to AWS using ECS
-
-## Bugs
-1. Fix Docker due to garmin login changes. Add set up to readme. Pass in username and password from env to docker
 
 ## To Do 1. Improve UI
  1. Improve workout day, today, selected styles

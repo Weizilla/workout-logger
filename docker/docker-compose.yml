@@ -2,6 +2,8 @@ workout-logger:
     environment:
         SPRING_PROFILES_ACTIVE: mongo
         SPRING_DATA_MONGODB_URI: mongodb://MONGO/workouts
+        GARMIN_USERNAME: ${GARMIN_USERNAME}
+        GARMIN_PASSWORD: ${GARMIN_PASSWORD}
     image: weizilla/workout-logger
     ports:
         - "80:80"
