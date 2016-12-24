@@ -19,7 +19,7 @@ Add a Manual Entry
   Add Manual Entry  ${input}
   ${workouts}=  Get Workouts By Date  2016-12-22
   ${num-workouts}=  Get Length  ${workouts}
-  #Should Be Equal  ${num-workouts}  1
+  Should Be Equal as Integers  ${num-workouts}  1
   ${actual-workout}=  Get From List  ${workouts}  0
   Dictionary Should Contain Item  ${actual-workout}  type  add manual entry test
   Dictionary Should Contain Item  ${actual-workout}  duration  PT1H10M
