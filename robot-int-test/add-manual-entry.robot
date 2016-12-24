@@ -3,7 +3,7 @@ Documentation  Add a Manual Entry
 Library  OperatingSystem
 Library  RequestsLibrary
 Library  Collections
-Library  MongoDbLibrary.py
+Library  python/MongoDbLibrary.py
 
 *** Variables ***
 ${WORKOUT_LOGGER_HOST}   localhost

@@ -3,7 +3,7 @@ Documentation  Refresh Garmin Entries
 Library  OperatingSystem
 Library  RequestsLibrary
 Library  Collections
-Library  MongoDbLibrary.py
+Library  python/MongoDbLibrary.py
 
 *** Variables ***
 ${WORKOUT_LOGGER_HOST}   localhost
