@@ -15,8 +15,3 @@ Garmin Connect service is accessible
   Create Session  garmin-connect  https://connect.garmin.com  verify=True
   ${resp}=  Get Request  garmin-connect  /
   Should Be Equal As Strings  ${resp.status_code}  200
-
-Garmin SSO service is accessible
-  Create Session  garmin-sso  https://sso.garmin.com  verify=True
-  ${resp}=  Get Request  garmin-sso  /
-  Should Be Equal As Strings  ${resp.status_code}  200
