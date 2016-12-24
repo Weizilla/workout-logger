@@ -1,1 +1,0 @@
-mvn clean install && mvn -pl server-app docker:build
