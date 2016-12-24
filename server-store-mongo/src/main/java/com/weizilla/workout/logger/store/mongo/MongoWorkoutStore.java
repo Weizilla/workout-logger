@@ -26,7 +26,7 @@ public class MongoWorkoutStore implements WorkoutStore
     @Override
     public void put(Workout workout)
     {
-        repo.insert(workout);
+        repo.save(workout);
     }
 
     @Override

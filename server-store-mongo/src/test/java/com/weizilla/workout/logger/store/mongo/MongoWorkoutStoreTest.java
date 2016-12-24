@@ -46,7 +46,7 @@ public class MongoWorkoutStoreTest
     public void putsWorkoutInRepo() throws Exception
     {
         store.put(workout);
-        verify(repo).insert(workout);
+        verify(repo).save(workout);
     }
 
     @Test
