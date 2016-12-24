@@ -30,13 +30,15 @@ Logs workouts
 3. Run using Docker with images stored in Docker Hub
 4. Deployed to AWS using ECS
 
-## To Do 1. Improve UI
+## To Do 
+1. Improve UI
  1. Improve workout day, today, selected styles
  2. Parse duration
  3. Unselect selected day
  4. Calendar, Add dialog and workouts on same page for larger screens
  5. Change url for selected day
  6. Use angular routes instead of different pages
+ 7. Garmin page
 2. Import/Export
 3. Workouts
  1. Add day ordering of workout (including reordering)
@@ -62,17 +64,11 @@ Logs workouts
  5. Sync custom time range
  6. Scheduled sync
  7. Match garmin types to existing types?
+ 8. Match multiple garmin entries to each workout
 12. Unit tests for UI
  1. add additional unit tests
  2. add browser based tests (Karma)
 14. Combine JS and Java code coverage in Coveralls.io
 15. Spring hot deploy
-16. Match garmin and manual workouts
 17. Add state to json and controller tests
-18. Add integration test with Docker, Robot Framework
- 1. Add robot framework install and run instructions
- 2. Add services up test for mongo
- 3. Add tests
-  1. Add workout
-  2. Gets garmin workouts
-  3. Matches workouts
+18. Add robot framework install and run instructions
