@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class WorkoutLoggerGarminIntTest
 {
-    private static final int PORT = 8080;
+    private static final int PORT = 8081;
 
     @MockBean
     private MongoClient mongoClient;
