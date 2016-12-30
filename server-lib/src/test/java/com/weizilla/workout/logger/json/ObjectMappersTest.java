@@ -21,6 +21,7 @@ public class ObjectMappersTest
     private LocalDate date;
     private Duration duration;
     private String type;
+    private int rating;
     private UUID id;
     private Instant entryTime;
     private String comment;
@@ -33,6 +34,7 @@ public class ObjectMappersTest
         date = LocalDate.of(2015, Month.NOVEMBER, 21);
         duration = Duration.ofHours(1);
         type = "TYPE";
+        rating = 3;
         id = UUID.fromString("e487cc32-c5d9-417a-b0df-9aa0eb9154c3");
         entryTime = Instant.ofEpochSecond(1448146540);
         comment = "COMMENT";
@@ -54,6 +56,7 @@ public class ObjectMappersTest
             .setType(type)
             .setDuration(duration)
             .setDate(date)
+            .setRating(rating)
             .setEntryTime(entryTime)
             .setComment(comment)
             .setGarminId(garminId)
@@ -73,6 +76,7 @@ public class ObjectMappersTest
         assertThat(actual.getType()).isEqualTo(type.toLowerCase());
         assertThat(actual.isMatched()).isEqualTo(true);
         assertThat(actual.getDuration()).isEqualTo(duration);
+        assertThat(actual.getRating()).isEqualTo(rating);
         assertThat(actual.getDate()).isEqualTo(date);
         assertThat(actual.getEntryTime()).isEqualTo(entryTime);
         assertThat(actual.getComment()).isEqualTo(comment);

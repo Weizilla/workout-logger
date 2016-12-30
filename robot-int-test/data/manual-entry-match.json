@@ -2,5 +2,6 @@
   "type": "cycling",
   "duration" : "PT70M",
   "date" : "2016-12-23",
+  "rating" : 5,
   "comment" : "GARMIN ENTRY MATCH TEST"
 }

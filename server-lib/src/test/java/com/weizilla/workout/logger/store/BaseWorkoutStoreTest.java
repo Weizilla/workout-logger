@@ -1,13 +1,10 @@
 package com.weizilla.workout.logger.store;
 
 import com.weizilla.workout.logger.entity.Workout;
-import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import com.weizilla.workout.logger.entity.WorkoutStub;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -22,15 +19,7 @@ public abstract class BaseWorkoutStoreTest
     @Before
     public void setUp() throws Exception
     {
-        workout = new WorkoutBuilder()
-            .setType("TYPE")
-            .setDuration(Duration.ofDays(1))
-            .setDate(LocalDate.now())
-            .setEntryTime(Instant.now())
-            .setComment("COMMENT")
-            .setGarminId(1L)
-            .setManualId(UUID.randomUUID())
-            .build();
+        workout = WorkoutStub.create();
         id = workout.getId();
     }
 
@@ -60,16 +49,7 @@ public abstract class BaseWorkoutStoreTest
         assertThat(workouts).hasSize(1);
         assertThat(workouts).containsExactly(workout);
 
-        Workout newWorkout = new WorkoutBuilder()
-            .setId(id)
-            .setType("NEW TYPE")
-            .setDuration(Duration.ofDays(1))
-            .setDate(LocalDate.now())
-            .setEntryTime(Instant.now())
-            .setComment("COMMENT")
-            .setGarminId(1L)
-            .setManualId(UUID.randomUUID())
-            .build();
+        Workout newWorkout = WorkoutStub.create(id);
         store.put(newWorkout);
 
         Collection<Workout> newWorkouts = store.getAll();

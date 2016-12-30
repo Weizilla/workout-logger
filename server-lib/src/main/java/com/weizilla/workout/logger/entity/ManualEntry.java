@@ -19,13 +19,14 @@ public class ManualEntry implements Entry<UUID>
     private final UUID id;
     private final String type;
     private final Duration duration;
+    private final int rating;
     private final LocalDate date;
     private final Instant entryTime;
     private final String comment;
 
-    public ManualEntry(String type, Duration duration)
+    public ManualEntry(String type, Duration duration, int rating)
     {
-        this(null, type, duration, null, null, null);
+        this(null, type, duration, 0, null, null, null);
     }
 
     @JsonCreator
@@ -34,6 +35,7 @@ public class ManualEntry implements Entry<UUID>
         @JsonProperty("id") UUID id,
         @JsonProperty(value = "type", required = true) String type,
         @JsonProperty(value = "duration", required = true) Duration duration,
+        @JsonProperty(value = "rating", required = true) int rating,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
         @JsonProperty("comment") String comment)
@@ -41,6 +43,7 @@ public class ManualEntry implements Entry<UUID>
         this.id = id != null ? id : UUID.randomUUID();
         this.type = type.toLowerCase();
         this.duration = duration;
+        this.rating = rating;
         this.date = date != null ? date : LocalDate.now();
         this.comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
 
@@ -57,6 +60,11 @@ public class ManualEntry implements Entry<UUID>
     public String getType()
     {
         return type;
+    }
+
+    public int getRating()
+    {
+        return rating;
     }
 
     public Duration getDuration()

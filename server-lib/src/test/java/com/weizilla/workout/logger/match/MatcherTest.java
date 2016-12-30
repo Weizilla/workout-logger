@@ -7,15 +7,11 @@ import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutAssert;
-import com.weizilla.workout.logger.entity.WorkoutBuilder;
 import com.weizilla.workout.logger.entity.WorkoutStub;
 import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -58,14 +54,7 @@ public class MatcherTest
         ManualEntry manualEntry = ManualEntryStub.create();
         Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
 
-        Workout workout = new WorkoutBuilder()
-            .setComment("COMMENT")
-            .setDate(LocalDate.now())
-            .setDuration(Duration.ofHours(1))
-            .setEntryTime(Instant.now())
-            .setType("WORKOUT")
-            .setManualId(manualEntry.getId())
-            .build();
+        Workout workout = WorkoutStub.createWithManualId(manualEntry.getId());
         Collection<Workout> workouts = Collections.singletonList(workout);
 
         Collection<Workout> actual = matcher.match(workouts, manualEntries, null);
@@ -151,6 +140,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(matchedWorkout).isMatched();
         WorkoutAssert.assertThat(matchedWorkout).hasDuration(garminEntry.getActivity().getDuration());
         WorkoutAssert.assertThat(matchedWorkout).hasDate(garminEntry.getDate());
+        WorkoutAssert.assertThat(matchedWorkout).hasRating(manualEntry.getRating());
         WorkoutAssert.assertThat(matchedWorkout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(matchedWorkout).hasManualId(manualEntry.getId());
@@ -176,6 +166,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(workout).isMatched();
         WorkoutAssert.assertThat(workout).hasDuration(sameTypeGarmin.getActivity().getDuration());
         WorkoutAssert.assertThat(workout).hasDate(sameTypeGarmin.getDate());
+        WorkoutAssert.assertThat(workout).hasRating(manualEntry.getRating());
         WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(workout).hasManualId(manualEntry.getId());
@@ -208,6 +199,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(matchedWorkout).isMatched();
         WorkoutAssert.assertThat(matchedWorkout).hasDuration(sameTypeGarmin.getActivity().getDuration());
         WorkoutAssert.assertThat(matchedWorkout).hasDate(sameTypeGarmin.getDate());
+        WorkoutAssert.assertThat(matchedWorkout).hasRating(manualEntry.getRating());
         WorkoutAssert.assertThat(matchedWorkout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(matchedWorkout).hasManualId(manualEntry.getId());
@@ -240,6 +232,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(workout).isNotMatched();
         WorkoutAssert.assertThat(workout).hasDuration(entry.getDuration());
         WorkoutAssert.assertThat(workout).hasDate(entry.getDate());
+        WorkoutAssert.assertThat(workout).hasRating(entry.getRating());
         WorkoutAssert.assertThat(workout).hasEntryTime(entry.getEntryTime());
         WorkoutAssert.assertThat(workout).hasComment(entry.getComment());
         WorkoutAssert.assertThat(workout).hasManualId(entry.getId());

@@ -18,4 +18,5 @@ Add a Manual Entry
   Dictionary Should Contain Item  ${actual-workout}  type  add manual entry test
   Dictionary Should Contain Item  ${actual-workout}  duration  PT1H10M
   Dictionary Should Contain Item  ${actual-workout}  date  2016-12-22
+  Dictionary Should Contain Item  ${actual-workout}  rating  5
   Dictionary Should Contain Item  ${actual-workout}  comment  ADD MANUAL ENTRY INT TEST

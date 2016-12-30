@@ -82,6 +82,7 @@ public class Matcher
             .setDuration(entry.getDuration())
             .setDate(entry.getDate())
             .setEntryTime(entry.getEntryTime())
+            .setRating(entry.getRating())
             .setComment(entry.getComment())
             .setManualId(entry.getId())
             .setGarminId(garminId)

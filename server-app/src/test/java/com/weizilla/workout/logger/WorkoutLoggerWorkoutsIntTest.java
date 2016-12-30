@@ -37,6 +37,7 @@ public class WorkoutLoggerWorkoutsIntTest
     private String type;
     private Instant entryTime;
     private Duration duration;
+    private int rating;
     private LocalDate date;
     private String comment;
     private UUID manualId;
@@ -48,10 +49,11 @@ public class WorkoutLoggerWorkoutsIntTest
         type = "TYPE";
         duration = Duration.ofHours(10);
         date = LocalDate.now();
+        rating = 5;
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
         manualId = UUID.randomUUID();
-        manualEntry = new ManualEntry(manualId, type, duration, date, entryTime, comment);
+        manualEntry = new ManualEntry(manualId, type, duration, rating, date, entryTime, comment);
     }
 
     @Test

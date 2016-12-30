@@ -17,6 +17,7 @@ class AddCtrl {
         let newEntry = {
             type: this.newEntryType,
             duration: "PT" + this.newEntryDuration + "M",
+            rating: this.newEntryRating,
             date: moment(this.newEntryDate).format("YYYY-MM-DD"),
             comment: this.newEntryComment
         };

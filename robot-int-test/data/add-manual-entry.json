@@ -2,5 +2,6 @@
   "type": "add manual entry test",
   "duration" : "PT70M",
   "date" : "2016-12-22",
+  "rating" : 5,
   "comment" : "ADD MANUAL ENTRY INT TEST"
 }

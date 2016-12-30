@@ -7,7 +7,7 @@ import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
 import com.weizilla.workout.logger.entity.Workout;
-import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import com.weizilla.workout.logger.entity.WorkoutStub;
 import com.weizilla.workout.logger.garmin.ActivityStub;
 import com.weizilla.workout.logger.garmin.GarminEntryStub;
 import com.weizilla.workout.logger.garmin.GarminManager;
@@ -20,14 +20,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -51,15 +48,7 @@ public class WorkoutLoggerTest
     public void setUp() throws Exception
     {
         workoutLogger = new WorkoutLogger(workoutStore, manualEntryStore, garminManager, matchRunner);
-        workout = new WorkoutBuilder()
-            .setType("TYPE")
-            .setDuration(Duration.ofDays(1))
-            .setDate(LocalDate.now())
-            .setEntryTime(Instant.now())
-            .setComment("COMMENT")
-            .setGarminId(1L)
-            .setManualId(UUID.randomUUID())
-            .build();
+        workout = WorkoutStub.create();
     }
 
     @Test

@@ -59,6 +59,7 @@ public class WorkoutLoggerMvcTest
     private Instant entryTime;
     private Duration duration;
     private LocalDate date;
+    private int rating;
     private String dateString;
     private UUID id;
     private String comment;
@@ -79,6 +80,7 @@ public class WorkoutLoggerMvcTest
         duration = Duration.ofHours(10);
         date = LocalDate.now();
         dateString = date.toString();
+        rating = 5;
         id = UUID.randomUUID();
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
@@ -88,6 +90,7 @@ public class WorkoutLoggerMvcTest
             .setId(id)
             .setType(type)
             .setDuration(duration)
+            .setRating(rating)
             .setDate(date)
             .setEntryTime(entryTime)
             .setComment(comment)
@@ -128,6 +131,7 @@ public class WorkoutLoggerMvcTest
             .andExpect(jsonPath("$[0].type", is(type.toLowerCase())))
             .andExpect(jsonPath("$[0].matched", is(true)))
             .andExpect(jsonPath("$[0].duration", is(duration.toString())))
+            .andExpect(jsonPath("$[0].rating", is(rating)))
             .andExpect(jsonPath("$[0].date", is(dateString)))
             .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())))
             .andExpect(jsonPath("$[0].comment", is(comment)))
@@ -155,6 +159,7 @@ public class WorkoutLoggerMvcTest
         assertThat(actual.getType()).isEqualTo(type.toLowerCase());
         assertThat(actual.isMatched()).isEqualTo(true);
         assertThat(actual.getDuration()).isEqualTo(duration);
+        assertThat(actual.getRating()).isEqualTo(rating);
         assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(entryTime);
         assertThat(actual.getDate()).isEqualTo(date);
         assertThat(actual.getComment()).isEqualTo(comment);

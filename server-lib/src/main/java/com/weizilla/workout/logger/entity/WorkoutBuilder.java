@@ -9,6 +9,7 @@ public class WorkoutBuilder
 {
     private String type;
     private Duration duration;
+    private Integer rating;
     private UUID id;
     private LocalDate date;
     private Instant entryTime;
@@ -25,6 +26,12 @@ public class WorkoutBuilder
     public WorkoutBuilder setType(String type)
     {
         this.type = type;
+        return this;
+    }
+
+    public WorkoutBuilder setRating(int rating)
+    {
+        this.rating = rating;
         return this;
     }
 
@@ -70,6 +77,6 @@ public class WorkoutBuilder
         date = date != null ? date : LocalDate.now();
         entryTime = entryTime != null ? entryTime : Instant.now();
         comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
-        return new Workout(id, type, duration, date, entryTime, comment, manualId, garminId);
+        return new Workout(id, type, duration, rating, date, entryTime, comment, manualId, garminId);
     }
 }

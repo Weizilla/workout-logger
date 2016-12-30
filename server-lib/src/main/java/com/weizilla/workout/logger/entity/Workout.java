@@ -20,6 +20,7 @@ public class Workout implements Entry<UUID>
     private final LocalDate date;
     private final Instant entryTime;
     private final String comment;
+    private final int rating;
     private Long garminId;
     private UUID manualId;
 
@@ -29,6 +30,7 @@ public class Workout implements Entry<UUID>
         @JsonProperty("id") UUID id,
         @JsonProperty("type") String type,
         @JsonProperty("duration") Duration duration,
+        @JsonProperty("rating") int rating,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
         @JsonProperty("comment") String comment,
@@ -38,6 +40,7 @@ public class Workout implements Entry<UUID>
         this.id = id;
         this.type = type.toLowerCase();
         this.duration = duration;
+        this.rating = rating;
         this.date = date;
         this.entryTime = entryTime;
         this.comment = comment;
@@ -59,6 +62,11 @@ public class Workout implements Entry<UUID>
     public Duration getDuration()
     {
         return duration;
+    }
+
+    public int getRating()
+    {
+        return rating;
     }
 
     @Override

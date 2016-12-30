@@ -51,6 +51,14 @@ describe("add controller", function() {
             expect(result.comment).to.equal("COMMENT");
         });
 
+        it("should set rating", function() {
+            ctrl.newEntryRating = 5;
+            ctrl.add();
+            let result = workoutService.result;
+            expect(result).to.exist;
+            expect(result.rating).to.equal(5);
+        });
+
         it("should set workout date", function() {
             ctrl.newEntryDate = new Date(2016, 5, 24, 23, 12, 13);
             ctrl.add();
