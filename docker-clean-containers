@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+CONTAINERS=$(docker ps -aq)
+if [[ $CONTAINERS ]]; then
+    echo "Cleaning containers..."
+	docker rm -v $CONTAINERS
+else
+    echo "No containers found"
+fi
