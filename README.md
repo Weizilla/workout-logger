@@ -43,15 +43,14 @@ Logs workouts
 3. Workouts
  1. Add day ordering of workout (including reordering)
  2. Edit/delete workout
- 3. 5 star rating
 4. Most common times for each time
 5. DB backup scheme
 6. Deployment
  1. Document
  2. Store AWS config in Git?
  3. Move to Docker Compose v2
- 4. Set up jenkins with build
- 5. Set up jenkins automated int test
+ 4. Fix local instance scripts
+ 5. Have jenkins docker push to docker hub 
 7. Logging
 8. Nagios
 9. Password/security for UI - Maybe use Google Sign In?
