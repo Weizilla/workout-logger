@@ -39,11 +39,12 @@ Logs workouts
  5. Change url for selected day
  6. Use angular routes instead of different pages
  7. Garmin page
+ 8. Option select for rating
 2. Import/Export
 3. Workouts
  1. Add day ordering of workout (including reordering)
  2. Edit/delete workout
-4. Most common times for each time
+4. Most common duration for each type
 5. DB backup scheme
 6. Deployment
  1. Document
