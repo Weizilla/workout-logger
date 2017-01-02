@@ -1,6 +1,7 @@
 package com.weizilla.workout.logger;
 
 import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.Export;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
@@ -96,5 +97,10 @@ public class WorkoutLogger
             .map(GarminEntry::getDate)
             .forEach(matchRunner::match);
         return newActivities.size();
+    }
+
+    public Export exportAll()
+    {
+        return new Export(workoutStore.getAll(), manualEntryStore.getAll(), garminManager.getAllEntries());
     }
 }

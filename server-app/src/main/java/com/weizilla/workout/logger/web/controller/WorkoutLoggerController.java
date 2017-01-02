@@ -2,6 +2,7 @@ package com.weizilla.workout.logger.web.controller;
 
 import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
+import com.weizilla.workout.logger.entity.Export;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
@@ -85,5 +86,11 @@ public class WorkoutLoggerController
     public Map<String, Object> refreshGarminEntries()
     {
         return Collections.singletonMap("downloaded", workoutLogger.refreshGarminEntries());
+    }
+
+    @RequestMapping(path = "/export")
+    public Export exportAll()
+    {
+        return workoutLogger.exportAll();
     }
 }

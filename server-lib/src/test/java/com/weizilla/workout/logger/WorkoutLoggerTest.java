@@ -3,6 +3,7 @@ package com.weizilla.workout.logger;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.weizilla.garmin.entity.Activity;
+import com.weizilla.workout.logger.entity.Export;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
@@ -134,5 +135,20 @@ public class WorkoutLoggerTest
 
         Set<String> actual = workoutLogger.getAllTypes();
         assertThat(actual).isSameAs(types);
+    }
+
+    @Test
+    public void exportsAllEntries() throws Exception
+    {
+        when(workoutStore.getAll()).thenReturn(Collections.singletonList(workout));
+        GarminEntry garminEntry = GarminEntryStub.create();
+        when(garminManager.getAllEntries()).thenReturn(Collections.singletonList(garminEntry));
+        ManualEntry manualEntry = ManualEntryStub.create();
+        when(manualEntryStore.getAll()).thenReturn(Collections.singletonList(manualEntry));
+
+        Export export = workoutLogger.exportAll();
+        assertThat(export.getWorkouts()).containsExactly(workout);
+        assertThat(export.getGarminEntries()).containsExactly(garminEntry);
+        assertThat(export.getManualEntries()).containsExactly(manualEntry);
     }
 }

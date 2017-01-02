@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
+import com.weizilla.workout.logger.entity.Export;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.ManualEntryStub;
@@ -258,5 +259,23 @@ public class WorkoutLoggerMvcTest
             .andExpect(status().isOk());
 
         verify(workoutLogger).addGarminActivities(activities);
+    }
+
+    @Test
+    public void exportsAll() throws Exception
+    {
+        Export export = new Export(Collections.singletonList(workout),
+            Collections.singletonList(manualEntry), Collections.singletonList(garminEntry));
+        when(workoutLogger.exportAll()).thenReturn(export);
+
+        mockMvc.perform(get("/api/export"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.workouts", hasSize(1)))
+            .andExpect(jsonPath("$.workouts[0].id", is(id.toString())))
+            .andExpect(jsonPath("$.manualEntries", hasSize(1)))
+            .andExpect(jsonPath("$.manualEntries[0].id", is(manualEntry.getId().toString())))
+            .andExpect(jsonPath("$.garminEntries", hasSize(1)))
+            .andExpect(jsonPath("$.garminEntries[0].id", is(garminEntry.getId())));
     }
 }
