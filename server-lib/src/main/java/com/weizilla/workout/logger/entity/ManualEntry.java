@@ -24,18 +24,13 @@ public class ManualEntry implements Entry<UUID>
     private final Instant entryTime;
     private final String comment;
 
-    public ManualEntry(String type, Duration duration, int rating)
-    {
-        this(null, type, duration, 0, null, null, null);
-    }
-
     @JsonCreator
     @PersistenceConstructor
     public ManualEntry(
         @JsonProperty("id") UUID id,
         @JsonProperty(value = "type", required = true) String type,
-        @JsonProperty(value = "duration", required = true) Duration duration,
         @JsonProperty(value = "rating", required = true) int rating,
+        @JsonProperty("duration") Duration duration,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
         @JsonProperty("comment") String comment)

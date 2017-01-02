@@ -10,35 +10,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ManualEntryTest
 {
     @Test
-    public void populatesDefaultValues() throws Exception
-    {
-        ManualEntry workout = new ManualEntry("TYPE", Duration.ofHours(1), 3);
-        assertThat(workout.getId()).isNotNull();
-        assertThat(workout.getDate()).isEqualTo(LocalDate.now());
-        assertThat(workout.getEntryTime()).isNotNull();
-    }
-
-    @Test
     public void populatesDefaultValuesGivenNull() throws Exception
     {
-        ManualEntry workout = new ManualEntry(null, "TYPE", Duration.ofHours(1), 4, null, null, null);
+        ManualEntry workout = new ManualEntry(null, "TYPE", 4, Duration.ofHours(1), null, null, null);
         assertThat(workout.getId()).isNotNull();
         assertThat(workout.getDate()).isEqualTo(LocalDate.now());
         assertThat(workout.getEntryTime()).isNotNull();
-    }
-
-    @Test
-    public void returnsStringWithValues() throws Exception
-    {
-        ManualEntry workout = new ManualEntry("TYPE", Duration.ofHours(1), 3);
-        assertThat(workout.toString()).isNotNull();
     }
 
     @Test
     public void stripsComment() throws Exception
     {
         String comment = " comment ";
-        ManualEntry workout = new ManualEntry(null, "TYPE", Duration.ofHours(1), 4, null, null, comment);
+        ManualEntry workout = new ManualEntry(null, "TYPE", 4, Duration.ofHours(1), null, null, comment);
         String actual = workout.getComment();
         assertThat(actual).isEqualTo(comment.trim());
     }
@@ -47,7 +31,7 @@ public class ManualEntryTest
     public void storesNullIfCommentIsEmptyString() throws Exception
     {
         String comment = "    ";
-        ManualEntry workout = new ManualEntry(null, "TYPE", Duration.ofHours(1), 4, null, null, comment);
+        ManualEntry workout = new ManualEntry(null, "TYPE", 4, Duration.ofHours(1), null, null, comment);
         String actual = workout.getComment();
         assertThat(actual).isNull();
     }

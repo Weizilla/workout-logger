@@ -11,7 +11,7 @@ public class ManualEntryStub
 {
     public static ManualEntry create()
     {
-        return new ManualEntry(UUID.randomUUID(), "TYPE", Duration.ofDays(1), 1, LocalDate.now(),
+        return new ManualEntry(UUID.randomUUID(), "TYPE", 1, Duration.ofDays(1), LocalDate.now(),
             Instant.now(), "COMMENT");
     }
 

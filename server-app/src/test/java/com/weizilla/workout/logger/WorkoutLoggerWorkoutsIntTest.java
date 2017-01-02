@@ -53,7 +53,7 @@ public class WorkoutLoggerWorkoutsIntTest
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
         manualId = UUID.randomUUID();
-        manualEntry = new ManualEntry(manualId, type, duration, rating, date, entryTime, comment);
+        manualEntry = new ManualEntry(manualId, type, rating, duration, date, entryTime, comment);
     }
 
     @Test
