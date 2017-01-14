@@ -21,11 +21,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MatcherTest
 {
     private Matcher matcher;
+    private ManualEntry manualEntry;
+    private GarminEntry garminEntry;
+    private Collection<ManualEntry> manualEntries;
+    private Collection<GarminEntry> garminEntries;
 
     @Before
     public void setUp() throws Exception
     {
-        matcher = new Matcher();
+        manualEntry = ManualEntryStub.create();
+        garminEntry = GarminEntryStub.create();
+        manualEntries = Collections.singletonList(manualEntry);
+        garminEntries = Collections.singletonList(garminEntry);
+        MatcherConfiguration configuration = new MatcherConfiguration();
+        configuration.getTypeMapping().put(garminEntry.getActivity().getType(), manualEntry.getType());
+        matcher = new Matcher(configuration);
     }
 
     @Test
@@ -38,9 +48,6 @@ public class MatcherTest
     @Test
     public void createWorkoutForNewManualEntries() throws Exception
     {
-        ManualEntry manualEntry = ManualEntryStub.create();
-        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
-
         Collection<Workout> actual = matcher.match(null, manualEntries, null);
         assertThat(actual).hasSize(1);
 
@@ -51,9 +58,6 @@ public class MatcherTest
     @Test
     public void doNotCreateWorkoutForOldManualEntries() throws Exception
     {
-        ManualEntry manualEntry = ManualEntryStub.create();
-        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
-
         Workout workout = WorkoutStub.createWithManualId(manualEntry.getId());
         Collection<Workout> workouts = Collections.singletonList(workout);
 
@@ -64,8 +68,6 @@ public class MatcherTest
     @Test
     public void doNotCreateWorkoutFromNewGarminEntry() throws Exception
     {
-        Collection<GarminEntry> garminEntries = GarminEntryStub.createList();
-
         Collection<Workout> actual = matcher.match(null, null, garminEntries);
         assertThat(actual).isEmpty();
     }
@@ -73,12 +75,6 @@ public class MatcherTest
     @Test
     public void createNewWorkoutWithNewManualAndGarminEntries() throws Exception
     {
-        ManualEntry manualEntry = ManualEntryStub.create();
-        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
-
-        GarminEntry garminEntry = GarminEntryStub.create();
-        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
-
         Collection<Workout> actual = matcher.match(null, manualEntries, garminEntries);
         assertThat(actual).hasSize(1);
 
@@ -97,12 +93,6 @@ public class MatcherTest
     @Test
     public void doNotMatchExistingGarminEntries() throws Exception
     {
-        ManualEntry manualEntry = ManualEntryStub.create();
-        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
-
-        GarminEntry garminEntry = GarminEntryStub.create();
-        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
-
         Workout workout = WorkoutStub.create();
         Collection<Workout> workouts = Collections.singletonList(workout);
         workout.setGarminId(garminEntry.getId());
@@ -118,17 +108,11 @@ public class MatcherTest
     @Test
     public void addGarminIdAndUpdateForExistingWorkout() throws Exception
     {
-        ManualEntry manualEntry = ManualEntryStub.create();
-        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
-
         Collection<Workout> workouts = matcher.match(null, manualEntries, null);
         assertThat(workouts).hasSize(1);
 
         Workout actualWorkout = Iterables.getOnlyElement(workouts);
         assertManualWorkout(manualEntry, actualWorkout);
-
-        GarminEntry garminEntry = GarminEntryStub.create();
-        Collection<GarminEntry> garminEntries = Collections.singletonList(garminEntry);
 
         Collection<Workout> actual2 = matcher.match(workouts, manualEntries, garminEntries);
         assertThat(actual2).hasSize(1);
@@ -150,9 +134,6 @@ public class MatcherTest
     @Test
     public void matchNewGarminEntryByType() throws Exception
     {
-        ManualEntry manualEntry = ManualEntryStub.create();
-        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
-
         GarminEntry differentTypeGarmin = GarminEntryStub.create("DIFFERENT TYPE");
         GarminEntry sameTypeGarmin = GarminEntryStub.create(manualEntry.getType());
         Collection<GarminEntry> garminEntries = Lists.newArrayList(differentTypeGarmin, sameTypeGarmin);
@@ -176,9 +157,6 @@ public class MatcherTest
     @Test
     public void matchExistingWorkoutToGarminByType() throws Exception
     {
-        ManualEntry manualEntry = ManualEntryStub.create();
-        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
-
         Collection<Workout> workouts = matcher.match(null, manualEntries, null);
         assertThat(workouts).hasSize(1);
 
@@ -209,9 +187,6 @@ public class MatcherTest
     @Test
     public void sameGarminEntryIsNotMatchedMultipleTimes() throws Exception
     {
-        ManualEntry manualEntry = ManualEntryStub.create();
-        Collection<ManualEntry> manualEntries = Collections.singletonList(manualEntry);
-
         Workout workout = WorkoutStub.create(manualEntry.getType());
         Collection<Workout> workouts = Collections.singletonList(workout);
 

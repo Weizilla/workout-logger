@@ -4,6 +4,7 @@ import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
 import com.weizilla.workout.logger.entity.WorkoutBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,6 +19,14 @@ import java.util.stream.Collectors;
 @Component
 public class Matcher
 {
+    private final MatcherConfiguration configuration;
+
+    @Autowired
+    public Matcher(MatcherConfiguration configuration)
+    {
+        this.configuration = configuration;
+    }
+
     public Collection<Workout> match(Collection<Workout> workoutsInput,
         Collection<ManualEntry> manualEntriesInput,
         Collection<GarminEntry> garminEntriesInput)
@@ -89,12 +98,17 @@ public class Matcher
             .build();
     }
 
-    private static Optional<GarminEntry> popByType(Collection<GarminEntry> entries, String type)
+    private Optional<GarminEntry> popByType(Collection<GarminEntry> entries, String manualType)
     {
         Optional<GarminEntry> found = entries.stream()
-            .filter(g -> g.getActivity().getType().equalsIgnoreCase(type))
+            .filter(g -> matchesType(g, manualType))
             .findFirst();
         found.ifPresent(entries::remove);
         return found;
+    }
+
+    private boolean matchesType(GarminEntry garminEntry, String manualType) {
+        String garminType = garminEntry.getActivity().getType();
+        return configuration.getTypeMapping().getOrDefault(garminType, garminType).equalsIgnoreCase(manualType);
     }
 }

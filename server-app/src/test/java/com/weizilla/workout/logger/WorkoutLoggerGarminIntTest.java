@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles = {"dev", "memory", "test"})
+@ActiveProfiles(profiles = {"dev", "memory", "server-app-test"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class WorkoutLoggerGarminIntTest
 {

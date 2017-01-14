@@ -12,12 +12,12 @@ public class ActivityStub
 {
     public static Activity create()
     {
-        return new Activity(new Random().nextLong(), "TYPE", Duration.ofDays(1), LocalDateTime.now(), 12.3);
+        return new Activity(new Random().nextLong(), "ACTIVITY TYPE", Duration.ofDays(1), LocalDateTime.now(), 12.3);
     }
 
     public static Activity create(LocalDateTime start)
     {
-        return new Activity(new Random().nextLong(), "TYPE", Duration.ofDays(1), start, 12.3);
+        return new Activity(new Random().nextLong(), "ACTIVITY TYPE", Duration.ofDays(1), start, 12.3);
     }
 
     public static Activity create(String type)

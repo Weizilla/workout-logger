@@ -1,3 +1,11 @@
 spring:
   profiles: mongo
   data.mongodb.uri: mongodb://localhost/workouts
+
+matcher:
+  type-mapping:
+    cycling: bike
+    indoor_cycling: bike
+    lap_swimming: swim
+    running: run
+    treadmill_running: run
