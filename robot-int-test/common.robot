@@ -15,6 +15,10 @@ Drop Int Test Database
   Connect To Mongodb  ${MONGODB_HOST}
   Drop Mongodb Database  ${MONGODB_DB}
 
+Remove Garmin Ids
+  Connect To Mongodb  ${MONGODB_HOST}
+  Unset Garmin Ids  ${MONGODB_DB}
+
 Refresh Garmin Entries
   Create Session  workout-logger  http://${WORKOUT_LOGGER_HOST}
   ${resp}=  Get Request  workout-logger  /api/garmin/refresh
@@ -45,3 +49,8 @@ Read Json File
   ${contents}=  Get File  robot-int-test/data/${filename}
   ${json}=  To Json  ${contents}
   [Return]  ${json}
+
+Match All Dates
+  Create Session  workout-logger  http://${WORKOUT_LOGGER_HOST}
+  ${resp}=  Get Request  workout-logger  /api/match/all
+  Should Be Equal As Strings  ${resp.status_code}  200

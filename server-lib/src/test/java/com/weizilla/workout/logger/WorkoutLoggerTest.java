@@ -151,4 +151,15 @@ public class WorkoutLoggerTest
         assertThat(export.getGarminEntries()).containsExactly(garminEntry);
         assertThat(export.getManualEntries()).containsExactly(manualEntry);
     }
+
+    @Test
+    public void runsMatchForAllDates() throws Exception {
+        LocalDate now = LocalDate.now();
+        when(garminManager.getAllDates()).thenReturn(Sets.newHashSet(now, now.plusDays(1)));
+        when(manualEntryStore.getAllDates()).thenReturn(Sets.newHashSet(now, now.minusDays(1)));
+        workoutLogger.matchAllDates();
+        verify(matchRunner).match(now);
+        verify(matchRunner).match(now.plusDays(1));
+        verify(matchRunner).match(now.minusDays(1));
+    }
 }

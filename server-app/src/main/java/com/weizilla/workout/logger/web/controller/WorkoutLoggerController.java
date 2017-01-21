@@ -88,6 +88,13 @@ public class WorkoutLoggerController
         return Collections.singletonMap("downloaded", workoutLogger.refreshGarminEntries());
     }
 
+    @RequestMapping(path = "/match/all")
+    public Map<String, Object> matchAllDates()
+    {
+        workoutLogger.matchAllDates();
+        return Collections.singletonMap("match", "success");
+    }
+
     @RequestMapping(path = "/export")
     public Export exportAll()
     {

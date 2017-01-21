@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +33,11 @@ public class GarminManager
     public Collection<GarminEntry> getAllEntries()
     {
         return store.getAll();
+    }
+
+    public Set<LocalDate> getAllDates()
+    {
+        return store.getAllDates();
     }
 
     public Collection<GarminEntry> refreshEntries()

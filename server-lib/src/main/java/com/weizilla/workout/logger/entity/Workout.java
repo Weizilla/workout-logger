@@ -47,7 +47,7 @@ public class Workout implements Entry<UUID>
         this.entryTime = entryTime;
         this.comment = comment;
         this.manualId = manualId;
-        this.garminIds = new ArrayList<>(garminIds);
+        this.garminIds = garminIds != null ? new ArrayList<>(garminIds) : Collections.emptyList();
     }
 
     @Override

@@ -38,5 +38,4 @@ public class MatchRunner
         Collection<Workout> newWorkouts = matcher.match(workouts, manualEntries, garminEntries);
         workoutStore.putAll(newWorkouts);
     }
-
 }

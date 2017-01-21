@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Component
@@ -97,6 +98,15 @@ public class WorkoutLogger
             .map(GarminEntry::getDate)
             .forEach(matchRunner::match);
         return newActivities.size();
+    }
+
+
+    public void matchAllDates()
+    {
+        Set<LocalDate> allDays = new HashSet<>();
+        allDays.addAll(manualEntryStore.getAllDates());
+        allDays.addAll(garminManager.getAllDates());
+        allDays.forEach(matchRunner::match);
     }
 
     public Export exportAll()
