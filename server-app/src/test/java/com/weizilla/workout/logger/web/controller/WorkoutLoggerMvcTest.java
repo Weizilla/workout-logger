@@ -136,7 +136,7 @@ public class WorkoutLoggerMvcTest
             .andExpect(jsonPath("$[0].date", is(dateString)))
             .andExpect(jsonPath("$[0].entryTime", is((int) entryTime.getEpochSecond())))
             .andExpect(jsonPath("$[0].comment", is(comment)))
-            .andExpect(jsonPath("$[0].garminId", is((int) garminId)))
+            .andExpect(jsonPath("$[0].garminIds[0]", is((int) garminId)))
             .andExpect(jsonPath("$[0].manualId", is(manualId.toString())));
 
     }
@@ -164,7 +164,7 @@ public class WorkoutLoggerMvcTest
         assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(entryTime);
         assertThat(actual.getDate()).isEqualTo(date);
         assertThat(actual.getComment()).isEqualTo(comment);
-        assertThat(actual.getGarminId()).isPresent().contains(garminId);
+        assertThat(actual.getGarminIds()).contains(garminId);
         assertThat(actual.getManualId()).isEqualTo(manualId);
     }
 

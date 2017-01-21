@@ -8,7 +8,9 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class Workout implements Entry<UUID>
@@ -21,7 +23,7 @@ public class Workout implements Entry<UUID>
     private final Instant entryTime;
     private final String comment;
     private final int rating;
-    private Long garminId;
+    private List<Long> garminIds;
     private UUID manualId;
 
     @JsonCreator
@@ -35,7 +37,7 @@ public class Workout implements Entry<UUID>
         @JsonProperty("entryTime") Instant entryTime,
         @JsonProperty("comment") String comment,
         @JsonProperty("manualId") UUID manualId,
-        @JsonProperty("garminId") Long garminId)
+        @JsonProperty("garminIds") List<Long> garminIds)
     {
         this.id = id;
         this.type = type.toLowerCase();
@@ -44,8 +46,8 @@ public class Workout implements Entry<UUID>
         this.date = date;
         this.entryTime = entryTime;
         this.comment = comment;
-        this.garminId = garminId;
         this.manualId = manualId;
+        this.garminIds = new ArrayList<>(garminIds);
     }
 
     @Override
@@ -90,19 +92,24 @@ public class Workout implements Entry<UUID>
         return manualId;
     }
 
-    public Optional<Long> getGarminId()
+    public List<Long> getGarminIds()
     {
-        return Optional.ofNullable(garminId);
+        return Collections.unmodifiableList(garminIds);
     }
 
-    public void setGarminId(long garminId)
+    public void setGarminId(long garminIds)
     {
-        this.garminId = garminId;
+        this.garminIds = Collections.singletonList(garminIds);
+    }
+
+    public void setGarminIds(List<Long> garminIds)
+    {
+        this.garminIds = new ArrayList<>(garminIds);
     }
 
     public boolean isMatched()
     {
-        return garminId != null;
+        return garminIds != null && ! garminIds.isEmpty();
     }
 
     @Override
@@ -116,7 +123,7 @@ public class Workout implements Entry<UUID>
             ", entryTime=" + entryTime +
             ", comment=" + comment +
             ", manualId=" + manualId +
-            ", garminId=" + garminId +
+            ", garminIds=" + garminIds +
             '}';
     }
 }

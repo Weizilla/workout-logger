@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,9 +42,7 @@ public class Matcher
             .collect(Collectors.toSet());
 
         Set<Long> matchedGarminIds = workouts.stream()
-            .map(Workout::getGarminId)
-            .filter(Optional::isPresent)
-            .map(Optional::get)
+            .flatMap(w -> w.getGarminIds().stream())
             .collect(Collectors.toSet());
 
         List<ManualEntry> unmatchedManualEntries = manualEntries.stream()
@@ -55,24 +53,25 @@ public class Matcher
             .filter(e -> ! matchedGarminIds.contains(e.getId()))
             .collect(Collectors.toList());
 
+        // match each manual entry against all unmatched garmin entries of same type
         for (ManualEntry manualEntry : unmatchedManualEntries)
         {
-            Optional<GarminEntry> matchedEntry = popByType(unmatchedGarminEntries, manualEntry.getType());
-            Long garminId = matchedEntry.isPresent() ? matchedEntry.get().getId() : null;
-            Workout workout = create(manualEntry, garminId);
+            List<Long> garminIds = removeByType(unmatchedGarminEntries, manualEntry.getType());
+            Workout workout = create(manualEntry, garminIds);
             results.add(workout);
         }
 
+        // match existing workouts against remaining unmatched garmin entries
         for (Workout workout : workouts)
         {
-            if (! workout.getGarminId().isPresent() && ! unmatchedGarminEntries.isEmpty())
+            if (workout.getGarminIds().isEmpty() && ! unmatchedGarminEntries.isEmpty())
             {
                 //check for dup matches from previous
-                Optional<GarminEntry> matchedEntry = popByType(unmatchedGarminEntries, workout.getType());
-                matchedEntry.ifPresent(g -> {
-                    workout.setGarminId(g.getId());
+                List<Long> garminIds = removeByType(unmatchedGarminEntries, workout.getType());
+                if (! garminIds.isEmpty()) {
+                    workout.setGarminIds(garminIds);
                     results.add(workout);
-                });
+                }
             }
         }
 
@@ -84,7 +83,7 @@ public class Matcher
         return input != null ? input : Collections.emptyList();
     }
 
-    private static Workout create(ManualEntry entry, Long garminId)
+    private static Workout create(ManualEntry entry, List<Long> garminIds)
     {
         return new WorkoutBuilder()
             .setType(entry.getType())
@@ -94,17 +93,22 @@ public class Matcher
             .setRating(entry.getRating())
             .setComment(entry.getComment())
             .setManualId(entry.getId())
-            .setGarminId(garminId)
+            .setGarminIds(garminIds)
             .build();
     }
 
-    private Optional<GarminEntry> popByType(Collection<GarminEntry> entries, String manualType)
+    private List<Long> removeByType(Collection<GarminEntry> entries, String manualType)
     {
-        Optional<GarminEntry> found = entries.stream()
-            .filter(g -> matchesType(g, manualType))
-            .findFirst();
-        found.ifPresent(entries::remove);
-        return found;
+        List<Long> results = new ArrayList<>(entries.size());
+        Iterator<GarminEntry> iter = entries.iterator();
+        while (iter.hasNext()) {
+            GarminEntry entry = iter.next();
+            if (matchesType(entry, manualType)) {
+                results.add(entry.getId());
+                iter.remove();
+            }
+        }
+        return results;
     }
 
     private boolean matchesType(GarminEntry garminEntry, String manualType) {

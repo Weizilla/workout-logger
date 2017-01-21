@@ -18,7 +18,7 @@ Garmin Refresh Matches Existing Manual Entry
   Dictionary Should Contain Item  ${matched-workout}  duration  PT1H10M
   Dictionary Should Contain Item  ${matched-workout}  date  2016-12-23
   Dictionary Should Contain Item  ${matched-workout}  rating  5
-  Dictionary Should Contain Item  ${matched-workout}  garminId  1493610294
+  Dictionary Should Contain Item  ${matched-workout}  garminIds  [1493610294]
   Dictionary Should Contain Item  ${matched-workout}  comment  GARMIN ENTRY MATCH TEST
 
 Adding Manual Entry Matches Against Existing Garmin Entries
@@ -34,5 +34,5 @@ Adding Manual Entry Matches Against Existing Garmin Entries
   Dictionary Should Contain Item  ${matched-workout}  duration  PT1H10M
   Dictionary Should Contain Item  ${matched-workout}  date  2016-12-23
   Dictionary Should Contain Item  ${matched-workout}  rating  5
-  Dictionary Should Contain Item  ${matched-workout}  garminId  1493610294
+  Dictionary Should Contain Item  ${matched-workout}  garminIds  [1493610294]
   Dictionary Should Contain Item  ${matched-workout}  comment  GARMIN ENTRY MATCH TEST

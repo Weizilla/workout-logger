@@ -3,6 +3,9 @@ package com.weizilla.workout.logger.entity;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class WorkoutBuilder
@@ -14,7 +17,7 @@ public class WorkoutBuilder
     private LocalDate date;
     private Instant entryTime;
     private String comment;
-    private Long garminId;
+    private List<Long> garminIds;
     private UUID manualId;
 
     public WorkoutBuilder setId(UUID id)
@@ -61,7 +64,13 @@ public class WorkoutBuilder
 
     public WorkoutBuilder setGarminId(Long garminId)
     {
-        this.garminId = garminId;
+        garminIds = garminId != null ? Collections.singletonList(garminId) : Collections.emptyList();
+        return this;
+    }
+
+    public WorkoutBuilder setGarminIds(List<Long> garminIds)
+    {
+        this.garminIds = new ArrayList(garminIds);
         return this;
     }
 
@@ -77,6 +86,6 @@ public class WorkoutBuilder
         date = date != null ? date : LocalDate.now();
         entryTime = entryTime != null ? entryTime : Instant.now();
         comment = comment == null || comment.trim().isEmpty() ? null : comment.trim();
-        return new Workout(id, type, duration, rating, date, entryTime, comment, manualId, garminId);
+        return new Workout(id, type, duration, rating, date, entryTime, comment, manualId, garminIds);
     }
 }

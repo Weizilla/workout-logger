@@ -81,6 +81,6 @@ public class ObjectMappersTest
         assertThat(actual.getEntryTime()).isEqualTo(entryTime);
         assertThat(actual.getComment()).isEqualTo(comment);
         assertThat(actual.getManualId()).isEqualTo(manualId);
-        assertThat(actual.getGarminId()).isPresent().contains(garminId);
+        assertThat(actual.getGarminIds()).containsExactly(garminId);
     }
 }

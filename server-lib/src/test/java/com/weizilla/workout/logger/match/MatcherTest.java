@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -87,7 +87,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(workout).hasManualId(manualEntry.getId());
-        WorkoutAssert.assertThat(workout).hasGarminId(Optional.of(garminEntry.getId()));
+        WorkoutAssert.assertThat(workout).hasOnlyGarminIds(garminEntry.getId());
     }
 
     @Test
@@ -102,7 +102,7 @@ public class MatcherTest
 
         Workout actualWorkout = Iterables.getOnlyElement(actual);
         assertManualWorkout(manualEntry, actualWorkout);
-        assertThat(actualWorkout.getGarminId()).isEmpty();
+        assertThat(actualWorkout.getGarminIds()).isEmpty();
     }
 
     @Test
@@ -128,7 +128,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(matchedWorkout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(matchedWorkout).hasManualId(manualEntry.getId());
-        WorkoutAssert.assertThat(matchedWorkout).hasGarminId(Optional.of(garminEntry.getId()));
+        WorkoutAssert.assertThat(matchedWorkout).hasOnlyGarminIds(garminEntry.getId());
     }
 
     @Test
@@ -151,7 +151,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(workout).hasManualId(manualEntry.getId());
-        WorkoutAssert.assertThat(workout).hasGarminId(Optional.of(sameTypeGarmin.getId()));
+        WorkoutAssert.assertThat(workout).hasOnlyGarminIds(sameTypeGarmin.getId());
     }
 
     @Test
@@ -181,7 +181,28 @@ public class MatcherTest
         WorkoutAssert.assertThat(matchedWorkout).hasEntryTime(manualEntry.getEntryTime());
         WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(matchedWorkout).hasManualId(manualEntry.getId());
-        WorkoutAssert.assertThat(matchedWorkout).hasGarminId(Optional.of(sameTypeGarmin.getId()));
+        WorkoutAssert.assertThat(matchedWorkout).hasOnlyGarminIds(sameTypeGarmin.getId());
+    }
+
+    @Test
+    public void matchesToMultipleGarminWorkoutsByType() throws Exception
+    {
+        GarminEntry entry1 = GarminEntryStub.create();
+        GarminEntry entry2 = GarminEntryStub.create();
+        List<GarminEntry> garminEntries = Lists.newArrayList(entry1, entry2);
+        Collection<Workout> actual = matcher.match(null, manualEntries, garminEntries);
+        assertThat(actual).hasSize(1);
+
+        Workout workout = Iterables.getOnlyElement(actual);
+        assertThat(workout.getId()).isNotNull();
+        WorkoutAssert.assertThat(workout).hasType(manualEntry.getType());
+        WorkoutAssert.assertThat(workout).isMatched();
+        WorkoutAssert.assertThat(workout).hasDuration(entry1.getActivity().getDuration());
+        WorkoutAssert.assertThat(workout).hasDate(entry1.getDate());
+        WorkoutAssert.assertThat(workout).hasEntryTime(manualEntry.getEntryTime());
+        WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
+        WorkoutAssert.assertThat(workout).hasManualId(manualEntry.getId());
+        WorkoutAssert.assertThat(workout).hasOnlyGarminIds(entry1.getId(), entry2.getId());
     }
 
     @Test
@@ -197,7 +218,7 @@ public class MatcherTest
         assertThat(actual).hasSize(1);
 
         Workout actualWorkout = Iterables.getOnlyElement(actual);
-        assertThat(actualWorkout.getGarminId()).contains(garminEntry.getId());
+        assertThat(actualWorkout.getGarminIds()).contains(garminEntry.getId());
     }
 
     private static void assertManualWorkout(ManualEntry entry, Workout workout)
