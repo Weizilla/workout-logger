@@ -28,6 +28,12 @@ public class MongoManualEntryStore implements ManualEntryStore
     }
 
     @Override
+    public ManualEntry get(UUID uuid)
+    {
+        return repo.findOne(uuid);
+    }
+
+    @Override
     public void delete(UUID id)
     {
         repo.delete(id);

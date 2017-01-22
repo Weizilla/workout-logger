@@ -34,4 +34,9 @@ public class MemoryStore<T extends Entry<ID>, ID extends Serializable> implement
     {
         return store.values();
     }
+
+    @Override
+    public T get(ID id) {
+        return store.get(id);
+    }
 }

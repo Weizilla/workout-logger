@@ -21,6 +21,12 @@ public class MongoGarminEntryStore implements GarminEntryStore
     }
 
     @Override
+    public GarminEntry get(Long id)
+    {
+        return repo.findOne(id);
+    }
+
+    @Override
     public void put(GarminEntry entry)
     {
         repo.save(entry);

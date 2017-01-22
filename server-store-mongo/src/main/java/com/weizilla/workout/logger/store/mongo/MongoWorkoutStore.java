@@ -30,6 +30,12 @@ public class MongoWorkoutStore implements WorkoutStore
     }
 
     @Override
+    public Workout get(UUID uuid)
+    {
+        return repo.findOne(uuid);
+    }
+
+    @Override
     public void delete(UUID id)
     {
         repo.delete(id);

@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public interface Store<T extends Entry<ID>, ID extends Serializable>
 {
+    T get(ID id);
     void put(T value);
     void delete(ID id);
     void deleteAll();

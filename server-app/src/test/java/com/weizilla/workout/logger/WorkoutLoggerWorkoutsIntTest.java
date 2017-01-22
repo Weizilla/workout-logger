@@ -115,4 +115,18 @@ public class WorkoutLoggerWorkoutsIntTest
         String[] types = template.getForObject("/api/workouts/types", String[].class);
         assertThat(types).containsExactly(type.toLowerCase());
     }
+
+    @Test
+    public void deletesWorkout() throws Exception {
+        template.postForLocation("/api/entry", manualEntry);
+
+        Workout[] workouts = template.getForObject("/api/workouts/dates/" + date, Workout[].class);
+        assertThat(workouts).isNotNull();
+        assertThat(workouts).hasSize(1);
+
+        template.delete("/api/workouts/" + workouts[0].getId());
+
+        workouts = template.getForObject("/api/workouts/dates/" + date, Workout[].class);
+        assertThat(workouts).isEmpty();
+    }
 }

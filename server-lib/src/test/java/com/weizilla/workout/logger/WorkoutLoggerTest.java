@@ -26,8 +26,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -150,6 +153,23 @@ public class WorkoutLoggerTest
         assertThat(export.getWorkouts()).containsExactly(workout);
         assertThat(export.getGarminEntries()).containsExactly(garminEntry);
         assertThat(export.getManualEntries()).containsExactly(manualEntry);
+    }
+
+    @Test
+    public void noErrorsDeletingInvalidIds() throws Exception {
+        workoutLogger.deleteWorkout(UUID.randomUUID());
+        verify(workoutStore, never()).delete(any(UUID.class));
+        verify(manualEntryStore, never()).delete(any(UUID.class));
+    }
+
+    @Test
+    public void deleteWorkoutAndManualWorkout() throws Exception {
+        UUID workoutId = workout.getId();
+        when(workoutStore.get(workoutId)).thenReturn(workout);
+
+        workoutLogger.deleteWorkout(workoutId);
+        verify(workoutStore).delete(workoutId);
+        verify(manualEntryStore).delete(workout.getManualId());
     }
 
     @Test

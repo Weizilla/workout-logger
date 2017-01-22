@@ -47,6 +47,10 @@ class WorkoutsService {
             });
     }
 
+    deleteWorkout(id) {
+        return this.$http.delete(getHost() + "/api/workouts/" + id);
+    }
+
     getWorkoutDates() {
         return this.$http.get(getHost() + "/api/workouts/dates").then(r => r.data.map(d => moment(d)));
     }

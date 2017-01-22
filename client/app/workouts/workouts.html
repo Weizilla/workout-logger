@@ -10,8 +10,9 @@
         <div class="panel-body" ng-show="workout.comment"><strong>{{ workout.rating }}</strong> -
             {{ workout.comment }}</div>
         <div class="panel-footer clearfix">
-            <span ng-show="workout.manualId">Manual Id: {{ workout.manualId }}</span>
-            <span class="pull-right" ng-show="workout.garminIds">GarminIds: {{ workout.garminIds }}</span>
+            <!--<span ng-show="workout.manualId">Manual Id: {{ workout.manualId }}</span>-->
+            <span>GarminIds: {{ workout.garminIds }}</span>
+            <span class="pull-right"><a ng-click="ctrl.deleteWorkout(workout.id)">Delete</a></span>
         </div>
     </div>
 </div>

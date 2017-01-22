@@ -41,6 +41,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -277,5 +278,13 @@ public class WorkoutLoggerMvcTest
             .andExpect(jsonPath("$.manualEntries[0].id", is(manualEntry.getId().toString())))
             .andExpect(jsonPath("$.garminEntries", hasSize(1)))
             .andExpect(jsonPath("$.garminEntries[0].id", is(garminEntry.getId())));
+    }
+
+    @Test
+    public void deletesWorkout() throws Exception {
+        mockMvc.perform(delete("/api/workouts/" + workout.getId()))
+            .andExpect(status().isOk());
+
+        verify(workoutLogger).deleteWorkout(workout.getId());
     }
 }

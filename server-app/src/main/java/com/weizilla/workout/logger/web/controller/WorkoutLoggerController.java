@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -49,6 +50,12 @@ public class WorkoutLoggerController
     public void addWorkout(@RequestBody Workout workout)
     {
         workoutLogger.put(workout);
+    }
+
+    @RequestMapping(path = "/workouts/{id}", method = RequestMethod.DELETE)
+    public void deleteWorkout(@PathVariable UUID id)
+    {
+        workoutLogger.deleteWorkout(id);
     }
 
     @RequestMapping(path = "/workouts/dates")

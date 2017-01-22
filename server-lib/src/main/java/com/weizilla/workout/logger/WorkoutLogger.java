@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Component
 public class WorkoutLogger
@@ -112,5 +113,19 @@ public class WorkoutLogger
     public Export exportAll()
     {
         return new Export(workoutStore.getAll(), manualEntryStore.getAll(), garminManager.getAllEntries());
+    }
+
+    public void deleteWorkout(UUID id)
+    {
+        Workout workout = workoutStore.get(id);
+        if (workout != null)
+        {
+            UUID manualId = workout.getManualId();
+            if (manualId != null)
+            {
+                manualEntryStore.delete(manualId);
+            }
+            workoutStore.delete(workout.getId());
+        }
     }
 }

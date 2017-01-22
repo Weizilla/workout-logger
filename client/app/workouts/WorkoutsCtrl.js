@@ -5,6 +5,10 @@ class WorkoutsCtrl {
         this.workoutsService = workoutsService;
         this.displayWorkouts = workoutsService.displayWorkouts;
     }
+
+    deleteWorkout(id) {
+        this.workoutsService.deleteWorkout(id);
+    }
 }
 
 WorkoutsCtrl.$inject = ["WorkoutsService"];
