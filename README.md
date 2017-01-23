@@ -43,7 +43,7 @@ Logs workouts
 2. Import
 3. Workouts
  1. Add day ordering of workout (including reordering)
- 2. Edit/delete workout
+ 2. Edit workout
 4. Most common duration for each type
 5. Monitor daily export 
 6. Deployment
@@ -72,3 +72,10 @@ Logs workouts
 15. Spring hot deploy
 17. Add state to json and controller tests
 18. Add robot framework install and run instructions
+19. Refactor workout type
+ 1. Separate place for storage instead of main object
+ 2. Different display/colors on UI based on type
+
+## Version 2
+1. React instead of Angular for front end
+2. Sqlite instead of MongoDb
