@@ -2,6 +2,7 @@ package com.weizilla.workout.logger.web.controller;
 
 import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
+import com.weizilla.workout.logger.build.GitConfiguration;
 import com.weizilla.workout.logger.entity.Export;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -27,11 +29,13 @@ import java.util.UUID;
 public class WorkoutLoggerController
 {
     private final WorkoutLogger workoutLogger;
+    private final GitConfiguration gitConfiguration;
 
     @Autowired
-    public WorkoutLoggerController(WorkoutLogger workoutLogger)
+    public WorkoutLoggerController(WorkoutLogger workoutLogger, GitConfiguration gitConfiguration)
     {
         this.workoutLogger = workoutLogger;
+        this.gitConfiguration = gitConfiguration;
     }
 
     @RequestMapping("/entry")
@@ -106,5 +110,14 @@ public class WorkoutLoggerController
     public Export exportAll()
     {
         return workoutLogger.exportAll();
+    }
+
+    @RequestMapping(path = "/git")
+    public Map<String, String> gitConfiguration()
+    {
+        Map<String, String> result = new HashMap<>();
+        result.put("buildTime", gitConfiguration.getBuildTime());
+        result.put("commitIdAbbrev", gitConfiguration.getCommitIdAbbrev());
+        return result;
     }
 }

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
+import com.weizilla.workout.logger.build.GitConfiguration;
 import com.weizilla.workout.logger.entity.Export;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
@@ -69,11 +70,19 @@ public class WorkoutLoggerMvcTest
     private UUID manualId;
     private ManualEntry manualEntry;
     private GarminEntry garminEntry;
+    private GitConfiguration gitConfiguration;
+    private String commitIdAbbrev;
+    private String buildTime;
 
     @Before
     public void setUp() throws Exception
     {
-        WorkoutLoggerController controller = new WorkoutLoggerController(workoutLogger);
+        commitIdAbbrev = "COMMIT ID ABBREV";
+        buildTime = "BUILD TIME";
+        gitConfiguration = new GitConfiguration(commitIdAbbrev, buildTime);
+
+        WorkoutLoggerController controller =
+            new WorkoutLoggerController(workoutLogger, gitConfiguration);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
             .setMessageConverters(new WorkoutJsonConverter())
             .build();
@@ -281,10 +290,21 @@ public class WorkoutLoggerMvcTest
     }
 
     @Test
-    public void deletesWorkout() throws Exception {
+    public void deletesWorkout() throws Exception
+    {
         mockMvc.perform(delete("/api/workouts/" + workout.getId()))
             .andExpect(status().isOk());
 
         verify(workoutLogger).deleteWorkout(workout.getId());
+    }
+
+    @Test
+    public void getsGitConfiguration() throws Exception
+    {
+        mockMvc.perform(get("/api/git"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(WebTestUtils.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.commitIdAbbrev", is(commitIdAbbrev)))
+            .andExpect(jsonPath("$.buildTime", is(buildTime)));
     }
 }

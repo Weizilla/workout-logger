@@ -67,6 +67,10 @@ class WorkoutsService {
         this.updateListeners.forEach(l => l.update());
     }
 
+    getGitConfiguration() {
+        return this.$http.get(getHost() + "/api/git").then(r => r.data);
+    }
+
     static factory($http) {
         return new WorkoutsService($http);
     }

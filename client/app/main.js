@@ -3,6 +3,7 @@ import * as CalendarModule from "./calendar/calendar";
 import * as WorkoutsModule from "./workouts/workouts";
 import * as AddModule from "./add/add";
 import * as GarminModule from "./garmin/garmin";
+import * as FooterModule from "./footer/footer";
 import { WorkoutsService } from "./WorkoutsService";
 import "bootswatch/cosmo/bootstrap.min.css";
 import "font-awesome-webpack";
@@ -20,6 +21,9 @@ angular.module("workoutLoggerApp", [])
     .controller("WorkoutsCtrl", WorkoutsModule.ctrl)
     .directive("workouts", () => new WorkoutsModule.directive())
     .controller("GarminCtrl", GarminModule.ctrl)
-    .directive("garmin", () => new GarminModule.directive());
+    .directive("garmin", () => new GarminModule.directive())
+    .controller("FooterCtrl", FooterModule.ctrl)
+    .directive("footers", () => new FooterModule.directive());
+
 
 
