@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.weizilla.garmin.entity.Activity;
 import com.weizilla.workout.logger.WorkoutLogger;
-import com.weizilla.workout.logger.build.GitConfiguration;
+import com.weizilla.workout.logger.git.GitConfiguration;
 import com.weizilla.workout.logger.entity.Export;
 import com.weizilla.workout.logger.entity.GarminEntry;
 import com.weizilla.workout.logger.entity.ManualEntry;
