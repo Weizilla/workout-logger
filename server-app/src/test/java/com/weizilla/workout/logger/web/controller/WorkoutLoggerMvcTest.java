@@ -148,34 +148,6 @@ public class WorkoutLoggerMvcTest
             .andExpect(jsonPath("$[0].comment", is(comment)))
             .andExpect(jsonPath("$[0].garminIds[0]", is((int) garminId)))
             .andExpect(jsonPath("$[0].manualId", is(manualId.toString())));
-
-    }
-
-    @Test
-    public void addsWorkout() throws Exception
-    {
-        String json = ObjectMappers.OBJECT_MAPPER.writeValueAsString(workout);
-
-        MockHttpServletRequestBuilder post = post("/api/workouts")
-            .contentType(WebTestUtils.APPLICATION_JSON_UTF8)
-            .content(json);
-        mockMvc.perform(post)
-            .andExpect(status().isOk());
-
-        ArgumentCaptor<Workout> captor = ArgumentCaptor.forClass(Workout.class);
-        verify(workoutLogger).put(captor.capture());
-
-        Workout actual = captor.getValue();
-        assertThat(actual.getId()).isEqualTo(id);
-        assertThat(actual.getType()).isEqualTo(type.toLowerCase());
-        assertThat(actual.isMatched()).isEqualTo(true);
-        assertThat(actual.getDuration()).isEqualTo(duration);
-        assertThat(actual.getRating()).isEqualTo(rating);
-        assertThat(actual.getEntryTime().truncatedTo(ChronoUnit.SECONDS)).isEqualTo(entryTime);
-        assertThat(actual.getDate()).isEqualTo(date);
-        assertThat(actual.getComment()).isEqualTo(comment);
-        assertThat(actual.getGarminIds()).contains(garminId);
-        assertThat(actual.getManualId()).isEqualTo(manualId);
     }
 
     @Test

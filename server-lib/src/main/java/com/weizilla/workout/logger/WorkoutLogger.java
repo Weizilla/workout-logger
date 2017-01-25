@@ -42,11 +42,6 @@ public class WorkoutLogger
         matchRunner.match(entry.getDate());
     }
 
-    public void put(Workout workout)
-    {
-        workoutStore.put(workout);
-    }
-
     public Collection<Workout> getAllWorkouts()
     {
         return workoutStore.getAll();
