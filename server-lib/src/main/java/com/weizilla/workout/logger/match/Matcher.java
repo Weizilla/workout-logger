@@ -85,7 +85,7 @@ public class Matcher
 
     private static Workout create(ManualEntry entry, List<Long> garminIds)
     {
-        return new WorkoutBuilder()
+        Workout workout = new WorkoutBuilder()
             .setType(entry.getType())
             .setDuration(entry.getDuration())
             .setDate(entry.getDate())
@@ -95,6 +95,8 @@ public class Matcher
             .setManualId(entry.getId())
             .setGarminIds(garminIds)
             .build();
+        entry.setWorkoutId(workout.getId());
+        return workout;
     }
 
     private List<Long> removeByType(Collection<GarminEntry> entries, String manualType)

@@ -37,5 +37,6 @@ public class MatchRunner
         Collection<GarminEntry> garminEntries = garminStore.getForDate(date);
         Collection<Workout> newWorkouts = matcher.match(workouts, manualEntries, garminEntries);
         workoutStore.putAll(newWorkouts);
+        manualStore.putAll(manualEntries);
     }
 }

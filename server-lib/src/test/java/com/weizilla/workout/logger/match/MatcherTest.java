@@ -53,6 +53,7 @@ public class MatcherTest
 
         Workout workout = Iterables.getOnlyElement(actual);
         assertManualWorkout(manualEntry, workout);
+        assertThat(manualEntry.getWorkoutId()).isPresent().contains(workout.getId());
     }
 
     @Test
@@ -88,6 +89,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(workout).hasManualId(manualEntry.getId());
         WorkoutAssert.assertThat(workout).hasOnlyGarminIds(garminEntry.getId());
+        assertThat(manualEntry.getWorkoutId()).isPresent().contains(workout.getId());
     }
 
     @Test
@@ -129,6 +131,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(matchedWorkout).hasManualId(manualEntry.getId());
         WorkoutAssert.assertThat(matchedWorkout).hasOnlyGarminIds(garminEntry.getId());
+        assertThat(manualEntry.getWorkoutId()).isPresent().contains(matchedWorkout.getId());
     }
 
     @Test
@@ -152,6 +155,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(workout).hasManualId(manualEntry.getId());
         WorkoutAssert.assertThat(workout).hasOnlyGarminIds(sameTypeGarmin.getId());
+        assertThat(manualEntry.getWorkoutId()).isPresent().contains(workout.getId());
     }
 
     @Test
@@ -182,6 +186,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(matchedWorkout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(matchedWorkout).hasManualId(manualEntry.getId());
         WorkoutAssert.assertThat(matchedWorkout).hasOnlyGarminIds(sameTypeGarmin.getId());
+        assertThat(manualEntry.getWorkoutId()).isPresent().contains(matchedWorkout.getId());
     }
 
     @Test
@@ -203,6 +208,7 @@ public class MatcherTest
         WorkoutAssert.assertThat(workout).hasComment(manualEntry.getComment());
         WorkoutAssert.assertThat(workout).hasManualId(manualEntry.getId());
         WorkoutAssert.assertThat(workout).hasOnlyGarminIds(entry1.getId(), entry2.getId());
+        assertThat(manualEntry.getWorkoutId()).isPresent().contains(workout.getId());
     }
 
     @Test
@@ -232,5 +238,6 @@ public class MatcherTest
         WorkoutAssert.assertThat(workout).hasEntryTime(entry.getEntryTime());
         WorkoutAssert.assertThat(workout).hasComment(entry.getComment());
         WorkoutAssert.assertThat(workout).hasManualId(entry.getId());
+        assertThat(entry.getWorkoutId()).isPresent().contains(workout.getId());
     }
 }

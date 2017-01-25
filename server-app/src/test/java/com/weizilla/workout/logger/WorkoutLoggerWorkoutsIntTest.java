@@ -42,6 +42,7 @@ public class WorkoutLoggerWorkoutsIntTest
     private String comment;
     private UUID manualId;
     private ManualEntry manualEntry;
+    private UUID workoutId;
 
     @Before
     public void setUp() throws Exception
@@ -53,7 +54,8 @@ public class WorkoutLoggerWorkoutsIntTest
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
         manualId = UUID.randomUUID();
-        manualEntry = new ManualEntry(manualId, type, rating, duration, date, entryTime, comment);
+        workoutId = UUID.randomUUID();
+        manualEntry = new ManualEntry(manualId, type, rating, duration, date, entryTime, comment, workoutId);
     }
 
     @Test

@@ -9,6 +9,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
@@ -23,6 +24,7 @@ public class ManualEntry implements Entry<UUID>
     private final LocalDate date;
     private final Instant entryTime;
     private final String comment;
+    private UUID workoutId;
 
     @JsonCreator
     @PersistenceConstructor
@@ -33,7 +35,8 @@ public class ManualEntry implements Entry<UUID>
         @JsonProperty("duration") Duration duration,
         @JsonProperty("date") LocalDate date,
         @JsonProperty("entryTime") Instant entryTime,
-        @JsonProperty("comment") String comment)
+        @JsonProperty("comment") String comment,
+        @JsonProperty("workoutId") UUID workoutId)
     {
         this.id = id != null ? id : UUID.randomUUID();
         this.type = type.toLowerCase();
@@ -44,6 +47,7 @@ public class ManualEntry implements Entry<UUID>
 
         Instant now = entryTime != null ? entryTime : Instant.now();
         this.entryTime = now.truncatedTo(SECONDS);
+        this.workoutId = workoutId;
     }
 
     @Override
@@ -83,42 +87,51 @@ public class ManualEntry implements Entry<UUID>
         return comment;
     }
 
-    @Override
-    public String toString()
+    public Optional<UUID> getWorkoutId()
     {
+        return Optional.ofNullable(workoutId);
+    }
+
+    public void setWorkoutId(UUID workoutId)
+    {
+        this.workoutId = workoutId;
+    }
+
+    @Override
+    public String toString() {
         return "ManualEntry{" +
             "id=" + id +
             ", type='" + type + '\'' +
             ", duration=" + duration +
+            ", rating=" + rating +
             ", date=" + date +
             ", entryTime=" + entryTime +
             ", comment='" + comment + '\'' +
+            ", workoutId=" + workoutId +
             '}';
     }
 
     @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass())
-        {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ManualEntry that = (ManualEntry) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(type, that.type) &&
-            Objects.equals(duration, that.duration) &&
-            Objects.equals(date, that.date) &&
-            Objects.equals(entryTime, that.entryTime) &&
-            Objects.equals(comment, that.comment);
+        ManualEntry entry = (ManualEntry) o;
+        return rating == entry.rating &&
+            Objects.equals(id, entry.id) &&
+            Objects.equals(type, entry.type) &&
+            Objects.equals(duration, entry.duration) &&
+            Objects.equals(date, entry.date) &&
+            Objects.equals(entryTime, entry.entryTime) &&
+            Objects.equals(comment, entry.comment) &&
+            Objects.equals(workoutId, entry.workoutId);
     }
 
     @Override
-    public int hashCode()
-    {
-        return Objects.hash(id, type, duration, date, entryTime, comment);
+    public int hashCode() {
+        return Objects.hash(id, type, duration, rating, date, entryTime, comment, workoutId);
     }
 }
