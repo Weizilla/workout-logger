@@ -49,9 +49,19 @@ public class WorkoutLogger
         matchRunner.match(entry.getDate());
     }
 
+    public ManualEntry getManualEntry(UUID id)
+    {
+        return manualEntryStore.get(id);
+    }
+
     public Collection<Workout> getAllWorkouts()
     {
         return workoutStore.getAll();
+    }
+
+    public Workout getWorkout(UUID id)
+    {
+        return workoutStore.get(id);
     }
 
     public Set<LocalDate> getAllDates()

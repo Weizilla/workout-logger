@@ -43,7 +43,6 @@ public class WorkoutLoggerWorkoutsIntTest
     private String comment;
     private UUID manualId;
     private ManualEntry manualEntry;
-    private UUID workoutId;
 
     @Before
     public void setUp() throws Exception
@@ -55,8 +54,7 @@ public class WorkoutLoggerWorkoutsIntTest
         entryTime = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         comment = "COMMENT";
         manualId = UUID.randomUUID();
-        workoutId = UUID.randomUUID();
-        manualEntry = new ManualEntry(manualId, type, rating, duration, date, entryTime, comment, workoutId);
+        manualEntry = new ManualEntry(manualId, type, rating, duration, date, entryTime, comment, null);
     }
 
     @Test
@@ -135,8 +133,6 @@ public class WorkoutLoggerWorkoutsIntTest
 
     @Test
     public void updatesManualEntryWillUpdateWorkout() throws Exception {
-        manualEntry.setWorkoutId(null);
-
         template.postForLocation("/api/entry", manualEntry);
         Workout[] workouts = template.getForObject("/api/workouts/dates/" + date, Workout[].class);
         assertThat(workouts).isNotNull();
@@ -153,5 +149,24 @@ public class WorkoutLoggerWorkoutsIntTest
         assertThat(workouts).isNotNull();
         assertThat(workouts).hasSize(1);
         WorkoutAssert.assertThat(workouts[0]).hasComment(newComment);
+    }
+
+    @Test
+    public void getsManualEntryById() throws Exception {
+        template.postForLocation("/api/entry", manualEntry);
+
+        ManualEntry entry = template.getForObject("/api/entry/" + manualEntry.getId(), ManualEntry.class);
+        assertThat(entry).isEqualToIgnoringGivenFields(manualEntry, "workoutId");
+    }
+
+    @Test
+    public void getsWorkoutById() throws Exception {
+        template.postForLocation("/api/entry", manualEntry);
+
+        ManualEntry entry = template.getForObject("/api/entry/" + manualEntry.getId(), ManualEntry.class);
+        Workout workout = template.getForObject("/api/workouts/" + entry.getWorkoutId().get(), Workout.class);
+        WorkoutAssert.assertThat(workout).isNotNull();
+        WorkoutAssert.assertThat(workout).hasManualId(manualEntry.getId());
+
     }
 }

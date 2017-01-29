@@ -38,6 +38,7 @@ public class WorkoutLoggerController
         this.gitConfiguration = gitConfiguration;
     }
 
+
     @RequestMapping(path = "/entry", method = RequestMethod.POST)
     public void addEntry(@RequestBody ManualEntry entry)
     {
@@ -50,6 +51,13 @@ public class WorkoutLoggerController
         workoutLogger.updateEntry(entry);
     }
 
+    @RequestMapping(path = "/entry/{id}", method = RequestMethod.GET)
+    public ManualEntry getEntry(@PathVariable UUID id)
+    {
+        //TODO add 404 if id not found
+        return workoutLogger.getManualEntry(id);
+    }
+
     @RequestMapping("/workouts")
     public Collection<Workout> getWorkouts()
     {
@@ -60,6 +68,12 @@ public class WorkoutLoggerController
     public void deleteWorkout(@PathVariable UUID id)
     {
         workoutLogger.deleteWorkout(id);
+    }
+
+    @RequestMapping(path = "/workouts/{id}", method = RequestMethod.GET)
+    public Workout getWorkout(@PathVariable UUID id)
+    {
+        return workoutLogger.getWorkout(id);
     }
 
     @RequestMapping(path = "/workouts/dates")
