@@ -75,7 +75,9 @@ Logs workouts
 19. Refactor workout type
  1. Separate place for storage instead of main object
  2. Different display/colors on UI based on type
-20. Integration/Robot tests for manual entry's matched workout id
+20. Integration/Robot tests
+ 1. Manual entry's matched workout id
+ 2. Updating workout
 
 ## Version 2
 1. React instead of Angular for front end
