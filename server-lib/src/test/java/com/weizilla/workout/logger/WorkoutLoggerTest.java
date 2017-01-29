@@ -156,14 +156,16 @@ public class WorkoutLoggerTest
     }
 
     @Test
-    public void noErrorsDeletingInvalidIds() throws Exception {
+    public void noErrorsDeletingInvalidIds() throws Exception
+    {
         workoutLogger.deleteWorkout(UUID.randomUUID());
         verify(workoutStore, never()).delete(any(UUID.class));
         verify(manualEntryStore, never()).delete(any(UUID.class));
     }
 
     @Test
-    public void deleteWorkoutAndManualWorkout() throws Exception {
+    public void deleteWorkoutAndManualWorkout() throws Exception
+    {
         UUID workoutId = workout.getId();
         when(workoutStore.get(workoutId)).thenReturn(workout);
 
@@ -173,7 +175,8 @@ public class WorkoutLoggerTest
     }
 
     @Test
-    public void runsMatchForAllDates() throws Exception {
+    public void runsMatchForAllDates() throws Exception
+    {
         LocalDate now = LocalDate.now();
         when(garminManager.getAllDates()).thenReturn(Sets.newHashSet(now, now.plusDays(1)));
         when(manualEntryStore.getAllDates()).thenReturn(Sets.newHashSet(now, now.minusDays(1)));
@@ -181,5 +184,16 @@ public class WorkoutLoggerTest
         verify(matchRunner).match(now);
         verify(matchRunner).match(now.plusDays(1));
         verify(matchRunner).match(now.minusDays(1));
+    }
+
+    @Test
+    public void updateManualEntryUpdatesStoreDeletesWorkoutRerunsMatch() throws Exception
+    {
+        ManualEntry entry = ManualEntryStub.create();
+        workoutLogger.updateEntry(entry);
+
+        verify(manualEntryStore).put(entry);
+        verify(workoutStore).delete(entry.getWorkoutId().get());
+        verify(matchRunner).match(entry.getDate());
     }
 }

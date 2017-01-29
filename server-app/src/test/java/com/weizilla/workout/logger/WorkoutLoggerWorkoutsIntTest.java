@@ -3,6 +3,7 @@ package com.weizilla.workout.logger;
 import com.mongodb.MongoClient;
 import com.weizilla.workout.logger.entity.ManualEntry;
 import com.weizilla.workout.logger.entity.Workout;
+import com.weizilla.workout.logger.entity.WorkoutAssert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -130,5 +131,27 @@ public class WorkoutLoggerWorkoutsIntTest
 
         workouts = template.getForObject("/api/workouts/dates/" + date, Workout[].class);
         assertThat(workouts).isEmpty();
+    }
+
+    @Test
+    public void updatesManualEntryWillUpdateWorkout() throws Exception {
+        manualEntry.setWorkoutId(null);
+
+        template.postForLocation("/api/entry", manualEntry);
+        Workout[] workouts = template.getForObject("/api/workouts/dates/" + date, Workout[].class);
+        assertThat(workouts).isNotNull();
+        assertThat(workouts).hasSize(1);
+        Workout oldWorkout = workouts[0];
+        WorkoutAssert.assertThat(oldWorkout).hasComment(comment);
+
+        String newComment = "NEW COMMENT";
+        ManualEntry updated = new ManualEntry(manualId, type, rating, duration, date, entryTime, newComment, oldWorkout.getId());
+
+        template.put("/api/entry", updated);
+
+        workouts = template.getForObject("/api/workouts/dates/" + date, Workout[].class);
+        assertThat(workouts).isNotNull();
+        assertThat(workouts).hasSize(1);
+        WorkoutAssert.assertThat(workouts[0]).hasComment(newComment);
     }
 }

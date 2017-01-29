@@ -38,10 +38,16 @@ public class WorkoutLoggerController
         this.gitConfiguration = gitConfiguration;
     }
 
-    @RequestMapping("/entry")
+    @RequestMapping(path = "/entry", method = RequestMethod.POST)
     public void addEntry(@RequestBody ManualEntry entry)
     {
         workoutLogger.addEntry(entry);
+    }
+
+    @RequestMapping(path = "/entry", method = RequestMethod.PUT)
+    public void updateEntry(@RequestBody ManualEntry entry)
+    {
+        workoutLogger.updateEntry(entry);
     }
 
     @RequestMapping("/workouts")

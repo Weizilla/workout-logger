@@ -49,6 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+//TODO not needed with Workout Logger Integration Tests providing better testing setup?
 @RunWith(MockitoJUnitRunner.class)
 public class WorkoutLoggerMvcTest
 {

@@ -42,6 +42,13 @@ public class WorkoutLogger
         matchRunner.match(entry.getDate());
     }
 
+    public void updateEntry(ManualEntry entry)
+    {
+        entry.getWorkoutId().ifPresent(workoutStore::delete);
+        manualEntryStore.put(entry);
+        matchRunner.match(entry.getDate());
+    }
+
     public Collection<Workout> getAllWorkouts()
     {
         return workoutStore.getAll();
