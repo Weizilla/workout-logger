@@ -47,6 +47,18 @@ class WorkoutsService {
             });
     }
 
+    updateEntry(entry) {
+        return this.$http.put(getHost() + "/api/entry", entry)
+            .then(r => r.data)
+            .then(() => {
+                this.refreshUpdateListeners();
+            });
+    }
+
+    getEntry(id) {
+        return this.$http.get(getHost() + "/api/entry/" + id).then(r => r.data);
+    }
+
     deleteWorkout(id) {
         return this.$http.delete(getHost() + "/api/workouts/" + id);
     }
